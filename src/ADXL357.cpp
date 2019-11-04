@@ -18,7 +18,7 @@ bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length)
 		return false;
 
 	uint8_t address = (reg << 1) | 0b1;
-	piSPI->Read(address, buf, length);
+	return piSPI->Read(address, buf, length);
 }
 
 bool ADXL357::write(uint8_t reg, uint8_t val)
@@ -27,7 +27,7 @@ bool ADXL357::write(uint8_t reg, uint8_t val)
 		return false;
 
 	uint8_t address = (reg << 1) & 0b11111110;
-	piSPI->Write(address, &val, 1);
+	return piSPI->Write(address, &val, 1);
 }
 
 bool ADXL357::fifoFull()
@@ -178,6 +178,8 @@ Sample ADXL357::getXYZ()
 	sample.setRawX((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
   sample.setRawY((((int32_t)buf[3]) << 16) | ((int32_t)buf[4] << 8) | ((int32_t)buf[5]));
 	sample.setRawZ((((int32_t)buf[6]) << 16) | ((int32_t)buf[7] << 8) | ((int32_t)buf[8]));
+
+	return sample;
 }
 
 vector<Sample> ADXL357::getFifo()
@@ -225,7 +227,6 @@ bool ADXL357::hasNewData()
 vector<Sample> ADXL357::getSamplesFast(int nSamples)
 {
 	vector<Sample> samples;
-	uint8_t buf[3];
 
 	while(samples.size() < nSamples)
 	{
