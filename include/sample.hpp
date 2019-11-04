@@ -29,9 +29,9 @@ class Sample
 	bool getSampleData(double *x, double *y, double *z);
 
 	void convertSample(double factor);
+	static int32_t convertTwoComp(uint32_t source);
 
 	private:
-	static int32_t convertTwoComp(uint32_t source);
 
 	uint32_t m_rawX;
 	uint32_t m_rawY;
