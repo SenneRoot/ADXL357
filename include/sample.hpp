@@ -23,8 +23,6 @@ class Sample
 	double getY();
 	double getZ();
 
-
-
 	void getRawSampleData(uint32_t *x, uint32_t *y, uint32_t *z);
 	bool getSampleData(double *x, double *y, double *z);
 

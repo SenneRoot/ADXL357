@@ -14,17 +14,17 @@ Sample::~Sample()
 
 }
 
-void Sample::setRawX(int32_t val)
+void Sample::setRawX(uint32_t val)
 {
 	m_rawX = val;
 }
 
-void Sample::setRawY(int32_t val)
+void Sample::setRawY(uint32_t val)
 {
 	m_rawY = val;
 }
 
-void Sample::setRawZ(int32_t val)
+void Sample::setRawZ(uint32_t val)
 {
 	m_rawZ = val;
 }
