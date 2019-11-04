@@ -169,20 +169,21 @@ int32_t ADXL357::getZ()
 	return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
 }
 
-void ADXL357::getXYZ(sample *adxl357)
+Sample ADXL357::getXYZ()
 {
 	uint8_t buf[9];
+	Sample sample;
 	read(REG_XDATA3, buf, 9);
 
-	adxl357->x = twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
-  adxl357->y = twoComp((((int32_t)buf[3]) << 16) | ((int32_t)buf[4] << 8) | ((int32_t)buf[5]));
-	adxl357->z = twoComp((((int32_t)buf[6]) << 16) | ((int32_t)buf[7] << 8) | ((int32_t)buf[8]));
+	sample.setRawX((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+  sample.setRawY((((int32_t)buf[3]) << 16) | ((int32_t)buf[4] << 8) | ((int32_t)buf[5]));
+	sample.setRawZ((((int32_t)buf[6]) << 16) | ((int32_t)buf[7] << 8) | ((int32_t)buf[8]));
 }
 
-vector<sample> ADXL357::getFifo()
+vector<Sample> ADXL357::getFifo()
 {
-	vector<sample> samples;
-	sample sam;
+	vector<Sample> samples;
+	Sample sample;
 	uint8_t bufx[3], bufy[3], bufz[3];
 
 	read(REG_FIFO_DATA, bufx, 3);
@@ -191,15 +192,15 @@ vector<sample> ADXL357::getFifo()
 		read(REG_FIFO_DATA, bufy, 3);
 		read(REG_FIFO_DATA, bufz, 3);
 
-		sam.x = twoComp((((int32_t)bufx[0]) << 16) | ((int32_t)bufx[1] << 8) | ((int32_t)bufx[2]));
-		sam.y = twoComp((((int32_t)bufy[0]) << 16) | ((int32_t)bufy[1] << 8) | ((int32_t)bufy[2]));
-		sam.z = twoComp((((int32_t)bufz[0]) << 16) | ((int32_t)bufz[1] << 8) | ((int32_t)bufz[2]));
+		sample.setRawX((((int32_t)bufx[0]) << 16) | ((int32_t)bufx[1] << 8) | ((int32_t)bufx[2]));
+		sample.setRawY((((int32_t)bufy[0]) << 16) | ((int32_t)bufy[1] << 8) | ((int32_t)bufy[2]));
+		sample.setRawZ((((int32_t)bufz[0]) << 16) | ((int32_t)bufz[1] << 8) | ((int32_t)bufz[2]));
 
-		samples.push_back(sam);
+		samples.push_back(sample);
 
 		read(REG_FIFO_DATA, bufx, 3);
 	}
-
+	
 	return samples;
 }
 
@@ -221,43 +222,16 @@ bool ADXL357::hasNewData()
 	return buf[0] & 0b1;
 }
 
-vector<sample> ADXL357::getSamplesFast(int nSamples)
+vector<Sample> ADXL357::getSamplesFast(int nSamples)
 {
-	vector<sample> samples;
+	vector<Sample> samples;
 	uint8_t buf[3];
 
 	while(samples.size() < nSamples)
 	{
-		vector<sample> temp = getFifo();
+		vector<Sample> temp = getFifo();
 		samples.insert(samples.end(), temp.begin(), temp.end());
 	}
 
 	return samples;
-}
-
-
-void ADXL357::convertRawToG(vector<sample> *source)
-{
-	for(auto &sample : *source)
-	{
-		sample.x *=  m_factor;
-		sample.y *=  m_factor;
-		sample.z *=  m_factor;
-	}
-}
-
-int32_t ADXL357::twoComp(uint32_t source)
-{
-	//from ADXL355_Acceleration_Data_Conversion function from EVAL-ADICUP360 repository
-            // value = value | 0xFFF00000
-	int target;
-	source = (source >> 4);
-  source = (source & 0x000FFFFF);
-
-  if((source & 0x00080000)  == 0x00080000)
-    target = (source | 0xFFF00000);
-  else
-    target = source;
-
-  return target;
 }

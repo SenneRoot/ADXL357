@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "PiSPI.hpp"
+#include "sample.hpp"
 //#include <termios.h>
 //#include <linux/serial.h>
 //#include <sys/ioctl.h>
@@ -13,6 +14,7 @@
 #include <sys/time.h>
 #include <string>
 #include <iostream>
+
 
 #define START 						0b0
 #define STOP							0b1
@@ -71,12 +73,6 @@
 #define SET_ODR_7_813    0b1001
 #define SET_ODR_3_906    0b1010
 
-typedef struct {
-    double x;
-    double y;
-    double z;
-} sample;
-
 class ADXL357
 {
 
@@ -104,23 +100,22 @@ class ADXL357
 	int32_t getZraw();
 	int32_t getZ();
 
-	void getXYZ(sample *adxl357);
+	Sample getXYZ();
 
-	std::vector<sample> getFifo();
+	vector<Sample> getFifo();
   void emptyFifo();
 	bool hasNewData();
 
-	std::vector<sample> getSamplesFast(int nSampels = 1000); //Get specified numbers of samples from FIFO, without any processing.
+	vector<Sample> getSamplesFast(int nSampels = 1000); //Get specified numbers of samples from FIFO.
 
-	std::vector<sample> getsamplesRaw(int nSampels = 1000);
-	std::vector<sample> getsamples(int nSampels = 1000);
+	vector<Sample> getsamplesRaw(int nSampels = 1000);
+	vector<Sample> getsamples(int nSampels = 1000);
 
 
 	private:
 	bool read(uint8_t reg, uint8_t *buf, size_t length = 1);
 	bool write(uint8_t reg, uint8_t val);
 
-	void convertRawToG(vector<sample> *source);
 	int32_t twoComp(uint32_t source);
 
 
