@@ -7,6 +7,11 @@ Sample::Sample()
 	m_rawZ = 0;
 }
 
+Sample::~Sample()
+{
+	
+}
+
 void Sample::setRawX(int32_t val)
 {
 	m_rawX = val;

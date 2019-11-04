@@ -34,7 +34,7 @@ class Sample
 
 
 
-}
+};
 
 
 #endif
