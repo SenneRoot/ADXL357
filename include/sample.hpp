@@ -31,7 +31,7 @@ class Sample
 	void convertSample(double factor);
 
 	private:
-	//int32_t convertTwoComp(uint32_t source);
+	static int32_t convertTwoComp(uint32_t source);
 
 	uint32_t m_rawX;
 	uint32_t m_rawY;
