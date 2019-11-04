@@ -19,7 +19,7 @@ DEPEXT	:= d
 OBJEXT	:= o
 
 #Flags, Libraries and Includes
-CFLAGS	:= -Wall -Wextra -g -std=c++11
+CFLAGS	:= -Wall -Wextra -Wno-psabi  -g -std=c++11
 LIB	:= -lpthread -lrt
 INCDEP	:= -I$(INCDIR)
 
