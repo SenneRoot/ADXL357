@@ -106,7 +106,7 @@ class ADXL357
   void emptyFifo();
 	bool hasNewData();
 
-	vector<Sample> getSamplesFast(int nSampels = 1000); //Get specified numbers of samples from FIFO.
+	vector<Sample> getSamplesFast(size_t nSampels = 1000); //Get specified numbers of samples from FIFO.
 
 	vector<Sample> getsamplesRaw(int nSampels = 1000);
 	vector<Sample> getsamples(int nSampels = 1000);
