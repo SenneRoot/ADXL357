@@ -72,9 +72,9 @@
 #define SET_ODR_3_906    0b1010
 
 typedef struct {
-    int x;
-    int y;
-    int z;
+    double x;
+    double y;
+    double z;
 } sample;
 
 class ADXL357
@@ -120,7 +120,7 @@ class ADXL357
 	bool read(uint8_t reg, uint8_t *buf, size_t length = 1);
 	bool write(uint8_t reg, uint8_t val);
 
-	int32_t convertRawToG(int32_t source);
+	void convertRawToG(vector<sample> *source);
 	int32_t twoComp(uint32_t source);
 
 
@@ -129,10 +129,7 @@ class ADXL357
 
 	private:
 	PiSPI *piSPI = nullptr;
-	int m_factor = 1;
-
-
-
+	double m_factor = 1;
 };
 
 #endif

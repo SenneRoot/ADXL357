@@ -12,20 +12,23 @@ ADXL357::~ADXL357()
 
 }
 
-
 bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length = 1)
 {
+	if (piSPI == nullptr)
+		return false;
+
 	uint8_t address = (reg << 1) | 0b1;
 	piSPI->Read(address, buf, length);
 }
 
 bool ADXL357::write(uint8_t reg, uint8_t val)
 {
+	if (piSPI == nullptr)
+		return false;
+
 	uint8_t address = (reg << 1) & 0b11111110;
 	piSPI->Write(address, &val, 1);
 }
-
-
 
 bool ADXL357::fifoFull()
 {
@@ -87,12 +90,15 @@ void ADXL357::setRange(uint8_t range)
 	{
 	case SET_RANGE_10G:
 		write(REG_RANGE, SET_RANGE_10G);
+		m_factor = 1 / 51200;
 		break;
 	case SET_RANGE_20G:
 		write(REG_RANGE, SET_RANGE_20G);
+		m_factor = 1 / 25600;
 		break;
 	case SET_RANGE_40G:
 		write(REG_RANGE, SET_RANGE_40G);
+		m_factor = 1 / 12800;
 		break;
 	default:
 		break;
@@ -229,6 +235,16 @@ vector<sample> ADXL357::getSamplesFast(int nSamples)
 	return samples;
 }
 
+
+void ADXL357::convertRawToG(vector<sample> *source)
+{
+	for(auto &sample : *source)
+	{
+		sample.x *=  m_factor;
+		sample.y *=  m_factor;
+		sample.z *=  m_factor;
+	}
+}
 
 int32_t ADXL357::twoComp(uint32_t source)
 {
