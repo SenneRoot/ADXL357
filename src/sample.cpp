@@ -5,11 +5,13 @@ Sample::Sample()
 	m_rawX = 0;
 	m_rawY = 0;
 	m_rawZ = 0;
+
+	m_converted = false;
 }
 
 Sample::~Sample()
 {
-	
+
 }
 
 void Sample::setRawX(int32_t val)
@@ -27,6 +29,52 @@ void Sample::setRawZ(int32_t val)
 	m_rawZ = val;
 }
 
+uint32_t Sample::getRawX()
+{
+	return m_rawX;
+}
+
+uint32_t Sample::getRawY()
+{
+	return m_rawY;
+}
+
+uint32_t Sample::getRawZ()
+{
+	return m_rawZ;
+}
+
+double Sample::getX()
+{
+	if(m_converted)
+		return m_X;
+	else
+	{
+		return 0;
+	}
+}
+
+double Sample::getY()
+{
+	if(m_converted)
+		return m_X;
+	else
+	{
+		return 0;
+	}
+}
+
+double Sample::getZ()
+{
+	if(m_converted)
+		return m_X;
+	else
+	{
+		return 0;
+	}
+}
+
+
 void Sample::getRawSampleData(uint32_t *x, uint32_t *y, uint32_t *z)
 {
 	*x = m_rawX;
@@ -34,22 +82,28 @@ void Sample::getRawSampleData(uint32_t *x, uint32_t *y, uint32_t *z)
 	*z = m_rawZ;
 }
 
-void Sample::getSampleData(double *x, double *y, double *z)
+bool Sample::getSampleData(double *x, double *y, double *z)
 {
+	if(!m_converted)
+		return false;
+
 	*x = m_X;
 	*y = m_Y;
 	*z = m_Z;
+
+	return true;
 }
 
 void Sample::convertSample(double factor)
 {
-
 	m_X = convertTwoComp(m_rawX) * factor;
 	m_Y = convertTwoComp(m_rawY) * factor;
 	m_Z = convertTwoComp(m_rawZ) * factor;
+
+	m_converted = true;
 }
 
-int32_t Sample::convertTwoComp(uint32_t source)
+static int32_t convertTwoComp(uint32_t source)
 {
 		int target;
 	source = (source >> 4);

@@ -11,29 +11,37 @@ class Sample
 	Sample();
 	~Sample();
 
-	void setRawX(int32_t val);
-	void setRawY(int32_t val);
-	void setRawZ(int32_t val);
+	void setRawX(uint32_t val);
+	void setRawY(uint32_t val);
+	void setRawZ(uint32_t val);
+
+	uint32_t getRawX();
+	uint32_t getRawY();
+	uint32_t getRawZ();
+
+	double getX();
+	double getY();
+	double getZ();
+
+
 
 	void getRawSampleData(uint32_t *x, uint32_t *y, uint32_t *z);
-	void getSampleData(double *x, double *y, double *z);
+	bool getSampleData(double *x, double *y, double *z);
 
 	void convertSample(double factor);
 
-
 	private:
-	int32_t convertTwoComp(uint32_t source);
+	//int32_t convertTwoComp(uint32_t source);
 
-	int32_t m_rawX;
-	int32_t m_rawY;
-	int32_t m_rawZ;
+	uint32_t m_rawX;
+	uint32_t m_rawY;
+	uint32_t m_rawZ;
 
 	double m_X;
 	double m_Y;
 	double m_Z;
 
-
-
+	bool m_converted;
 };
 
 
