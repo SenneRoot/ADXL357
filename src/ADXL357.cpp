@@ -134,8 +134,7 @@ int32_t ADXL357::getX()
 	uint8_t buf[3];
 	read(REG_XDATA3, buf, 3);
 
-	//return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
-	return 1;
+	return Sample::convertTwoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
 }
 
 int32_t ADXL357::getYraw()
@@ -151,8 +150,7 @@ int32_t ADXL357::getY()
 	uint8_t buf[3];
 	read(REG_YDATA3, buf, 3);
 
-	//return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
-	return 1;
+	return Sample::convertTwoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
 }
 
 int32_t ADXL357::getZraw()
@@ -168,8 +166,7 @@ int32_t ADXL357::getZ()
 	uint8_t buf[3];
 	read(REG_ZDATA3, buf, 3);
 
-	//return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
-	return 1;
+	return Sample::convertTwoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
 }
 
 Sample ADXL357::getXYZ()
@@ -195,9 +192,9 @@ vector<Sample> ADXL357::getFifo()
 		read(REG_FIFO_DATA, bufy, 3);
 		read(REG_FIFO_DATA, bufz, 3);
 
-		sample.setRawX((((int32_t)bufx[0]) << 16) | ((int32_t)bufx[1] << 8) | ((int32_t)bufx[2]));
-		sample.setRawY((((int32_t)bufy[0]) << 16) | ((int32_t)bufy[1] << 8) | ((int32_t)bufy[2]));
-		sample.setRawZ((((int32_t)bufz[0]) << 16) | ((int32_t)bufz[1] << 8) | ((int32_t)bufz[2]));
+		sample.setRawX((((uint32_t)bufx[0]) << 16) | ((uint32_t)bufx[1] << 8) | ((uint32_t)bufx[2]));
+		sample.setRawY((((uint32_t)bufy[0]) << 16) | ((uint32_t)bufy[1] << 8) | ((uint32_t)bufy[2]));
+		sample.setRawZ((((uint32_t)bufz[0]) << 16) | ((uint32_t)bufz[1] << 8) | ((uint32_t)bufz[2]));
 
 		samples.push_back(sample);
 
