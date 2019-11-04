@@ -224,7 +224,7 @@ bool ADXL357::hasNewData()
 	return buf[0] & 0b1;
 }
 
-vector<Sample> ADXL357::getSamplesFast(int nSamples)
+vector<Sample> ADXL357::getSamplesFast(size_t nSamples)
 {
 	vector<Sample> samples;
 
