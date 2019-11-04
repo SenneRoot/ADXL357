@@ -27,7 +27,18 @@ class Sample
 	bool getSampleData(double *x, double *y, double *z);
 
 	void convertSample(double factor);
-	static int32_t convertTwoComp(uint32_t source);
+	static int32_t convertTwoComp(uint32_t source) {
+		int target;
+	source = (source >> 4);
+  source = (source & 0x000FFFFF);
+
+  if((source & 0x00080000)  == 0x00080000)
+    target = (source | 0xFFF00000);
+  else
+    target = source;
+
+  return target;
+	};
 
 	private:
 
