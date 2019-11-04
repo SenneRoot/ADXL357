@@ -10,8 +10,8 @@
 #include <string>
 #include <ios>
 #include <sys/fcntl.h>
-//#include <sys/ioctl.h>
-//#include <linux/spi/spidev.h>
+#include <sys/ioctl.h>
+#include <linux/spi/spidev.h>
 #include <unistd.h>
 
 //Namespace STD to avoid std::

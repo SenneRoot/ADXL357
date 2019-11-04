@@ -6,7 +6,7 @@
 #include "sample.hpp"
 //#include <termios.h>
 //#include <linux/serial.h>
-//#include <sys/ioctl.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
