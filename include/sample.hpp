@@ -9,7 +9,7 @@ class Sample
 {
 	public:
 	Sample();
-	~sample();
+	~Sample();
 
 	void setRawX(int32_t val);
 	void setRawY(int32_t val);
