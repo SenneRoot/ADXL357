@@ -134,7 +134,8 @@ int32_t ADXL357::getX()
 	uint8_t buf[3];
 	read(REG_XDATA3, buf, 3);
 
-	return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+	//return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+	return 1;
 }
 
 int32_t ADXL357::getYraw()
@@ -150,7 +151,8 @@ int32_t ADXL357::getY()
 	uint8_t buf[3];
 	read(REG_YDATA3, buf, 3);
 
-	return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+	//return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+	return 1;
 }
 
 int32_t ADXL357::getZraw()
@@ -166,7 +168,8 @@ int32_t ADXL357::getZ()
 	uint8_t buf[3];
 	read(REG_ZDATA3, buf, 3);
 
-	return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+	//return twoComp((((int32_t)buf[0]) << 16) | ((int32_t)buf[1] << 8) | ((int32_t)buf[2]));
+	return 1;
 }
 
 Sample ADXL357::getXYZ()
@@ -187,7 +190,7 @@ vector<Sample> ADXL357::getFifo()
 	uint8_t bufx[3], bufy[3], bufz[3];
 
 	read(REG_FIFO_DATA, bufx, 3);
-	while(bufx[2] & 0b10 == 0)
+	while((bufx[2] & 0b10) == 0)
 	{
 		read(REG_FIFO_DATA, bufy, 3);
 		read(REG_FIFO_DATA, bufz, 3);
@@ -200,7 +203,7 @@ vector<Sample> ADXL357::getFifo()
 
 		read(REG_FIFO_DATA, bufx, 3);
 	}
-	
+
 	return samples;
 }
 
@@ -208,7 +211,7 @@ void ADXL357::emptyFifo()
 {
 	uint8_t buf[3];
 	read(REG_FIFO_DATA, buf, 3);
-	while (buf[2] & 0b10 == 0)
+	while ((buf[2] & 0b10) == 0)
 	{
 		read(REG_FIFO_DATA, buf, 3);
 	}
