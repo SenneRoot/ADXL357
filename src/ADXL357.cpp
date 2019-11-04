@@ -12,7 +12,7 @@ ADXL357::~ADXL357()
 
 }
 
-bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length = 1)
+bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length)
 {
 	if (piSPI == nullptr)
 		return false;
