@@ -7,7 +7,7 @@
 CC	:= g++
 
 #The Target Binary Program
-TARGET	:= darwin
+TARGET	:= ADXL357_Logger
 
 #The Directories, Source, Includes, Objects, Binary and Resources
 SRCDIR	:= src
