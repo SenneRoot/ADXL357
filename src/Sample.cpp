@@ -50,27 +50,27 @@ double Sample::getX()
 		return m_X;
 	else
 	{
-		return 0;
+		return -1;
 	}
 }
 
 double Sample::getY()
 {
 	if(m_converted)
-		return m_X;
+		return m_Y;
 	else
 	{
-		return 0;
+		return -1;
 	}
 }
 
 double Sample::getZ()
 {
 	if(m_converted)
-		return m_X;
+		return m_Z;
 	else
 	{
-		return 0;
+		return -1;
 	}
 }
 

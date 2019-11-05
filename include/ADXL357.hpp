@@ -112,9 +112,9 @@ class ADXL357
   void emptyFifo();
 	bool hasNewData();
 
-	vector<Sample> getSamplesFast(size_t nSampels = 1000); //Get specified numbers of samples from FIFO.
-	vector<Sample> getsamplesRaw(int nSampels = 1000);
-	vector<Sample> getsamples(int nSampels = 1000);
+	vector<Sample>& getSamplesFast(size_t nSampels = 1000); //Get specified numbers of samples from FIFO.
+	vector<Sample>& getsamplesRaw(int nSampels = 1000);
+	vector<Sample>& getsamples(int nSampels = 1000);
 
 	private:
 	bool read(uint8_t reg, uint8_t *buf, size_t length = 1);

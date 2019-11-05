@@ -12,7 +12,7 @@ Logger::~Logger()
 		//delete m_adxl357;
 }
 
-vector<Sample> Logger::log(int m_time, bool convert)
+vector<Sample>& Logger::log(int m_time, bool convert)
 {
 	vector<Sample> samples;
 
@@ -36,8 +36,6 @@ vector<Sample> Logger::log(int m_time, bool convert)
 		if(m_adxl357->hasNewData())
 		{
 			vector<Sample> temp = m_adxl357->getFifo();
-			if(temp.size() > 0)
-				printf("%d \n", temp.at(0).getRawX());
 			samples.insert(samples.end(), temp.begin(), temp.end());
 		}
 	}
