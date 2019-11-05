@@ -60,7 +60,7 @@ void ADXL357::start()
 	uint8_t buf[1];
 	if(!read(REG_POWER_CTL, buf, 1))
 		cout << "Reading Power CTL Failed while starting!" << endl;
-	if(!write(REG_POWER_CTL, buf[0] & START))
+	if(!write(REG_POWER_CTL, START))
 		cout << "Writing Power CTL Failed while starting!" << endl;
 }
 
@@ -69,7 +69,7 @@ void ADXL357::stop()
 	uint8_t buf[1];
 	if(!read(REG_POWER_CTL, buf, 1))
 		cout << "Reading Power CTL Failed while stopping!" << endl;
-	if(!write(REG_POWER_CTL, buf[0] & STOP))
+	if(!write(REG_POWER_CTL, STOP))
 		cout << "Writing Power CTL Failed while stopping!" << endl;
 }
 
