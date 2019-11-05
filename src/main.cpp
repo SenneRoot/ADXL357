@@ -24,7 +24,7 @@ int main()
 	adxl357.start();
 	while(true)
 	{
-		printf("%d \n", adxl357.getX());
+		printf("%d \n", adxl357.getFifo().at(0).getRawX());
 	}
 
 	//for(auto& sample : samples)
