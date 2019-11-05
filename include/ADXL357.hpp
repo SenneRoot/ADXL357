@@ -78,7 +78,7 @@ class ADXL357
 
 	//methods
 	public:
-	ADXL357();
+	ADXL357(uint8_t channel = 0, int speed = 1000000, int mode = 0, uint8_t bitsperword = 8);
 	~ADXL357();
 
 	bool fifoFull();
@@ -88,7 +88,7 @@ class ADXL357
 	void dumpInfo();
 	uint8_t  whoAmI();
 	void setRange(uint8_t range);
-	void setFilter(uint8_t hpf = 0b00000000, uint8_t lpf = 0b00000000);
+	void setFilter(uint8_t hpf = 0b000, uint8_t lpf = 0b0000);
 	int16_t tempRaw();
 
 	int32_t getXraw();
