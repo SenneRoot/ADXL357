@@ -17,7 +17,7 @@ int main()
 
 	Logger logger(&adxl357);
 
-	sampels = logger.log();
+	samples = logger.log();
 
 	cout << samples.size();
 	for(auto& sample : samples)

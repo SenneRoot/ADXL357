@@ -1,5 +1,5 @@
-#ifndef _SAMPLE_HPP_
-#define _SAMPLE_HPP_
+#ifndef _LOGGER_HPP_
+#define _LOGGER_HPP_
 
 #include "Sample.hpp"
 #include "ADXL357.hpp"
