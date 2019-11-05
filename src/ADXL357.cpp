@@ -9,7 +9,7 @@ ADXL357::ADXL357(uint8_t channel, int speed, int mode, uint8_t bitsperword)
 
 ADXL357::~ADXL357()
 {
-	delete piSPI;
+	//delete piSPI;
 }
 
 bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length)
