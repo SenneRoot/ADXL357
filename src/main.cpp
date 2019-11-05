@@ -21,9 +21,10 @@ int main()
 
 	//cout << samples.size();
 
+	adxl357.start();
 	while(true)
 	{
-		printf("%d", adxl357.getX());
+		printf("%d \n", adxl357.getX());
 	}
 
 	//for(auto& sample : samples)
