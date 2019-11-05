@@ -34,7 +34,7 @@ vector<Sample> Logger::log(int m_time, bool convert)
 
 		if(m_adxl357->hasNewData())
 		{
-			vector<Sample> temp = adxl357.getFifo();
+			vector<Sample> temp = m_adxl357->getFifo();
 			samples.insert(samples.end(), temp.begin(), temp.end());
 		}
 	}
