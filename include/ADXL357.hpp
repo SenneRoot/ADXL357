@@ -93,6 +93,7 @@ class ADXL357
 	void setRange(uint8_t range);
 	void setFilter(uint8_t hpf = 0b000, uint8_t lpf = 0b0000);
 	double getRate();
+	double getSensitivityFactor();
 
 	int16_t tempRaw();
 

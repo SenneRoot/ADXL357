@@ -147,10 +147,12 @@ double ADXL357::getRate()
 	uint8_t buf[1];
 
 	if(!read(REG_FILTER, buf, 1))
+	{
 		cout << "Reading Filter Register Failed!" << endl;
+	}
 	else
 	{
-		switch (buf[0] & 0xF))
+		switch ((buf[0] & 0xF))
 		{
 		case SET_ODR_4000:
 			return 4000;
@@ -189,6 +191,11 @@ double ADXL357::getRate()
 			break;
 		}
 	}
+}
+
+double ADXL357::getSensitivityFactor()
+{
+	return m_factor;
 }
 
 int16_t ADXL357::tempRaw()
