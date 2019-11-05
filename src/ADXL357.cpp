@@ -141,6 +141,56 @@ void ADXL357::setFilter(uint8_t hpf, uint8_t lpf)
 	start();
 }
 
+double ADXL357::getRate()
+{
+	stop();
+	uint8_t buf[1];
+
+	if(!read(REG_FILTER, buf, 1))
+		cout << "Reading Filter Register Failed!" << endl;
+	else
+	{
+		switch (buf[0] & 0xF))
+		{
+		case SET_ODR_4000:
+			return 4000;
+			break;
+		case SET_ODR_2000:
+			return 2000;
+			break;
+		case SET_ODR_1000:
+			return 1000;
+			break;
+		case SET_ODR_500:
+			return 500;
+			break;
+		case SET_ODR_250:
+			return 250;
+			break;
+		case SET_ODR_125:
+			return 125;
+			break;
+		case SET_ODR_62_5:
+			return 62.5;
+			break;
+		case SET_ODR_31_25:
+			return 31.25;
+			break;
+		case SET_ODR_15_625:
+			return 15.625;
+			break;
+		case SET_ODR_7_813:
+			return 7.813;
+			break;
+		case SET_ODR_3_906:
+			return 3.906;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 int16_t ADXL357::tempRaw()
 {
 	uint8_t buf[2];

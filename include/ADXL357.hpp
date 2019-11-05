@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "PiSPI.hpp"
-#include "sample.hpp"
+#include "Sample.hpp"
 //#include <termios.h>
 //#include <linux/serial.h>
 #include <sys/ioctl.h>
@@ -83,12 +83,17 @@ class ADXL357
 
 	bool fifoFull();
 	bool fifoOverRange();
+
 	void start();
 	void stop();
+
 	void dumpInfo();
 	uint8_t  whoAmI();
+
 	void setRange(uint8_t range);
 	void setFilter(uint8_t hpf = 0b000, uint8_t lpf = 0b0000);
+	double getRate();
+
 	int16_t tempRaw();
 
 	int32_t getXraw();
@@ -107,17 +112,14 @@ class ADXL357
 	bool hasNewData();
 
 	vector<Sample> getSamplesFast(size_t nSampels = 1000); //Get specified numbers of samples from FIFO.
-
 	vector<Sample> getsamplesRaw(int nSampels = 1000);
 	vector<Sample> getsamples(int nSampels = 1000);
-
 
 	private:
 	bool read(uint8_t reg, uint8_t *buf, size_t length = 1);
 	bool write(uint8_t reg, uint8_t val);
 
 	int32_t twoComp(uint32_t source);
-
 
 	//fields:
 	public:
