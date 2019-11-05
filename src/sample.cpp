@@ -1,4 +1,4 @@
-#include "sample.hpp"
+#include "Sample.hpp"
 
 Sample::Sample()
 {
