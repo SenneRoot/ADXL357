@@ -1,11 +1,13 @@
 #include <iostream>
 #include "ADXL357.hpp"
+#include "Logger.hpp"
+#include "Sample.hpp"
 
 int main()
 {
 	vector<Sample> samples;
 	ADXL357 adxl357;
-	auto rate = SET_ODR_4000;
+	//auto rate = SET_ODR_4000;
 	int mtime = 1;
 	adxl357.start();
 	adxl357.setRange(SET_RANGE_10G);
@@ -18,9 +20,9 @@ int main()
 	sampels = logger.log();
 
 	cout << samples.size();
-	for(const auto& sample : samples)
+	for(auto& sample : samples)
 	{
 		cout << "X: " << sample.getX() << "Y: " << sample.getY() << "Z: " << sample.getZ() << endl;
 	}
-	
+
 }
