@@ -106,7 +106,7 @@ uint8_t ADXL357::whoAmI()
 
 void ADXL357::setRange(uint8_t range)
 {
-	stop();
+	//stop();
 	bool res = false;
 
 	switch (range)
@@ -130,15 +130,15 @@ void ADXL357::setRange(uint8_t range)
 	{
 		cout << "Writing Range register Failed!" << endl;
 	}
-	start();
+	//start();
 }
 
 void ADXL357::setFilter(uint8_t hpf, uint8_t lpf)
 {
-	stop();
+	//stop();
 	if(!write(REG_FILTER, (hpf << 4) | lpf))
 		cout << "Writing Filter register Failed!" << endl;
-	start();
+	//start();
 }
 
 double ADXL357::getRate()
