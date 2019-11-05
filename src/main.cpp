@@ -15,11 +15,17 @@ int main()
 
 	adxl357.dumpInfo();
 
-	Logger logger(&adxl357);
+	//Logger logger(&adxl357);
 
-	samples = logger.log();
+	//samples = logger.log();
 
-	cout << samples.size();
+	//cout << samples.size();
+
+	while(true)
+	{
+		printf("%d", adxl357.getX());
+	}
+
 	//for(auto& sample : samples)
 	//{
 	//	cout << "X: " << sample.getX() << "Y: " << sample.getY() << "Z: " << sample.getZ() << endl;
