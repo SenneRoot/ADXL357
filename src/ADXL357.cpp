@@ -81,9 +81,9 @@ void ADXL357::dumpInfo()
 	//uint8_t adid, memsid, devid;
 	if(read(REG_DEVID_AD, buf, 3))
 	{
-		printf("Analog Devices ID: %d\n", buf[0]);
-		printf("Analog Devices MEMS ID: %d\n", buf[1]);
-		printf("Device ID: %d\n", buf[2]);
+		printf("Analog Devices ID: %#02x\n", buf[0]);
+		printf("Analog Devices MEMS ID: %#02x\n", buf[1]);
+		printf("Device ID: %#02x\n", buf[2]);
 	}
 	else
 		cout << "Reading ID Registers Failed!" << endl;
