@@ -15,17 +15,10 @@ int main()
 
 	adxl357.dumpInfo();
 
-	//Logger logger(&adxl357);
+	Logger logger(&adxl357);
+	samples = logger.log();
+	cout << samples.size();
 
-	//samples = logger.log();
-
-	//cout << samples.size();
-
-	adxl357.start();
-	while(true)
-	{
-		printf("%d \n", adxl357.getFifo().at(0).getRawX());
-	}
 
 	//for(auto& sample : samples)
 	//{

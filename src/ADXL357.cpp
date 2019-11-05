@@ -321,7 +321,7 @@ bool ADXL357::hasNewData()
 	if(!read(REG_STATUS, buf, 1))
 		cout << "Reading Has New Data bit Failed!" << endl;
 
-	return buf[0] & 0b1;
+	return (buf[0] & 0b00000001);
 }
 
 vector<Sample> ADXL357::getSamplesFast(size_t nSamples)
