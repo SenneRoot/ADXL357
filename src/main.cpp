@@ -47,8 +47,7 @@ int main()
 	//{
 	//	out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 	//}
-
-	const int N = 16384‬;
+	const int N = 16384;
 	fftw_complex in[N], out[N];
 	fftw_plan p, q;
 
@@ -59,8 +58,10 @@ int main()
 	}
 
 	p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
-  fftw_execute(p);
-  for (i = 0; i < N; i++)
-    printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
-  fftw_destroy_plan(p);
+
+	fftw_execute(p);
+  	for (int i = 0; i < N; i++)
+    	printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
+
+	fftw_destroy_plan(p);
 }
