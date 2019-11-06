@@ -37,12 +37,13 @@ int main()
 
 
 	ofstream out("data.csv");
-	if( !out )
-  	{
-  	  cout << "Couldn't open file."  << endl;
-  	  return 1;
-  	}
+	if(!out)
+  {
+  	cout << "Couldn't open file."  << endl;
+  	return 1;
+  }
 
+	out << "x" << "," << "y" << "," << "z" << endl;
 	for (auto& sample : samples)
 	{
 		out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
