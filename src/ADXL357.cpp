@@ -116,17 +116,17 @@ void ADXL357::setRange(uint8_t range)
 	case SET_RANGE_10G:
 		cout << "Setting 10g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_10G);
-		m_factor = 1 / 51200;
+		m_factor = 1 / 51200.0;
 		break;
 	case SET_RANGE_20G:
 		cout << "Setting 20g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_20G);
-		m_factor = 1 / 25600;
+		m_factor = 1 / 25600.0;
 		break;
 	case SET_RANGE_40G:
 		cout << "Setting 40g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_40G);
-		m_factor = 1 / 12800;
+		m_factor = 1 / 12800.0;
 		break;
 	default:
 		break;
