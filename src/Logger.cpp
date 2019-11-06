@@ -14,8 +14,6 @@ Logger::~Logger()
 
 void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 {
-	vector<Sample> samples;
-
 	if(m_adxl357 == nullptr)
 		return samples;
 
@@ -26,7 +24,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 	double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
-	while(samples.size() < nSamples)
+	while(samples->size() < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())
 		{
@@ -35,8 +33,9 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 
 		if(m_adxl357->hasNewData())
 		{
-			vector<Sample> temp = m_adxl357->getFifo();
-			samples.insert(samples.end(), temp.begin(), temp.end());
+			vector<Sample> temp;
+			m_adxl357->getFifo(&temp);
+			samples->insert(samples->end(), temp.begin(), temp.end());
 		}
 	}
 	m_adxl357->stop();
@@ -48,6 +47,4 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
 	}
-
-	return samples;
 }
