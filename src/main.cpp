@@ -16,7 +16,7 @@ int main()
 	adxl357.dumpInfo();
 
 	Logger logger(&adxl357);
-	samples = logger.log();
+	logger.log(&samples);
 	cout << samples.size();
 
 

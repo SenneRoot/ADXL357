@@ -191,6 +191,8 @@ double ADXL357::getRate()
 			break;
 		}
 	}
+
+	return -1;
 }
 
 double ADXL357::getSensitivityFactor()
@@ -275,9 +277,8 @@ Sample ADXL357::getXYZ()
 	return sample;
 }
 
-vector<Sample>& ADXL357::getFifo()
+void ADXL357::getFifo(vector<Sample> *samples)
 {
-	vector<Sample> samples;
 	Sample sample;
 	uint8_t bufx[3], bufy[3], bufz[3];
 
@@ -300,8 +301,6 @@ vector<Sample>& ADXL357::getFifo()
 
 		read(REG_FIFO_DATA, bufx, 3);
 	}
-
-	return samples;
 }
 
 void ADXL357::emptyFifo()
@@ -324,15 +323,11 @@ bool ADXL357::hasNewData()
 	return (buf[0] & 0b00000001);
 }
 
-vector<Sample>& ADXL357::getSamplesFast(size_t nSamples)
+void ADXL357::getSamplesFast(vector<Sample> *samples, size_t nSamples)
 {
-	vector<Sample> samples;
-
 	while(samples.size() < nSamples)
 	{
 		vector<Sample> temp = getFifo();
 		samples.insert(samples.end(), temp.begin(), temp.end());
 	}
-
-	return samples;
 }

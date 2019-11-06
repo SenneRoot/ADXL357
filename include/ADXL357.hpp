@@ -108,13 +108,13 @@ class ADXL357
 
 	Sample getXYZ();
 
-	vector<Sample>& getFifo();
+	void getFifo(vector<Sample> *samples);
   void emptyFifo();
 	bool hasNewData();
 
-	vector<Sample>& getSamplesFast(size_t nSampels = 1000); //Get specified numbers of samples from FIFO.
-	vector<Sample>& getsamplesRaw(int nSampels = 1000);
-	vector<Sample>& getsamples(int nSampels = 1000);
+	void getSamplesFast(vector<Sample> *samples, size_t nSampels = 1000); //Get specified numbers of samples from FIFO.
+	void getsamplesRaw(vector<Sample> *samples, int nSampels = 1000);
+	void getsamples(vector<Sample> *samples, int nSampels = 1000);
 
 	private:
 	bool read(uint8_t reg, uint8_t *buf, size_t length = 1);
