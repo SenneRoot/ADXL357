@@ -20,9 +20,9 @@ int main()
 	cout << samples.size();
 
 
-	//for(auto& sample : samples)
-	//{
-	//	cout << "X: " << sample.getX() << "Y: " << sample.getY() << "Z: " << sample.getZ() << endl;
-	//}
+	for(auto& sample : samples)
+	{
+		cout << "X: " << sample.getX() << "Y: " << sample.getY() << "Z: " << sample.getZ() << endl;
+	}
 
 }
