@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import warnings
 from scipy import signal
+from scipy.signal import blackman
 
 freq = 4000
 
@@ -34,10 +35,12 @@ def fftPlot(sig, dt=None, block=False, plot=True, title = 'Analytic FFT plot'):
         warnings.warn("signal prefered to be even in size, autoFixing it...")
         t = t[0:-1]
         sig = sig[0:-1]
+		
+    w = blackman(t.shape[0])
 	
     sig = signal.detrend(sig, axis=0)
     #newsig = sig - np.mean(sig)
-    sigFFT = np.fft.fft(sig) / t.shape[0]  # divided by size t for coherent magnitude
+    sigFFT = np.fft.fft(sig*w) / t.shape[0]  # divided by size t for coherent magnitude
 
     freq = np.fft.fftfreq(t.shape[0], d=dt)
 
