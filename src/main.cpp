@@ -22,7 +22,7 @@ int main()
 
 	for(auto& sample : samples)
 	{
-		cout << "X: " << sample.getX() << "Y: " << sample.getY() << "Z: " << sample.getZ() << endl;
+		cout << "X: " << sample.getRawX() << " Y: " << sample.getRawY() << " Z: " << sample.getRawZ() << endl;
 	}
 
 }
