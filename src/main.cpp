@@ -12,23 +12,25 @@ int main()
 	ADXL357 adxl357;
 	//auto rate = SET_ODR_4000;
 	bool writeData = false;
+	bool log = true;
 	adxl357.stop();
 	adxl357.setRange(SET_RANGE_10G);
 	adxl357.setFilter(0b000, SET_ODR_4000);
 
 	adxl357.dumpInfo();
 
-	Logger logger(&adxl357);
+	adxl357.start();
 
-	clock_t begin = clock();
 
-	logger.log(&samples, 8, true);
-
-	clock_t end = clock();
-  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-
-	cout << "Number of samples: " << samples.size() << "Time: " << elapsed_secs << endl;
-
+	if(log)
+	{
+		Logger logger(&adxl357);
+		clock_t begin = clock();
+		logger.log(&samples, 8, true);
+		clock_t end = clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+		cout << "Number of samples: " << samples.size() << "Time: " << elapsed_secs << endl;
+	}
 
 	if (writeData)
 	{
