@@ -15,6 +15,7 @@ def read_and_plot(column = 'x', block = False):
 	
     sig = df.values.ravel()
 
+    #fftPlot(sig, dt=None, block=block, title = column)
     fftPlot(sig, dt=dt, block=block, title = column)
 
 	
