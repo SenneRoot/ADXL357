@@ -21,7 +21,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 	m_adxl357->emptyFifo();
 
 	size_t nSamples = m_time * m_adxl357->getRate();
-	double period = 1 / m_adxl357->getRate();
+	//double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
 	while(samples->size() < nSamples)

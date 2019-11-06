@@ -93,8 +93,8 @@ void ADXL357::dumpInfo()
 	else
 		cout << "Reading Power CTL Failed!" << endl;
 
-	printf("ODR: %f", getRate());
-	printf("Sensitivity factor: %f", m_factor);
+	printf("ODR: %f\n", getRate());
+	printf("Sensitivity factor: %f\n", m_factor);
 }
 
 uint8_t ADXL357::whoAmI()
@@ -114,20 +114,24 @@ void ADXL357::setRange(uint8_t range)
 	switch (range)
 	{
 	case SET_RANGE_10G:
+		cout << "Setting 10g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_10G);
 		m_factor = 1 / 51200;
 		break;
 	case SET_RANGE_20G:
+		cout << "Setting 20g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_20G);
 		m_factor = 1 / 25600;
 		break;
 	case SET_RANGE_40G:
+		cout << "Setting 40g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_40G);
 		m_factor = 1 / 12800;
 		break;
 	default:
 		break;
 	}
+
 	if(!res)
 	{
 		cout << "Writing Range register Failed!" << endl;
