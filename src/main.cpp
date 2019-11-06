@@ -3,6 +3,11 @@
 #include "Logger.hpp"
 #include "Sample.hpp"
 
+#include <iostream>
+#include <fstream>
+
+
+
 #include <ctime>
 
 int main()
@@ -20,15 +25,25 @@ int main()
 	Logger logger(&adxl357);
 
 	clock_t begin = clock();
+
 	logger.log(&samples, 2, true);
 
 	clock_t end = clock();
   double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	//for(auto& sample : samples)
-	//{
-	//	cout << "X: " << sample.getX() << " Y: " << sample.getY() << " Z: " << sample.getZ() << endl;
-	//}
-
 	cout << "Number of samples: " << samples.size() << "Time: " << elapsed_secs << endl;
+
+
+	ofstream out("data.csv");
+	if( !out )
+  {
+    cout << "Couldn't open file."  << endl;
+    return 1;
+  }
+
+	for (auto& sample : samples)
+	{
+		out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+	}
+
 }
