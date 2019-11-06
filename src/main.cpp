@@ -17,13 +17,11 @@ int main()
 
 	Logger logger(&adxl357);
 	logger.log(&samples, 1, true);
-	cout << samples.size() << endl;
-
 
 	for(auto& sample : samples)
 	{
-		//sample.convertSample()
 		cout << "X: " << sample.getX() << " Y: " << sample.getY() << " Z: " << sample.getZ() << endl;
 	}
 
+	cout << "Number of samples: " << samples.size() << endl;
 }
