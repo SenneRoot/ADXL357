@@ -93,6 +93,8 @@ void ADXL357::dumpInfo()
 	else
 		cout << "Reading Power CTL Failed!" << endl;
 
+	printf("ODR: %d", getRate());
+	printf("Sensitivity factor: %d", m_factor);
 }
 
 uint8_t ADXL357::whoAmI()

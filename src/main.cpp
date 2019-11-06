@@ -16,13 +16,14 @@ int main()
 	adxl357.dumpInfo();
 
 	Logger logger(&adxl357);
-	logger.log(&samples);
+	logger.log(&samples, 1, false);
 	cout << samples.size();
 
 
-	for(auto& sample : samples)
-	{
-		cout << "X: " << sample.getRawX() << " Y: " << sample.getRawY() << " Z: " << sample.getRawZ() << endl;
-	}
+	//for(auto& sample : samples)
+	//{
+	//	sample.convertSample()
+	//	cout << "X: " << sample.getRawX() << " Y: " << sample.getRawY() << " Z: " << sample.getRawZ() << endl;
+	//}
 
 }
