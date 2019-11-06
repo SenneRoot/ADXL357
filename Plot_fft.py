@@ -2,8 +2,24 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import warnings
+from scipy import signal
 
-def fftPlot(sig, dt=None, block=False, plot=True):
+freq = 4000
+
+def read_and_plot(column = 'x', block = False):
+    df = pd.read_csv('data_vibrating_motor.csv', usecols=[column], index_col=False)
+	
+    dt = 1 / freq
+    f0 = 1 / dt / 4
+	
+    sig = df.values.ravel()
+
+    fftPlot(sig, dt=dt, block=block, title = column)
+
+	
+	
+
+def fftPlot(sig, dt=None, block=False, plot=True, title = 'Analytic FFT plot'):
     # here it's assumes analytic signal (real signal...)- so only half of the axis is required
 
     if dt is None:
@@ -18,7 +34,9 @@ def fftPlot(sig, dt=None, block=False, plot=True):
         warnings.warn("signal prefered to be even in size, autoFixing it...")
         t = t[0:-1]
         sig = sig[0:-1]
-
+	
+    sig = signal.detrend(sig, axis=0)
+    #newsig = sig - np.mean(sig)
     sigFFT = np.fft.fft(sig) / t.shape[0]  # divided by size t for coherent magnitude
 
     freq = np.fft.fftfreq(t.shape[0], d=dt)
@@ -33,7 +51,7 @@ def fftPlot(sig, dt=None, block=False, plot=True):
         plt.plot(freqAxisPos, np.abs(sigFFTPos))
         plt.xlabel(xLabel)
         plt.ylabel('mag')
-        plt.title('Analytic FFT plot')
+        plt.title(title)
         plt.show(block=block)
 
     return sigFFTPos, freqAxisPos
@@ -41,28 +59,10 @@ def fftPlot(sig, dt=None, block=False, plot=True):
 
 if __name__ == "__main__":
     # Import csv file
-    df = pd.read_csv('data.csv', usecols=['z'], index_col=False)
-	
-    dt = 1 / 4000
-    f0 = 1 / dt / 4
-	
-    #conv_arr= df.values
-    #split matrix into 3 columns each into 1d array
-	
-    #sig = np.delete(conv_arr,[1,2],axis=1) 
-    sig = df.values.ravel()
+	read_and_plot('x')
+	read_and_plot('y')
+	read_and_plot('z', block = True)
     
-    #sig = df.to_numpy()
-	
-    #print(sig)
-    #t = np.arange(0, 1 + dt, dt)
-    #sig = np.sin(2 * np.pi * f0 * t)
-    print(sig)
-    fftPlot(sig, dt=dt)
-    fftPlot(sig, block = True)
-    #t = np.arange(0, 1 + dt, dt)
-    #sig = np.sin(2 * np.pi * f0 * t) + 10 * np.sin(2 * np.pi * f0 / 2 * t)
-    #fftPlot(sig, dt=dt, block=True)
 
 
 
