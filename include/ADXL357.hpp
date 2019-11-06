@@ -108,7 +108,7 @@ class ADXL357
 
 	Sample getXYZ();
 
-	vector<Sample> getFifo();
+	vector<Sample>& getFifo();
   void emptyFifo();
 	bool hasNewData();
 
