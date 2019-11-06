@@ -95,6 +95,28 @@ void ADXL357::dumpInfo()
 
 	printf("ODR: %f\n", getRate());
 	printf("Sensitivity factor: %f\n", m_factor);
+	if(read(REG_RANGE, buf))
+	{
+		int range = 0;
+		switch ((buf[0] & 0b11))
+		{
+		case SET_RANGE_10G:
+			range = 10;
+			break;
+		case SET_RANGE_20G:
+			range = 20;
+			break;
+		case SET_RANGE_30G:
+			range = 30;
+			break;
+		default:
+			break;
+		}
+		printf("Range: %dg", range);
+	}
+	else
+		cout << "Reading Range register Failed!" << endl;
+
 	printf("========================================\n");
 }
 
