@@ -6,6 +6,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <fftw3.h>
+
 
 
 #include <ctime>
@@ -34,16 +36,31 @@ int main()
 	cout << "Number of samples: " << samples.size() << "Time: " << elapsed_secs << endl;
 
 
-	ofstream out("data.csv");
-	if( !out )
-  {
-    cout << "Couldn't open file."  << endl;
-    return 1;
-  }
+	//ofstream out("data.csv");
+	//if( !out )
+  //{
+  //  cout << "Couldn't open file."  << endl;
+  //  return 1;
+  //}
 
-	for (auto& sample : samples)
+	//for (auto& sample : samples)
+	//{
+	//	out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+	//}
+
+	const int N = 16384‬;
+	fftw_complex in[N], out[N];
+	fftw_plan p, q;
+
+	for (int i = 0; i < N; i++)
 	{
-		out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+		in[i][0] = samples.at(i).getX();
+		in[i][1] = 0;
 	}
 
+	p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+  fftw_execute(p);
+  for (i = 0; i < N; i++)
+    printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
+  fftw_destroy_plan(p);
 }
