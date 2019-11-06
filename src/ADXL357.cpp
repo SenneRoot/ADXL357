@@ -285,7 +285,7 @@ void ADXL357::getFifo(vector<Sample> *samples)
 	if(!read(REG_FIFO_DATA, bufx, 3))
 	{
 		cout << "Reading FIFO Failed!" << endl;
-		return samples;
+		return;
 	}
 
 	while((bufx[2] & 0b10) == 0)
@@ -297,7 +297,7 @@ void ADXL357::getFifo(vector<Sample> *samples)
 		sample.setRawY((((uint32_t)bufy[0]) << 16) | ((uint32_t)bufy[1] << 8) | ((uint32_t)bufy[2]));
 		sample.setRawZ((((uint32_t)bufz[0]) << 16) | ((uint32_t)bufz[1] << 8) | ((uint32_t)bufz[2]));
 
-		samples.push_back(sample);
+		samples->push_back(sample);
 
 		read(REG_FIFO_DATA, bufx, 3);
 	}
@@ -325,9 +325,10 @@ bool ADXL357::hasNewData()
 
 void ADXL357::getSamplesFast(vector<Sample> *samples, size_t nSamples)
 {
-	while(samples.size() < nSamples)
+	while(samples->size() < nSamples)
 	{
-		vector<Sample> temp = getFifo();
-		samples.insert(samples.end(), temp.begin(), temp.end());
+		vector<Sample> temp;
+		getFifo(&temp);
+		samples->insert(samples->end(), temp.begin(), temp.end());
 	}
 }
