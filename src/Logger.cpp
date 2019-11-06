@@ -15,12 +15,12 @@ Logger::~Logger()
 void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 {
 	if(m_adxl357 == nullptr)
-		return samples;
+		return;
 
 	m_adxl357->stop();
 	m_adxl357->emptyFifo();
 
-	int nSamples = m_time * m_adxl357->getRate();
+	size_t nSamples = m_time * m_adxl357->getRate();
 	double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
@@ -42,7 +42,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 
 	if(convert)
 	{
-		for(auto &sample : samples)
+		for(auto &sample : *samples)
 		{
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
