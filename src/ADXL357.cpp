@@ -106,13 +106,13 @@ void ADXL357::dumpInfo()
 		case SET_RANGE_20G:
 			range = 20;
 			break;
-		case SET_RANGE_30G:
-			range = 30;
+		case SET_RANGE_40G:
+			range = 40;
 			break;
 		default:
 			break;
 		}
-		printf("Range: %dg", range);
+		printf("Range: %dg\n", range);
 	}
 	else
 		cout << "Reading Range register Failed!" << endl;
@@ -137,17 +137,17 @@ void ADXL357::setRange(uint8_t range)
 	switch (range)
 	{
 	case SET_RANGE_10G:
-		cout << "Setting 10g Range" << endl;
+		//cout << "Setting 10g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_10G);
 		m_factor = 1 / 51200.0;
 		break;
 	case SET_RANGE_20G:
-		cout << "Setting 20g Range" << endl;
+		//cout << "Setting 20g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_20G);
 		m_factor = 1 / 25600.0;
 		break;
 	case SET_RANGE_40G:
-		cout << "Setting 40g Range" << endl;
+		//cout << "Setting 40g Range" << endl;
 		res = write(REG_RANGE, SET_RANGE_40G);
 		m_factor = 1 / 12800.0;
 		break;
