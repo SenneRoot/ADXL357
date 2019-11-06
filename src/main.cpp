@@ -3,6 +3,8 @@
 #include "Logger.hpp"
 #include "Sample.hpp"
 
+#include <ctime>
+
 int main()
 {
 	vector<Sample> samples;
@@ -16,12 +18,17 @@ int main()
 	adxl357.dumpInfo();
 
 	Logger logger(&adxl357);
+
+	clock_t begin = clock();
 	logger.log(&samples, 2, true);
+
+	clock_t end = clock();
+  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
 	//for(auto& sample : samples)
 	//{
 	//	cout << "X: " << sample.getX() << " Y: " << sample.getY() << " Z: " << sample.getZ() << endl;
 	//}
 
-	cout << "Number of samples: " << samples.size() << endl;
+	cout << "Number of samples: " << samples.size() << "Time: " << elapsed_secs << endl;
 }
