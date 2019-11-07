@@ -61,6 +61,14 @@
 #define SET_RANGE_20G    0b10
 #define SET_RANGE_40G    0b11
 
+#define SET_HPF_OFF			 0b000
+#define SET_HPF_247			 0b001
+#define SET_HPF_62_084	 0b010
+#define SET_HPF_15_545	 0b011
+#define SET_HPF_3_862		 0b100
+#define SET_HPF_0_954		 0b101
+#define SET_HPF_0_238		 0b110
+
 #define SET_ODR_4000     0b0000
 #define SET_ODR_2000     0b0001
 #define SET_ODR_1000     0b0010

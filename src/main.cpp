@@ -18,7 +18,7 @@ int main()
 	//setup ADXL357 sensor
 	adxl357.stop();
 	adxl357.setRange(SET_RANGE_10G);
-	adxl357.setFilter(0b000, SET_ODR_4000);
+	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
 	adxl357.dumpInfo();
 
 	adxl357.start();
