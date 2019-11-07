@@ -1,4 +1,19 @@
 #include <iostream>
+#include "client.hpp"
+
+int main() {
+    socket_communication::Client client("127.0.0.1", 5002);
+
+    // Check that connection works
+    client.Send("Hello hello!");
+    std::string answer = client.Receive();
+    std::cout << "Server: " << answer << std::endl;
+}
+
+
+
+
+/*#include <iostream>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
@@ -50,4 +65,4 @@ int main()
 			out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 		}
 	}
-}
+}*/
