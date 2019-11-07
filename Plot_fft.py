@@ -8,7 +8,7 @@ from scipy.signal import blackman
 freq = 4000
 
 def read_and_plot(column = 'x', block = False):
-    df = pd.read_csv('data_vibrating_motor.csv', usecols=[column], index_col=False)
+    df = pd.read_csv('data.csv', usecols=[column], index_col=False)
 	
     dt = 1 / freq
     f0 = 1 / dt / 4
