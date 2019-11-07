@@ -4,11 +4,17 @@ import numpy as np
 import warnings
 from scipy import signal
 from scipy.signal import blackman
+import sys
 
 freq = 4000
 
 def read_and_plot(column = 'x', block = False):
-    df = pd.read_csv('data.csv', usecols=[column], index_col=False)
+    if len(sys.argv) > 1:
+	    path = 'data/' + sys.argv[1] + '.csv'
+    else:
+        print("File not found! Exiting...")
+        quit()
+    df = pd.read_csv(path, usecols=[column], index_col=False)
 	
     dt = 1 / freq
     f0 = 1 / dt / 4
