@@ -20,6 +20,8 @@ int main()
 	adxl357.setFilter(0b000, SET_ODR_4000);
 	adxl357.dumpInfo();
 
+	adxl357.start();	
+
 	if(log)
 	{
 		Logger logger(&adxl357);
