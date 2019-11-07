@@ -6,5 +6,5 @@ if __name__ == "__main__":
 
     # Check that connection works
     message = server.receive()
-    print("[CLIENT]:" + message)
-    server.send("Shut up and send an image")
+    print("[CLIENT]: " + message)
+    server.send('Shut up and send an image')

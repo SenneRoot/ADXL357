@@ -39,8 +39,7 @@ void Client::Send(std::string message) {
   // Send length of the message
   int length = message.length();
   std::string length_str = std::to_string(length);
-  std::string message_length =
-      std::string(size_message_length_ - length_str.length(), '0') + length_str;
+  std::string message_length = std::string(size_message_length_ - length_str.length(), '0') + length_str;
   send(client_, message_length.c_str(), size_message_length_, 0);
 
   // Send message
