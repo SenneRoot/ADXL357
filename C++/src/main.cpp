@@ -27,14 +27,14 @@ int main(void)
 	}
 
 	// zero out the structure
-	memset((char *) &amp;si_me, 0, sizeof(si_me));
+	memset((char *) &si_me, 0, sizeof(si_me));
 
 	si_me.sin_family = AF_INET;
 	si_me.sin_port = htons(PORT);
 	si_me.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	//bind socket to port
-	if( bind(s , (struct sockaddr*)&amp;si_me, sizeof(si_me) ) == -1)
+	if( bind(s , (struct sockaddr*)&si_me, sizeof(si_me) ) == -1)
 	{
 		die("bind");
 	}
@@ -46,7 +46,7 @@ int main(void)
 		fflush(stdout);
 
 		//try to receive some data, this is a blocking call
-		if ((recv_len = recvfrom(s, buf, BUFLEN, 0, (struct sockaddr *) &amp;si_other, &amp;slen)) == -1)
+		if ((recv_len = recvfrom(s, buf, BUFLEN, 0, (struct sockaddr *) &si_other, &slen)) == -1)
 		{
 			die("recvfrom()");
 		}
@@ -56,7 +56,7 @@ int main(void)
 		printf("Data: %s\n" , buf);
 
 		//now reply the client with the same data
-		if (sendto(s, buf, recv_len, 0, (struct sockaddr*) &amp;si_other, slen) == -1)
+		if (sendto(s, buf, recv_len, 0, (struct sockaddr*) &si_other, slen) == -1)
 		{
 			die("sendto()");
 		}
