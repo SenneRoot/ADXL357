@@ -20,7 +20,7 @@ OBJEXT	:= o
 
 #Flags, Libraries and Includes
 CFLAGS	:= -Wall -Wextra -Wno-psabi -Wno-missing-field-initializers -g -std=c++11
-LIB	:= -lpthread -lrt -lfftw3
+LIB	:= -lpthread -lrt -lfftw3 -lsocket++ 
 INCDEP	:= -I$(INCDIR)
 
 #---------------------------------------------------------------------------------
