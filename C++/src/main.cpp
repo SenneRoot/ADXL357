@@ -1,20 +1,30 @@
-#include <stdio.h>
-char increase;
-int main(int argc, char **argv) {
-    for (;;) {
-        char buf;
-        fread(&buf, 1, 1, stdin);
-        if ('q' == buf)
-            break;
-        increase = buf + 1;
-        fwrite(&increase, 1, 1, stdout);
-        fflush(stdout);
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+#include <sys/stat.h>
+
+int main(int argc, char *argv[]) {
+    const char *fifo_name = "fifo";
+    mknod(fifo_name, S_IFIFO | 0666, 0);
+    std::ifstream f(fifo_name);
+    std::string line;
+    getline(f, line);
+    auto data_size = std::stoi(line);
+    std::cout << "Size: " << data_size << std::endl;
+    std::string data;
+    {
+        std::vector<char> buf(data_size);
+        f.read(buf.data(), data_size);
+        // write to vector data is valid since C++11
+        data.assign(buf.data(), buf.size());
     }
-
-    return 0;
+    if (!f.good()) {
+        std::cerr << "Read failed" << std::endl;
+    }
+    std::cout << "Data size: " << data.size() << " content: " << data << std::endl;
 }
-
-
 
 
 /*#include <iostream>
