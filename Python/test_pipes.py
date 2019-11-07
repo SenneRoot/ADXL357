@@ -14,10 +14,10 @@ s1[8] = 73 #I
 
 t = buffer(s1)       
 
-sys.stdin.write(t)
+sys.stdout.write(t)
 value = [0,0,0,0,0,0,0,0]
 for i in range(8):
-    value[i] = ord(sys.stdout.read(1))
+    value[i] = ord(sys.stdin.read(1))
     print ("value i -> " + str(value[i]))
 
-sys.stdin.write('q')
+sys.stdout.write('q')
