@@ -10,7 +10,7 @@ freq = 4000
 
 def read_and_plot(column = 'x', block = False):
     if len(sys.argv) > 1:
-	    path = 'data/' + sys.argv[1] + '.csv'
+	    path = '../data/' + sys.argv[1] + '.csv'
     else:
         print("File not found! Exiting...")
         quit()

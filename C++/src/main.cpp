@@ -13,7 +13,7 @@ int main()
 	bool writeData = true;
 	bool log = true;
 	int time = 4;
-	string dataPath = "data/data_motor.csv";
+	string dataPath = "../../data/data_motor.csv";
 
 	//setup ADXL357 sensor
 	adxl357.stop();
