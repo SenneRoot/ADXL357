@@ -1,8 +1,8 @@
 
 #include <iostream>
 #include <string>
-#include "../include/exception.hpp"
-#include "../include/inetclientstream.hpp"
+#include <libsocket/exception.hpp>
+#include <libsokcet/inetclientstream.hpp>
 
 #include <stdlib.h>
 #include <unistd.h>
