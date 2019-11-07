@@ -1,4 +1,23 @@
-#include <iostream>
+#include <stdio.h>
+char increase;
+int main(int argc, char **argv) {
+    for (;;) {
+        char buf;
+        fread(&buf, 1, 1, stdin);
+        if ('q' == buf)
+            break;
+        increase = buf + 1;
+        fwrite(&increase, 1, 1, stdout);
+        fflush(stdout);
+    }
+
+    return 0;
+}
+
+
+
+
+/*#include <iostream>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
@@ -50,4 +69,4 @@ int main()
 			out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 		}
 	}
-}
+}*/
