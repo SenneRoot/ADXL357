@@ -30,10 +30,10 @@ int main()
 
 	while (1)
 	{
-		udpsocket.receive(&message[0], &clientAddress, &len);
+		udpsocket.receive(buf, &clientAddress, &len);
 		std::string message(buf);
 		cout << message << endl;
-		udpsocket.send(&message[0], &clientAddress, &len);
+		udpsocket.send(buf, &clientAddress, &len);
 
 
 		if (log)
