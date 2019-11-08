@@ -1,4 +1,22 @@
-#include <iostream>
+#include "udpSocket.hpp"
+
+int main()
+{
+	udpSocket udpsocket(8080);
+	uint8_t buf[MAXLINE];
+	struct sockaddr clientAddress;
+	uint len;
+
+	while(1)
+	{
+		udpSocket.receive(buf, &clientAddress, len);
+		udpSocket.send(buf, &clientAddress, len);
+	}
+}
+
+
+
+/*#include <iostream>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
@@ -50,4 +68,4 @@ int main()
 			out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 		}
 	}
-}
+}*/
