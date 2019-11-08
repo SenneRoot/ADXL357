@@ -5,13 +5,15 @@ int main()
 	udpSocket udpsocket(8080);
 	char buf[MAXLINE];
 	struct sockaddr clientAddress;
+	const char *hello = "Hello from server";
 	uint len;
 
 	while(1)
 	{
 		udpsocket.receive(buf, &clientAddress, &len);
 		printf("%d", buf[0]);
-		udpsocket.send(buf, &clientAddress, &len);
+
+		udpsocket.send(hello, &clientAddress, &len);
 	}
 }
 

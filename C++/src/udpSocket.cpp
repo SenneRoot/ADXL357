@@ -27,11 +27,11 @@ udpSocket::~udpSocket()
 
 void udpSocket::receive(char *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	uint n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, clientAddress, *len);
+	uint n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, clientAddress, len);
 	buf[n] = '\0';
 }
 
 void udpSocket::send(const char *buf, const struct sockaddr *clientAddress , uint32_t *len)
 {
-	sendto(m_sockfd, buf, *len, MSG_CONFIRM, clientAddress, *len);
+	sendto(m_sockfd, buf, strlen(buf), MSG_CONFIRM, clientAddress, *len);
 }
