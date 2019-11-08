@@ -13,7 +13,7 @@ int main()
 		udpsocket.receive(buf, &clientAddress, &len);
 		printf("%s", buf);
 
-		udpsocket.send(hello, &clientAddress, &len);
+		udpsocket.send(buf, &clientAddress, &len);
 	}
 }
 
