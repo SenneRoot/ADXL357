@@ -33,7 +33,13 @@ int main()
 		udpsocket.receive(buf, &clientAddress, &len);
 		std::string message(buf);
 		cout << message << endl;
-		udpsocket.send(buf, &clientAddress, &len);
+
+		if(message.compare("log"))
+			log = true;
+		else
+			log = false;
+
+		udpsocket.send("logging data", &clientAddress, &len);
 
 
 		if (log)
