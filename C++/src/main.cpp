@@ -78,6 +78,8 @@ int main()
 				printf("%f", temp);
 				udpsocket.send(&temp, &clientAddress, &len);
 			}
+
+			udpSocket.send("done", &clientAddress, &len);
 		}
 	}
 }
