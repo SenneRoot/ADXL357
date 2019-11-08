@@ -25,7 +25,7 @@ udpSocket::~udpSocket()
 
 void udpSocket::receive(uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, (struct sockaddr *) &clientAddress, len);
+	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, clientAddress, len);
 	buf[n] = '\0';
 }
 
