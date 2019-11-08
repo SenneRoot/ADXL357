@@ -40,5 +40,6 @@ void udpSocket::send(double *buf, const struct sockaddr *clientAddress , uint32_
 {
 	char buffer[MAXLINE];
 	sprintf(buffer, "%f", *buf);
-	sendto(m_sockfd, buffer, sizeof(buf), MSG_CONFIRM, clientAddress, *len);
+	send(buffer, clientAddress, len);
+	send("\n", clientAddress, len);
 }
