@@ -58,7 +58,7 @@ int main()
 
 		if (writeData)
 		{
-			ofstream out(dataPath);
+			/*ofstream out(dataPath);
 			if (!out)
 			{
 				cout << "Couldn't open file." << endl;
@@ -69,7 +69,7 @@ int main()
 					//<< ","
 					//<< "y"
 					//<< ","
-					//<< "z" << endl;
+					//<< "z" << endl;*/
 
 			for (auto &sample : samples)
 			{
