@@ -75,7 +75,6 @@ int main()
 			{
 				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 				double temp = sample.getX();
-				printf("%f", temp);
 				udpsocket.send(&temp, &clientAddress, &len);
 			}
 

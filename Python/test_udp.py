@@ -81,14 +81,16 @@ if __name__ == "__main__":
 
     datalist = []
     # receive some data
-    data = b""
-    while (data.decode('utf-8') is not 'done'):
-        data, addr = client.recvfrom(4096)
+    data, addr = client.recvfrom(4096)
+    while (data.decode('utf-8') != 'done'):
         if data.decode('utf-8') is not '\n':
             datalist.append(data.decode('utf-8'))
             print(data.decode('utf-8'))
+        data, addr = client.recvfrom(4096)
 
     dt = 1 / freq
-    fftPlot(datalist, dt=dt, block=True, title = 'x')
+    datalist.pop(0)
+    sig = np.asarray(datalist)
+    fftPlot(sig, dt=dt, block=True, title = 'x')
 
 
