@@ -34,7 +34,7 @@ int main()
 		std::string message(buf);
 		cout << message << endl;
 
-		if(message.compare("log"))
+		if(!message.compare("log"))
 			log = true;
 		else
 			log = false;
