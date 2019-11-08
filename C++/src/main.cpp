@@ -73,7 +73,8 @@ int main()
 
 			for (auto &sample : samples)
 			{
-				out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+				udpsocket.send(sample.getx(), &clientAddress, &len);
 			}
 		}
 	}

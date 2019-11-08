@@ -19,6 +19,7 @@ class udpSocket
 
 	void receive(char *buf, struct sockaddr *clientAddress ,uint32_t *len);
 	void send(const char *buf, const struct sockaddr *clientAddress ,uint32_t *len);
+	void send(const double *buf, const struct sockaddr *clientAddress , uint32_t *len)
 
 	private:
 	int m_sockfd;
