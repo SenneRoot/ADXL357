@@ -15,7 +15,7 @@ int main()
 	bool writeData = true;
 	bool log = false;
 	int time = 4;
-	string dataPath = "../../data/data_motor.csv";
+	string dataPath = "../../data/data_test.csv";
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -58,22 +58,23 @@ int main()
 
 		if (writeData)
 		{
-			/*ofstream out(dataPath);
+			ofstream out(dataPath);
 			if (!out)
 			{
 				cout << "Couldn't open file." << endl;
 				return 1;
 			}
 
-			out << "x"
-					<< ","
-					<< "y"
-					<< ","
-					<< "z" << endl;*/
+			out << "x" << endl;
+					//<< ","
+					//<< "y"
+					//<< ","
+					//<< "z" << endl;
 
 			for (auto &sample : samples)
 			{
 				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+				out << sample.getX();
 				double temp = sample.getX();
 				udpsocket.send(&temp, &clientAddress, &len);
 			}
