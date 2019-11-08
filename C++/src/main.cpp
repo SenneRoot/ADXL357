@@ -74,7 +74,7 @@ int main()
 			for (auto &sample : samples)
 			{
 				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
-				out << sample.getX() << endl;
+				//out << sample.getX() << endl;
 				double tempX = sample.getX();
 				double tempY = sample.getX();
 				double tempZ = sample.getX();
