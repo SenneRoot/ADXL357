@@ -31,5 +31,5 @@ void udpSocket::receive(uint8_t *buf, struct sockaddr *clientAddress , uint32_t 
 
 void udpSocket::send(const uint8_t *buf, const struct sockaddr *clientAddress , uint32_t *len)
 {
-	sendto(m_sockfd, buf, *len, MSG_CONFIRM, clientAddress, len);
+	sendto(m_sockfd, buf, *len, MSG_CONFIRM, clientAddress, *len);
 }
