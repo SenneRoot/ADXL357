@@ -74,7 +74,7 @@ int main()
 			for (auto &sample : samples)
 			{
 				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
-				out << sample.getX();
+				out << sample.getX() << endl;
 				double temp = sample.getX();
 				udpsocket.send(&temp, &clientAddress, &len);
 			}
