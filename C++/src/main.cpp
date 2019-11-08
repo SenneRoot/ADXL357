@@ -18,7 +18,7 @@ int main()
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool writeData = false;
-	bool log = true;
+	bool log = false;
 	int time = 4;
 	string dataPath = "../../data/data_motor.csv";
 
@@ -31,7 +31,7 @@ int main()
 	while (1)
 	{
 		udpsocket.receive(&message[0], &clientAddress, &len);
-		printf("%s", message);
+		cout << message << endl;
 		udpsocket.send(&message[0], &clientAddress, &len);
 
 

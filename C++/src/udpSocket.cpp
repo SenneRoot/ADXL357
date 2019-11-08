@@ -17,7 +17,7 @@ udpSocket::udpSocket(int port)
         exit(EXIT_FAILURE);
     }
 
-		printf("Connected to udp on port: %d", port);
+		printf("Connected to udp on port: %d\n", port);
 }
 
 udpSocket::~udpSocket()
