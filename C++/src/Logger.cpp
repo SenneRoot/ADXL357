@@ -19,7 +19,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 
 	if(!samples->empty())
 		{
-			samples.clear();
+			samples->clear();
 		}
 		
 	m_adxl357->stop();
