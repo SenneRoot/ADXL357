@@ -38,7 +38,7 @@ int main()
 		if(!message.compare("log"))
 		{
 			log = true;
-			udpsocket.send("logging data", &clientAddress, &len);
+			udpsocket.send("logging data\n", &clientAddress, &len);
 		}
 		else
 			log = false;
