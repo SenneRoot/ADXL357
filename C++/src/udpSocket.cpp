@@ -16,6 +16,8 @@ udpSocket::udpSocket(int port)
         perror("bind failed");
         exit(EXIT_FAILURE);
     }
+
+		printf("Connected to udp on port: %d", port);
 }
 
 udpSocket::~udpSocket()
@@ -23,13 +25,13 @@ udpSocket::~udpSocket()
 
 }
 
-void udpSocket::receive(uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
+void udpSocket::receive(char *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, clientAddress, len);
+	uint n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, clientAddress, *len);
 	buf[n] = '\0';
 }
 
-void udpSocket::send(const uint8_t *buf, const struct sockaddr *clientAddress , uint32_t *len)
+void udpSocket::send(const char *buf, const struct sockaddr *clientAddress , uint32_t *len)
 {
 	sendto(m_sockfd, buf, *len, MSG_CONFIRM, clientAddress, *len);
 }
