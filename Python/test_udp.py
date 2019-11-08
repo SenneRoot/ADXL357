@@ -67,7 +67,8 @@ def fftPlot(sig, dt=None, block=False, plot=True, title = 'Analytic FFT plot'):
 
     return sigFFTPos, freqAxisPos
 
-
+def list_slice(S, step, start):
+    return [S[i+start::step] for i in range(step)]
 
 if __name__ == "__main__":
     target_host = "10.219.2.89"
@@ -90,7 +91,18 @@ if __name__ == "__main__":
 
     dt = 1 / freq
     datalist.pop(0)
-    sig = np.asarray(datalist)
-    fftPlot(sig, dt=dt, block=True, title = 'x')
+
+    x = list_slice(datalist, 3, 0)
+    y = list_slice(datalist, 3, 1)
+    z = list_slice(datalist, 3, 2)
+
+
+    sigX = np.asarray(x)
+    sigY = np.asarray(y)
+    sigZ = np.asarray(z)
+
+    fftPlot(sigX, dt=dt, block=False, title = 'x')
+    fftPlot(sigY, dt=dt, block=False, title = 'y')
+    fftPlot(sigZ, dt=dt, block=True, title = 'z')
 
 

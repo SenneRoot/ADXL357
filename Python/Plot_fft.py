@@ -69,9 +69,9 @@ def fftPlot(sig, dt=None, block=False, plot=True, title = 'Analytic FFT plot'):
 
 if __name__ == "__main__":
     # Import csv file
-    read_and_plot('x')
-    read_and_plot('y')
-    read_and_plot('z', block = True)
+    #read_and_plot('x')
+    #read_and_plot('y')
+    read_and_plot('x', block = True)
     
 
 

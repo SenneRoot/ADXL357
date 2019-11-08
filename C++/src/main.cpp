@@ -75,8 +75,12 @@ int main()
 			{
 				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 				out << sample.getX() << endl;
-				double temp = sample.getX();
-				udpsocket.send(&temp, &clientAddress, &len);
+				double tempX = sample.getX();
+				double tempY = sample.getX();
+				double tempZ = sample.getX();
+				udpsocket.send(&tempX, &clientAddress, &len);
+				udpsocket.send(&tempY, &clientAddress, &len);
+				udpsocket.send(&tempZ, &clientAddress, &len);
 			}
 
 			udpsocket.send("done", &clientAddress, &len);
