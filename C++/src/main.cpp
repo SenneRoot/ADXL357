@@ -11,7 +11,6 @@ int main()
 {
 	udpSocket udpsocket(8080);
 
-	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool writeData = false;
 	bool log = false;
@@ -26,6 +25,7 @@ int main()
 
 	while (1)
 	{
+		vector<Sample> samples;
 		char buf[MAXLINE];
 		struct sockaddr clientAddress;
 		uint len;
