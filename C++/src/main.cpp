@@ -32,8 +32,9 @@ int main()
 
 		udpsocket.receive(buf, &clientAddress, &len);
 		std::string message(buf);
-		printf("%s", buf);
-		//cout << message << endl;
+		//printf("%s", buf);
+		message.pop_back();
+		cout << message << endl;
 
 		if(!message.compare("log"))
 		{
