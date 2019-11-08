@@ -29,7 +29,7 @@ void udpSocket::receive(uint8_t *buf, struct sockaddr *clientAddress , uint32_t 
 	buf[n] = '\0';
 }
 
-void udpSocket::send(const uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
+void udpSocket::send(const uint8_t *buf, const struct sockaddr *clientAddress , uint32_t *len)
 {
-	sendto(m_sockfd, buf, MSG_CONFIRM, (const struct sockaddr *) &clientAddress, len);
+	sendto(m_sockfd, buf, *len, MSG_CONFIRM, clientAddress, len);
 }
