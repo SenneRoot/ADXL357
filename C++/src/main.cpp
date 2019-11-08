@@ -9,8 +9,8 @@ int main()
 
 	while(1)
 	{
-		udpSocket.receive(buf, &clientAddress, len);
-		udpSocket.send(buf, &clientAddress, len);
+		udpsocket.receive(buf, &clientAddress, len);
+		udpsocket.send(buf, &clientAddress, len);
 	}
 }
 
