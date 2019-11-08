@@ -3,7 +3,7 @@
 int main()
 {
 	udpSocket udpsocket(8080);
-	uint8_t buf[MAXLINE];
+	char buf[MAXLINE];
 	struct sockaddr clientAddress;
 	uint len;
 
