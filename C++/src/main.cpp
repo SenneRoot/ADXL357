@@ -10,7 +10,7 @@
 int main()
 {
 	udpSocket udpsocket(8080);
-	std::string message[MAXLINE];
+	std::string message;
 	struct sockaddr clientAddress;
 	const char *hello = "Hello from server";
 	uint len;
