@@ -3,7 +3,7 @@
 udpSocket::udpSocket(int port)
 {
 	if ( (m_sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0 ) {
-        perror("socket creation failed");
+      	perror("socket creation failed");
         exit(EXIT_FAILURE);
     }
 
@@ -11,8 +11,7 @@ udpSocket::udpSocket(int port)
     m_servaddr.sin_addr.s_addr = INADDR_ANY;
     m_servaddr.sin_port = htons(port);
 
-		if ( bind(sockfd, (const struct sockaddr *)&servaddr,
-            sizeof(servaddr)) < 0 )
+		if ( bind(m_sockfd, (const struct sockaddr *) &m_servaddr, sizeof(servaddr)) < 0 )
     {
         perror("bind failed");
         exit(EXIT_FAILURE);
@@ -26,11 +25,11 @@ udpSocket::~udpSocket()
 
 void udpSocket::receive(uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, clientAddress, len);
+	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, (const struct sockaddr *) clientAddress, len);
 	buf[n] = '\0';
 }
 
 void udpSocket::send(const uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	sendto(m_sockfd, buf, MSG_CONFIRM, clientAddress, len);
+	sendto(m_sockfd, buf, MSG_CONFIRM, (const struct sockaddr *) clientAddress, len);
 }
