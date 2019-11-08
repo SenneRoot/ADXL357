@@ -10,10 +10,6 @@
 int main()
 {
 	udpSocket udpsocket(8080);
-	char buf[MAXLINE];
-	struct sockaddr clientAddress;
-	const char *hello = "Hello from server";
-	uint len;
 
 	vector<Sample> samples;
 	ADXL357 adxl357;
@@ -30,7 +26,10 @@ int main()
 
 	while (1)
 	{
-		buf = "";
+		char buf[MAXLINE];
+		struct sockaddr clientAddress;
+		uint len;
+
 		udpsocket.receive(buf, &clientAddress, &len);
 		std::string message(buf);
 		cout << message << endl;
