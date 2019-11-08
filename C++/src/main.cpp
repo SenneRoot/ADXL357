@@ -11,7 +11,7 @@ int main()
 	while(1)
 	{
 		udpsocket.receive(buf, &clientAddress, &len);
-		printf("%d", buf[0]);
+		printf("%s", buf);
 
 		udpsocket.send(hello, &clientAddress, &len);
 	}
