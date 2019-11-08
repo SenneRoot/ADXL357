@@ -79,7 +79,7 @@ int main()
 				udpsocket.send(&temp, &clientAddress, &len);
 			}
 
-			udpSocket.send("done", &clientAddress, &len);
+			udpsocket.send("done", &clientAddress, &len);
 		}
 	}
 }
