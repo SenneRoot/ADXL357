@@ -30,6 +30,7 @@ int main()
 
 	while (1)
 	{
+		buf = "";
 		udpsocket.receive(buf, &clientAddress, &len);
 		std::string message(buf);
 		cout << message << endl;
@@ -68,6 +69,7 @@ int main()
 					<< "y"
 					<< ","
 					<< "z" << endl;
+
 			for (auto &sample : samples)
 			{
 				out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
