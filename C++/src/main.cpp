@@ -1,25 +1,5 @@
 #include "udpSocket.hpp"
-
-int main()
-{
-	udpSocket udpsocket(8080);
-	char buf[MAXLINE];
-	struct sockaddr clientAddress;
-	const char *hello = "Hello from server";
-	uint len;
-
-	while(1)
-	{
-		udpsocket.receive(buf, &clientAddress, &len);
-		printf("%s, length: %d", buf, len);
-
-		udpsocket.send(buf, &clientAddress, &len);
-	}
-}
-
-
-
-/*#include <iostream>
+#include <iostream>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
@@ -29,6 +9,12 @@ int main()
 
 int main()
 {
+	udpSocket udpsocket(8080);
+	std::string buf[MAXLINE];
+	struct sockaddr clientAddress;
+	const char *hello = "Hello from server";
+	uint len;
+
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool writeData = false;
@@ -42,33 +28,43 @@ int main()
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
 	adxl357.dumpInfo();
 
-	adxl357.start();
-
-	if(log)
+	while (1)
 	{
-		Logger logger(&adxl357);
-		clock_t begin = clock();
-		cout << "Starting Logging dat for " << time << " seconds to gather " << 4000*time  << " samples" << endl;
-		logger.log(&samples, time, true);
-		clock_t end = clock();
-    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-		cout << "Resulting log: " << endl;
-		cout << "Number of samples: " << samples.size() << " Time: " << elapsed_secs << endl;
-	}
+		udpsocket.receive(&message[0], &clientAddress, &len);
+		printf("%s", message);
+		udpsocket.send(&message[0], &clientAddress, &len);
 
-	if (writeData)
-	{
-		ofstream out(dataPath);
-		if(!out)
-    {
-      cout << "Couldn't open file."  << endl;
-			return 1;
-		}
 
-		out << "x" << "," << "y" << "," << "z" << endl;
-		for (auto& sample : samples)
+		if (log)
 		{
-			out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+			Logger logger(&adxl357);
+			clock_t begin = clock();
+			cout << "Starting Logging dat for " << time << " seconds to gather " << 4000 * time << " samples" << endl;
+			logger.log(&samples, time, true);
+			clock_t end = clock();
+			double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+			cout << "Resulting log: " << endl;
+			cout << "Number of samples: " << samples.size() << " Time: " << elapsed_secs << endl;
+		}
+
+		if (writeData)
+		{
+			ofstream out(dataPath);
+			if (!out)
+			{
+				cout << "Couldn't open file." << endl;
+				return 1;
+			}
+
+			out << "x"
+					<< ","
+					<< "y"
+					<< ","
+					<< "z" << endl;
+			for (auto &sample : samples)
+			{
+				out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
+			}
 		}
 	}
-}*/
+}
