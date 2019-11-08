@@ -11,7 +11,7 @@ udpSocket::udpSocket(int port)
     m_servaddr.sin_addr.s_addr = INADDR_ANY;
     m_servaddr.sin_port = htons(port);
 
-		if ( bind(m_sockfd, (const struct sockaddr *) &m_servaddr, sizeof(servaddr)) < 0 )
+		if ( bind(m_sockfd, (const struct sockaddr *) &m_servaddr, sizeof(m_servaddr)) < 0 )
     {
         perror("bind failed");
         exit(EXIT_FAILURE);
@@ -25,11 +25,11 @@ udpSocket::~udpSocket()
 
 void udpSocket::receive(uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, (const struct sockaddr *) clientAddress, len);
+	int n = recvfrom(m_sockfd, buf, MAXLINE, MSG_WAITALL, (struct sockaddr *) &clientAddress, len);
 	buf[n] = '\0';
 }
 
 void udpSocket::send(const uint8_t *buf, struct sockaddr *clientAddress , uint32_t *len)
 {
-	sendto(m_sockfd, buf, MSG_CONFIRM, (const struct sockaddr *) clientAddress, len);
+	sendto(m_sockfd, buf, MSG_CONFIRM, (const struct sockaddr *) &clientAddress, len);
 }
