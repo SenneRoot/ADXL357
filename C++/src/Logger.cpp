@@ -17,6 +17,11 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 	if(m_adxl357 == nullptr)
 		return;
 
+	if(!samples->empty())
+		{
+			samples.clear();
+		}
+		
 	m_adxl357->stop();
 	m_adxl357->emptyFifo();
 
