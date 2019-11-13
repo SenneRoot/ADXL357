@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-import<thread>
+#include <thread>
 
 
 int main()
