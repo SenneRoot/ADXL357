@@ -86,7 +86,6 @@ if __name__ == "__main__":
     while (data.decode('utf-8') != 'done'):
         if data.decode('utf-8') is not '\n':
             datalist.append(data.decode('utf-8'))
-            print(data.decode('utf-8'))
         data, addr = client.recvfrom(4096)
 
     dt = 1 / freq

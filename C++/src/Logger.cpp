@@ -21,7 +21,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 		{
 			samples->clear();
 		}
-		
+
 	m_adxl357->stop();
 	m_adxl357->emptyFifo();
 
@@ -52,4 +52,11 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
 	}
+}
+
+
+
+void log(vector<Sample> *samples, bool convert = true)
+{
+	
 }

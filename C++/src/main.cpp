@@ -6,9 +6,12 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+import<thread>
+
 
 int main()
 {
+	std::thread thread_object(callable);
 	udpSocket udpsocket(8080);
 	vector<Sample> samples;
 	ADXL357 adxl357;
