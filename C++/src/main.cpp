@@ -51,7 +51,7 @@ int main()
 			Logger logger(&adxl357);
 			clock_t begin = clock();
 			cout << "Starting Logging dat for " << time << " seconds to gather " << 4000 * time << " samples" << endl;
-			std::thread thread_object(&Logger::log, this ,&samples, time, true);
+			std::thread thread_object(&Logger::log, &logger ,&samples, time, true);
 			//logger.log(&samples, time, true);
 			clock_t end = clock();
 			double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
