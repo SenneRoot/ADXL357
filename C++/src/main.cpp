@@ -11,7 +11,6 @@
 
 int main()
 {
-	std::thread thread_object(callable);
 	udpSocket udpsocket(8080);
 	vector<Sample> samples;
 	ADXL357 adxl357;
@@ -52,7 +51,8 @@ int main()
 			Logger logger(&adxl357);
 			clock_t begin = clock();
 			cout << "Starting Logging dat for " << time << " seconds to gather " << 4000 * time << " samples" << endl;
-			logger.log(&samples, time, true);
+			std::thread thread_object(logger.log, &samples, time, true);
+			//logger.log(&samples, time, true);
 			clock_t end = clock();
 			double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 			cout << "Resulting log: " << endl;
