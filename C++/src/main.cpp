@@ -29,7 +29,7 @@ int main()
 
 	while (1)
 	{
-		char buf[MAXLINE];
+		/*char buf[MAXLINE];
 		struct sockaddr clientAddress;
 		uint len;
 
@@ -46,7 +46,7 @@ int main()
 		}
 		else
 			log = false;
-
+		*/
 
 		if (log)
 		{
