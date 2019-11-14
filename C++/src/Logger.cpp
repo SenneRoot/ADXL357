@@ -53,3 +53,28 @@ void Logger::log(vector<Sample> &samples, int m_time, bool convert)
 		}
 	}
 }
+
+void Logger::logContinuousTCP(tcpSocket *tcpsocket)
+{
+	if(m_adxl357 == nullptr)
+		return;
+
+	m_adxl357->stop();
+	m_adxl357->emptyFifo();
+
+	m_adxl357->start();
+
+	while(true)
+	{
+		if (m_adxl357->fifoOverRange())
+		{
+			cout << "The FIFO overrange bit was set. That means some data was lost." << endl;
+		}
+
+		Sample sample;
+		m_adxl357->getFifoSample(&sample);
+		sample.convert();
+		double x = sample.getX();
+		tcpsocket->send(&x);
+	}
+}

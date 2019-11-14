@@ -37,12 +37,20 @@ tcpSocket::~tcpSocket()
 	close(m_sockfd);
 }
 
-void tcpSocket::receive(char *buf, uint32_t *len)
+void tcpSocket::receive(char *buf)
 {
 	read(m_connfd, buf, sizeof(buf));
 }
 
-void tcpSocket::send(const char *buf, uint32_t *len)
+void tcpSocket::send(const char *buf)
 {
 	write(m_connfd, buf, sizeof(buf));
+}
+
+void tcpSocket::send(double *buf)
+{
+	char buffer[MAXLINE];
+	sprintf(buffer, "%f", *buf);
+	send(buffer);
+	send("\n");
 }

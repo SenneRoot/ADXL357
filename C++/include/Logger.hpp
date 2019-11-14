@@ -11,6 +11,7 @@ class Logger
 	~Logger();
 
 	void log(vector<Sample> &samples, int m_time = 1, bool convert = true);
+	void logContinuousTCP(tcpSocket *tcpsocket);
 
 	private:
 	ADXL357 *m_adxl357;
