@@ -25,7 +25,7 @@ tcpSocket::tcpSocket(int port)
         //exit(0);
     }
 
-	m_connfd = accept(m_sockfd, (const struct sockaddr *) &m_cliaddr, &len);
+	m_connfd = accept(m_sockfd, (const struct sockaddr *) &m_cliaddr, sizeof(m_cliaddr));
 
 	if (m_connfd < 0)
 		printf("server acccept failed...\n");
