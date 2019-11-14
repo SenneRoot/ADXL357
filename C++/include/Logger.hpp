@@ -14,10 +14,6 @@ class Logger
 
 	private:
 	ADXL357 *m_adxl357;
-
-
-
-
 };
 
 
