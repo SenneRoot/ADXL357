@@ -13,7 +13,7 @@ tcpSocket::tcpSocket(int port)
 	m_servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	m_servaddr.sin_port = htons(port);
 
-	if ((bind(m_sockfd, (SA*)&m_servaddr, sizeof(m_servaddr))) != 0)
+	if ((bind(m_sockfd, (const struct sockaddr *) &m_servaddr, sizeof(m_servaddr))) != 0)
 		{
         printf("socket bind failed...\n");
         //exit(0);
@@ -25,7 +25,7 @@ tcpSocket::tcpSocket(int port)
         //exit(0);
     }
 
-	m_connfd = accept(m_sockfd, (SA*)&m_cliaddr, &len);
+	m_connfd = accept(m_sockfd, (const struct sockaddr *) &m_cliaddr, &len);
 
 	if (m_connfd < 0)
 		printf("server acccept failed...\n");
