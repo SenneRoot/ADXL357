@@ -24,7 +24,7 @@ tcpSocket::tcpSocket(int port)
         printf("Listen failed...\n");
         //exit(0);
     }
-	uint len = sizeof(m_cliaddr)
+	uint len = sizeof(m_cliaddr);
 	m_connfd = accept(m_sockfd, (struct sockaddr *) &m_cliaddr, &len);
 
 	if (m_connfd < 0)
@@ -39,10 +39,10 @@ tcpSocket::~tcpSocket()
 
 void tcpSocket::receive(char *buf, uint32_t *len)
 {
-	read(m_sockfd, buf, sizeof(buf));
+	read(m_connfd, buf, sizeof(buf));
 }
 
 void tcpSocket::send(const char *buf, uint32_t *len)
 {
-	write(m_sockfd, buf, sizeof(buf));
+	write(m_connfd, buf, sizeof(buf));
 }
