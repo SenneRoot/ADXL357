@@ -17,7 +17,7 @@ datalist = []
 
 def log_data():
     while True:
-        data, addr = client.recvfrom(4069)
+        data, addr = client.recvfrom(10)
         if data.decode('utf-8') is not '\n':
             print("appending data")
             datalist.append(data.decode('utf-8'))
