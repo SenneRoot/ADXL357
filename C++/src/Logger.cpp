@@ -75,6 +75,7 @@ void Logger::logContinuousTCP(tcpSocket *tcpsocket)
 		m_adxl357->getFifoSample(&sample);
 		sample.convertSample(m_adxl357->getSensitivityFactor);
 		double x = sample.getX();
+		printf("sending %f", x);
 		tcpsocket->send(&x);
 	}
 }
