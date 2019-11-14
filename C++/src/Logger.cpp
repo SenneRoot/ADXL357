@@ -53,10 +53,3 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 		}
 	}
 }
-
-
-
-void log(vector<Sample> *samples, bool convert = true)
-{
-	
-}
