@@ -42,7 +42,7 @@ void tcpSocket::receive(char *buf, uint32_t *len)
 	read(m_sockfd, buf, sizeof(buf));
 }
 
-void tcpSocket::send(char *buf, uint32_t *len)
+void tcpSocket::send(const char *buf, uint32_t *len)
 {
 	write(m_sockfd, buf, sizeof(buf));
 }
