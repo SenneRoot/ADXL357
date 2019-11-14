@@ -7,11 +7,13 @@
 #include <fstream>
 #include <ctime>
 #include <thread>
+#include "tcpSocket.hpp"
 
 
 int main()
 {
-	udpSocket udpsocket(8080);
+	//udpSocket udpsocket(8080);
+	tcpSocket tcpsocket(8081);
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool writeData = true;
@@ -73,7 +75,7 @@ int main()
 					//<< ","
 					//<< "z" << endl;*/
 
-			for (auto &sample : samples)
+			/*for (auto &sample : samples)
 			{
 				//out << sample.getX() << "," << sample.getY() << "," << sample.getZ() << endl;
 				//out << sample.getX() << endl;
@@ -85,7 +87,7 @@ int main()
 				udpsocket.send(&Z, &clientAddress, &len);
 			}
 
-			udpsocket.send("done", &clientAddress, &len);
+			udpsocket.send("done", &clientAddress, &len);*/
 		}
 	}
 }
