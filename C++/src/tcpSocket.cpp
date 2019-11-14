@@ -24,8 +24,8 @@ tcpSocket::tcpSocket(int port)
         printf("Listen failed...\n");
         //exit(0);
     }
-
-	m_connfd = accept(m_sockfd, (struct sockaddr *) &m_cliaddr, &(sizeof(m_cliaddr)));
+	uint len = sizeof(m_cliaddr)
+	m_connfd = accept(m_sockfd, (struct sockaddr *) &m_cliaddr, &len);
 
 	if (m_connfd < 0)
 		printf("server acccept failed...\n");
