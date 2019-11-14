@@ -17,7 +17,7 @@ int main()
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool writeData = true;
-	bool log = false;
+	bool log = true;
 	int time = 4;
 	string dataPath = "../data/data_test.csv";
 
