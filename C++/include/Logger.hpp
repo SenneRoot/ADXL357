@@ -3,6 +3,7 @@
 
 #include "Sample.hpp"
 #include "ADXL357.hpp"
+#include "tcpSocket.hpp"
 
 class Logger
 {
