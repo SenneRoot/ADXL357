@@ -47,7 +47,7 @@ void Logger::log(vector<Sample> &samples, int m_time, bool convert)
 
 	if(convert)
 	{
-		for(auto &sample : *samples)
+		for(auto &sample : samples)
 		{
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
