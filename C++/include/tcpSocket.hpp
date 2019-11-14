@@ -1,5 +1,5 @@
-#ifndef _UDPSOCKET_HPP_
-#define _UDPSOCKET_HPP_
+#ifndef _TCPSOCKET_HPP_
+#define _TCPSOCKET_HPP_
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
