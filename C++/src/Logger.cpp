@@ -83,7 +83,7 @@ void Logger::logContinuousTCP(tcpSocket *tcpsocket)
 	}
 }
 
-void Logger::logContinuousUDP(udpSocket *udpsocket, const struct sockaddr *clientAddress)
+void Logger::logContinuousUDP(udpSocket *udpsocket, const struct sockaddr *clientAddress, uint32_t *len)
 {
 	if(m_adxl357 == nullptr)
 		return;
@@ -91,7 +91,6 @@ void Logger::logContinuousUDP(udpSocket *udpsocket, const struct sockaddr *clien
 	m_adxl357->stop();
 	m_adxl357->emptyFifo();
 	int samples_sent = 0;
-	uint len;
 
 	m_adxl357->start();
 
@@ -109,6 +108,6 @@ void Logger::logContinuousUDP(udpSocket *udpsocket, const struct sockaddr *clien
 		double x = sample.getX();
 		printf("sending %f \n", x);
 		printf("Number of samples sent: %d \n", samples_sent++);
-		udpsocket->send(&x, clientAddress, &len);
+		udpsocket->send(&x, clientAddress, len);
 	}
 }

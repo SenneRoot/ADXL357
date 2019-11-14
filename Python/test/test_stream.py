@@ -17,15 +17,16 @@ datalist = []
 
 def log_data():
     while True:
-        data, addr = client.recvfrom(4096)
+        data, addr = client.recvfrom(4069)
         if data.decode('utf-8') is not '\n':
+            print("appending data")
             datalist.append(data.decode('utf-8'))
 
 if __name__ == "__main__":
     thread = threading.Thread(target=log_data)
     thread.start()
     
-    time.sleep(2)
+    #time.sleep(2)
     fig, ax = plt.subplots()
 
     x = np.arange(0, 2 * CHUNK, 2)
@@ -35,23 +36,6 @@ if __name__ == "__main__":
         show_data = datalist[:CHUNK]
         datalist = datalist[CHUNK:]
 
-        line.set_ydata(show_data)
-        fig.canvas.draw()
-        fig.canvas.flush_events()
-
-
- 
-
-    # create a socket object
-    
-
-    # send some data
-    
-
-    
-    # receive some data
-    data, addr = client.recvfrom(4096)
-    while (data.decode('utf-8') != 'done'):
-        if data.decode('utf-8') is not '\n':
-            datalist.append(data.decode('utf-8'))
-        data, addr = client.recvfrom(4096)
+        #line.set_ydata(show_data)
+        #fig.canvas.draw()
+        #fig.canvas.flush_events()

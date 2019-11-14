@@ -14,7 +14,7 @@ class Logger
 
 	void log(vector<Sample> &samples, int m_time = 1, bool convert = true);
 	void logContinuousTCP(tcpSocket *tcpsocket);
-	void logContinuousUDP(udpSocket *udpsocket, const struct sockaddr *clientAddress);
+	void logContinuousUDP(udpSocket *udpsocket, const struct sockaddr *clientAddress, , uint32_t *len);
 
 	private:
 	ADXL357 *m_adxl357;
