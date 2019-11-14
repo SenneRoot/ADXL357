@@ -12,14 +12,14 @@ Logger::~Logger()
 		//delete m_adxl357;
 }
 
-void Logger::log(vector<Sample> *samples, int m_time, bool convert)
+void Logger::log(vector<Sample> &samples, int m_time, bool convert)
 {
 	if(m_adxl357 == nullptr)
 		return;
 
-	if(!samples->empty())
+	if(!samples.empty())
 		{
-			samples->clear();
+			samples.clear();
 		}
 
 	m_adxl357->stop();
@@ -29,7 +29,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 	//double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
-	while(samples->size() < nSamples)
+	while(samples.size() < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())
 		{
@@ -40,7 +40,7 @@ void Logger::log(vector<Sample> *samples, int m_time, bool convert)
 		{
 			vector<Sample> temp;
 			m_adxl357->getFifo(&temp);
-			samples->insert(samples->end(), temp.begin(), temp.end());
+			samples.insert(samples.end(), temp.begin(), temp.end());
 		}
 	}
 	m_adxl357->stop();
