@@ -73,7 +73,7 @@ void Logger::logContinuousTCP(tcpSocket *tcpsocket)
 
 		Sample sample;
 		m_adxl357->getFifoSample(&sample);
-		sample.convert();
+		sample.convertSample();
 		double x = sample.getX();
 		tcpsocket->send(&x);
 	}
