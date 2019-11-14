@@ -17,9 +17,9 @@ class tcpSocket
 	tcpSocket(int port);
 	~tcpSocket();
 
-	void receive(char *buf, uint32_t *len);
-	void send(const char *buf, uint32_t *len);
-	void send(double *buf, uint32_t *len);
+	void receive(char *buf);
+	void send(const char *buf);
+	void send(double *buf);
 
 	private:
 	int m_sockfd;
