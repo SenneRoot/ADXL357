@@ -18,6 +18,6 @@ if __name__ == "__main__":
     thread = threading.Thread(target=log_data)
     thread.start()
 
-    while true:
+    while True:
         print (len(data))
         time.sleep(1)

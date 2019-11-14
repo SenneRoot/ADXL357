@@ -61,11 +61,13 @@ void Logger::logContinuousTCP(tcpSocket *tcpsocket)
 
 	m_adxl357->stop();
 	m_adxl357->emptyFifo();
+	int samples_sent = 0;
 
 	m_adxl357->start();
 
 	while(true)
 	{
+
 		if (m_adxl357->fifoOverRange())
 		{
 			cout << "The FIFO overrange bit was set. That means some data was lost." << endl;
@@ -75,7 +77,8 @@ void Logger::logContinuousTCP(tcpSocket *tcpsocket)
 		m_adxl357->getFifoSample(&sample);
 		sample.convertSample(m_adxl357->getSensitivityFactor());
 		double x = sample.getX();
-		printf("sending %f", x);
+		printf("sending %f \n", x);
+		printf("Number of samples sent: %d \n", samples_sent++);
 		tcpsocket->send(&x);
 	}
 }
