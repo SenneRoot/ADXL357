@@ -27,6 +27,7 @@ int main()
 		{
 			log = true;
 			fwrite(&buf, 1, 1, stdout);
+			fflush(stdout);
 		}
 
 		if (log)
