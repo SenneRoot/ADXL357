@@ -29,8 +29,10 @@ int main()
 	while (1)
 	{
 		//wait for message from python parent proc to start logging
-		std::string message;
-		getline(cin, message);
+		char buf[MAXLINE];
+		fread(&buf, 1, 3, stdin);
+		std::string message(buf);
+		
 		if(!message.compare("log"))
 		{
 			log = true;

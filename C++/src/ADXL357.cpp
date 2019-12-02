@@ -76,7 +76,6 @@ void ADXL357::stop()
 void ADXL357::dumpInfo()
 {
 	printf("ADXL355 SPI Info Dump\n");
-	cout << "ADXL355 SPI Info Dump\n";
   printf("========================================\n");
 	uint8_t buf[64];
 	//uint8_t adid, memsid, devid;
