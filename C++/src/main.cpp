@@ -2,15 +2,11 @@
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
-//#include <iostream>
-//#include <fstream>
-//#include <ctime>
-//#include <thread>
 #include "stdio.h"
 
 
 int main()
-{}
+{
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool log = false;
@@ -27,7 +23,7 @@ int main()
 		char buf[MAXLINE];
 		fread(&buf, 1, 1, stdin);
 
-		if(!(strcmp(buf, "log"))
+		if(!strcmp(buf, 'log'))
 		{
 			log = true;
 			printf("logging");
