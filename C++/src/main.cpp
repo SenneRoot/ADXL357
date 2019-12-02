@@ -23,11 +23,10 @@ int main()
 		char buf[MAXLINE];
 		fread(&buf, 1, 1, stdin);
 
-		if(!strcmp(buf, 'log'))
+		if(!strcmp(buf, "log"))
 		{
 			log = true;
-			printf("logging");
-			fflush(stdout);
+			fwrite(&buf, 1, 1, stdout);
 		}
 
 		if (log)
