@@ -41,7 +41,7 @@ int main()
 		if (log)
 		{
 			Logger logger(&adxl357);
-			logger.log(&samples, time);
+			logger.log(&samples, time, true);
 		}
 	}
 }
