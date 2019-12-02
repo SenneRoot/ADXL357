@@ -10,7 +10,7 @@
 
 
 int main()
-{
+{}
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool log = false;
@@ -20,11 +20,10 @@ int main()
 	adxl357.stop();
 	adxl357.setRange(SET_RANGE_10G);
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
-	adxl357.dumpInfo();
+	//adxl357.dumpInfo();
 
 	while (1)
 	{
-		//wait for message from python parent proc to start logging
 		char buf[MAXLINE];
 		fread(&buf, 1, 1, stdin);
 
@@ -40,15 +39,6 @@ int main()
 			Logger logger(&adxl357);
 			logger.log(samples, time, true);
 		}
-	}
-    /*while (1){
-        char buf;
-        fread(&buf, 1, 1, stdin);
-        if ('q' == buf)
-            break;
-        fwrite(&buf, 1, 1, stdout);
-        fflush(stdout);
-    }*/
-    return 0;
+
 	}
 }
