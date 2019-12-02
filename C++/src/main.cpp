@@ -41,7 +41,6 @@ int main()
 			logger.log(samples, time, true);
 		}
 	}*/
-	int main (int argc, char **argv) {
     for (;;) {
         char buf;
         fread(&buf, 1, 1, stdin);
@@ -51,5 +50,4 @@ int main()
         fflush(stdout);
     }
     return 0;
-	}
 }
