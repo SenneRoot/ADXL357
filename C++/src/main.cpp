@@ -34,6 +34,7 @@ int main()
 		if(!message.compare("log"))
 		{
 			log = true;
+			printf("logging")
 		}
 
 		if (log)
