@@ -31,7 +31,7 @@ int main()
 	{
 		//wait for message from python parent proc to start logging
 		std::string message;
-		std::getline(stdin, message);
+		getline(stdin, message);
 		if(!message.compare("log"))
 		{
 			log = true;
