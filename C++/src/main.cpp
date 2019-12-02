@@ -32,7 +32,7 @@ int main()
 		//wait for message from python parent proc to start logging
 		char* buf;
 		fread(buf, 1, 3, stdin);
-		std::string message(*buf)
+		std::string message(*buf);
 		if(!message.compare("log"))
 		{
 			log = true;
