@@ -1,13 +1,12 @@
-#include "udpSocket.hpp"
-#include <iostream>
+//#include <iostream>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
-#include <iostream>
-#include <fstream>
-#include <ctime>
-#include <thread>
-#include "tcpSocket.hpp"
+//#include <iostream>
+//#include <fstream>
+//#include <ctime>
+//#include <thread>
+#include "stdio.h"
 
 
 int main()
