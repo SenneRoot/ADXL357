@@ -4,7 +4,7 @@ proc = subprocess.Popen("../../C++/bin/ADXL357_Logger",
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE)
 
-proc.stdin.write('abc')
+proc.stdin.write('l')
 message = proc.stdout.read(3)
 print ("return message -> " + message + " written by python \n")
 proc.stdin.write('q')

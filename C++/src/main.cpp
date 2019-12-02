@@ -20,10 +20,10 @@ int main()
 
 	while (1)
 	{
-		char buf[MAXLINE];
+		char buf;
 		fread(&buf, 1, 1, stdin);
 
-		if(!strcmp(buf, "log"))
+		if(l == buf)
 		{
 			log = true;
 			fwrite(&buf, 1, 1, stdout);
