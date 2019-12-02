@@ -22,17 +22,17 @@ int main()
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
 	adxl357.dumpInfo();
 
-	/*while (1)
+	while (1)
 	{
 		//wait for message from python parent proc to start logging
 		char buf[MAXLINE];
 		fread(&buf, 1, 1, stdin);
-		std::string message(buf);
 
-		if(!message.compare("log"))
+		if(!(strcmp(buf, "log"))
 		{
 			log = true;
 			printf("logging");
+			fflush(stdout);
 		}
 
 		if (log)
@@ -40,14 +40,14 @@ int main()
 			Logger logger(&adxl357);
 			logger.log(samples, time, true);
 		}
-	}*/
-    for (;;) {
+	}
+    /*while (1){
         char buf;
         fread(&buf, 1, 1, stdin);
         if ('q' == buf)
             break;
         fwrite(&buf, 1, 1, stdout);
         fflush(stdout);
-    }
+    }*/
     return 0;
 }
