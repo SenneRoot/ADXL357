@@ -32,11 +32,11 @@ int main()
 		char buf[MAXLINE];
 		fread(&buf, 1, 3, stdin);
 		std::string message(buf);
-		
+
 		if(!message.compare("log"))
 		{
 			log = true;
-			printf("logging")
+			printf("logging");
 		}
 
 		if (log)
