@@ -23,6 +23,9 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 			m_adxl357->emptyFifo();
 		}
 
+	if(samples.empty())
+		m_adxl357->emptyFifo();
+
 	m_adxl357->stop();
 
 	size_t nSamples = m_time * m_adxl357->getRate();
