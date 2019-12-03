@@ -24,7 +24,7 @@ int main()
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool log = false;
-	int time = 4;
+	int time = 0.1;
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -38,10 +38,9 @@ int main()
 		if(!digitalRead(btn_pin))
 		{
 			usleep(1);
-			if(!digitalRead(btn_pin))
+			while(!digitalRead(btn_pin))
 			{
-				printf("logging samples");
-				logger.log(samples, time, true);
+				logger.log(samples, time, true, true);
 			}
 		}
 	}

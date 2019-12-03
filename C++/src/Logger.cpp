@@ -12,18 +12,18 @@ Logger::~Logger()
 		//delete m_adxl357;
 }
 
-void Logger::log(vector<Sample> &samples, int m_time, bool convert)
+void Logger::log(vector<Sample> &samples, int m_time, bool convert, bool appendSamples)
 {
 	if(m_adxl357 == nullptr)
 		return;
 
-	if(!samples.empty())
+	if(!samples.empty() && !appendSamples || samples.empty())
 		{
 			samples.clear();
+			m_adxl357->emptyFifo();
 		}
 
 	m_adxl357->stop();
-	m_adxl357->emptyFifo();
 
 	size_t nSamples = m_time * m_adxl357->getRate();
 	//double period = 1 / m_adxl357->getRate();
