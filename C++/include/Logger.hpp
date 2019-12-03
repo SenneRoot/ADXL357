@@ -12,7 +12,7 @@ class Logger
 	Logger(ADXL357 *adxl357);
 	~Logger();
 
-	void log(vector<Sample> &samples, int m_time = 1, bool convert = true, bool appendSamples = false);
+	void log(vector<Sample> &samples, double m_time = 1, bool convert = true, bool appendSamples = false);
 
 	private:
 	ADXL357 *m_adxl357;

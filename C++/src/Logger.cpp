@@ -12,7 +12,7 @@ Logger::~Logger()
 		//delete m_adxl357;
 }
 
-void Logger::log(vector<Sample> &samples, int m_time, bool convert, bool appendSamples)
+void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appendSamples)
 {
 	if(m_adxl357 == nullptr)
 		return;

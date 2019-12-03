@@ -24,7 +24,7 @@ int main()
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
-	int time = 0.1;
+	double time = 0.1;
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -47,7 +47,7 @@ int main()
 
 		if(logged)
 		{
-			printf("Logged samples, got %f samples", samples.size());
+			printf("Logged samples, got %d samples", samples.size());
 			logged = false;
 		}
 	}
