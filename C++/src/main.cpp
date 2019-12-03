@@ -3,10 +3,12 @@
 #include "Logger.hpp"
 #include "Sample.hpp"
 #include "stdio.h"
-
+##include <mqtt/client.h>
+#include <wiringPi.h>
 
 int main()
 {
+	wiringPiSetup();
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool log = false;
