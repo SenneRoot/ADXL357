@@ -5,6 +5,7 @@
 #include "stdio.h"
 //#include <mqtt/client.h>
 #include <wiringPi.h>
+#include <unistd.h>
 
 #define btn_pin 8
 
@@ -36,8 +37,12 @@ int main()
 		Logger logger(&adxl357);
 		if(!digitalRead(btn_pin))
 		{
-			printf("logging samples");
-			logger.log(samples, time, true);
+			usleep(1);
+			if(!digitalRead(btn_pin)
+			{
+				printf("logging samples");
+				logger.log(samples, time, true);
+			}
 		}
 	}
 }
