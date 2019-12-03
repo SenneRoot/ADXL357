@@ -38,7 +38,7 @@ int main()
 		if(!digitalRead(btn_pin))
 		{
 			usleep(1);
-			if(!digitalRead(btn_pin)
+			if(!digitalRead(btn_pin))
 			{
 				printf("logging samples");
 				logger.log(samples, time, true);
