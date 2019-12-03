@@ -41,9 +41,12 @@ int main()
 			usleep(1);
 			if(!digitalRead(btn_pin))
 			{
+				samples.clear();
 				while(!digitalRead(btn_pin))
 				{
 					logger.log(samples, time, true, true);
+					printf("\rLogging ---> %6d", samples.size());
+                                	fflush(stdout);
 				}
 				logged = true;
 			}
@@ -51,7 +54,7 @@ int main()
 
 		if(logged)
 		{
-			printf("Logged samples, got %d samples", samples.size());
+			printf("\nDone! logged %7d samples\n", samples.size());
 			logged = false;
 		}
 	}
