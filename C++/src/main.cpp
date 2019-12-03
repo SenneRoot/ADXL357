@@ -35,14 +35,18 @@ int main()
 	while (1)
 	{
 		Logger logger(&adxl357);
+		
 		if(!digitalRead(btn_pin))
 		{
 			usleep(1);
-			while(!digitalRead(btn_pin))
+			if(!digitalRead(btn_pin))
 			{
-				logger.log(samples, time, true, true);
+				while(!digitalRead(btn_pin))
+				{
+					logger.log(samples, time, true, true);
+				}
+				logged = true;
 			}
-			logged = true;
 		}
 
 		if(logged)
