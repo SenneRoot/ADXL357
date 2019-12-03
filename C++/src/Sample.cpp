@@ -96,9 +96,12 @@ bool Sample::getSampleData(double *x, double *y, double *z)
 
 void Sample::convertSample(double factor)
 {
-	m_X = convertTwoComp(m_rawX) * factor;
-	m_Y = convertTwoComp(m_rawY) * factor;
-	m_Z = convertTwoComp(m_rawZ) * factor;
+	if(!m_converted)
+	{
+		m_X = convertTwoComp(m_rawX) * factor;
+		m_Y = convertTwoComp(m_rawY) * factor;
+		m_Z = convertTwoComp(m_rawZ) * factor;
 
-	m_converted = true;
+		m_converted = true;
+	}
 }

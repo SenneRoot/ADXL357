@@ -26,10 +26,11 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	m_adxl357->stop();
 
 	size_t nSamples = m_time * m_adxl357->getRate();
+	size_t retrievedSamples = 0;
 	//double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
-	while(samples.size() < nSamples)
+	while(retrievedSamples < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())
 		{
@@ -40,6 +41,7 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 		{
 			vector<Sample> temp;
 			m_adxl357->getFifo(&temp);
+			retrievedSamples += temp.size();
 			samples.insert(samples.end(), temp.begin(), temp.end());
 		}
 	}
