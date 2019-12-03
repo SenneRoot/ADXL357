@@ -16,25 +16,10 @@ int main()
 	adxl357.stop();
 	adxl357.setRange(SET_RANGE_10G);
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
-	//adxl357.dumpInfo();
+	adxl357.dumpInfo();
 
 	while (1)
 	{
-		char buf;
-		fread(&buf, 1, 1, stdin);
-
-		if(l == buf)
-		{
-			log = true;
-			fwrite(&buf, 1, 1, stdout);
-			fflush(stdout);
-		}
-
-		if (log)
-		{
-			Logger logger(&adxl357);
-			logger.log(samples, time, true);
-		}
 
 	}
 }
