@@ -23,7 +23,7 @@ int main()
 	setupGPIO();
 	vector<Sample> samples;
 	ADXL357 adxl357;
-	bool log = false;
+	bool logged = false;
 	int time = 0.1;
 
 	//setup ADXL357 sensor
@@ -42,6 +42,13 @@ int main()
 			{
 				logger.log(samples, time, true, true);
 			}
+			logged = true;
+		}
+
+		if(logged)
+		{
+			printf("Logged samples, got %f samples", samples.size());
+			logged = false;
 		}
 	}
 }
