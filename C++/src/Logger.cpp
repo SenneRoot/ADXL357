@@ -37,7 +37,7 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	{
 		if (m_adxl357->fifoOverRange())
 		{
-			cout << "The FIFO overrange bit was set. That means some data was lost." << endl;
+			cout << "\nThe FIFO overrange bit was set. That means some data was lost." << endl;
 		}
 
 		if(m_adxl357->hasNewData())
