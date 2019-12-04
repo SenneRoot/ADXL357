@@ -17,6 +17,22 @@ void setupGPIO()
 		pullUpDnControl(btn_pin, PUD_UP);
 }
 
+bool read_btn(int btnPin)
+{
+	//debounce pin
+	if(!digitalRead(btn_pin))
+	{
+		usleep(1);
+		return !digitalRead(btn_pin)
+	}
+
+	if(digitalRead(btn_pin))
+	{
+		usleep(1);
+		return digitalRead(btn_pin)
+	}
+}
+
 
 int main()
 {
@@ -35,21 +51,19 @@ int main()
 	while (1)
 	{
 		Logger logger(&adxl357);
-		
-		if(!digitalRead(btn_pin))
+
+		if(!read_btn(btn_pin))
 		{
-			usleep(1);
-			if(!digitalRead(btn_pin))
+			samples.clear();
+
+			while(!digitalRead(btn_pin))
 			{
-				samples.clear();
-				while(!digitalRead(btn_pin))
-				{
-					logger.log(samples, time, true, true);
-					printf("\rLogging ---> %6d", samples.size());
-                                	fflush(stdout);
-				}
-				logged = true;
+				logger.log(samples, time, true, true);
+				printf("\rLogging ---> %6d", samples.size());
+        fflush(stdout);
 			}
+
+			logged = true;
 		}
 
 		if(logged)
