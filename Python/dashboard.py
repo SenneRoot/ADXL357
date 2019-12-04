@@ -11,6 +11,7 @@ import numpy as np
 from scipy import signal
 from scipy.signal import blackman
 import warnings
+import os
 
 
 def fftPlot(sig, dt=None, block=False, plot=True, title = 'Analytic FFT plot'):
@@ -58,7 +59,7 @@ Xy_fft, Xx_fft = fftPlot(X.values[1:].ravel(), 1/freq, title='X_FFT')
 Yy_fft, Yx_fft = fftPlot(Y.values[1:].ravel(), 1/freq, title='X_FFT')
 Zy_fft, Zx_fft = fftPlot(Z.values[1:].ravel(), 1/freq, title='X_FFT') 
 
-
+files = os.listdir("data/")
 
 data_dict = {
 "X" : X,
@@ -76,9 +77,11 @@ app.layout = html.Div([
                 style={'float': 'left',
                     }),
         ]),
-    html.Div([
-    html.Button('Get Samples', id='get-samples')
-    ]),
+    dcc.Dropdown(id='Data-files',
+                options=[{'label': s, 'value': s} for s in files],
+                #value=[],
+                multi=False
+                ),
     dcc.Dropdown(id='vehicle-data-name',
                 options=[{'label': s, 'value': s} for s in data_dict.keys()],
                 value=['X', 'X_FFT'],
@@ -145,10 +148,19 @@ def display_graphs(selected_values):
     
     return graphs
 
-@app.callback(Output('out', 'children'),[Input('get-samples', 'n_clicks')])
+''''@app.callback(Output('out', 'children'),[Input('get-samples', 'n_clicks')])
 def get_samples(n_clicks):
     df = pandas.read_csv("data/data_235Hz.csv")
-    return 'Data'
+    X = df['x']
+    Y = df['y']
+    Z = df['z']
+
+    freq = 4000
+    #print(X.values[1:].ravel())
+    Xy_fft, Xx_fft = fftPlot(X.values[1:].ravel(), 1/freq, title='X_FFT')
+    Yy_fft, Yx_fft = fftPlot(Y.values[1:].ravel(), 1/freq, title='X_FFT')
+    Zy_fft, Zx_fft = fftPlot(Z.values[1:].ravel(), 1/freq, title='X_FFT') 
+    return 'Got it' '''
 
 if __name__ == '__main__':
     app.run_server(debug=True)

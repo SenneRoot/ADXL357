@@ -20,16 +20,10 @@ void setupGPIO()
 bool read_btn(int btnPin)
 {
 	//debounce pin
-	if(!digitalRead(btn_pin))
+	if(!digitalRead(btnPin) || digitalRead(btnPin))
 	{
 		usleep(1);
-		return !digitalRead(btn_pin)
-	}
-
-	if(digitalRead(btn_pin))
-	{
-		usleep(1);
-		return digitalRead(btn_pin)
+		return digitalRead(btnPin);
 	}
 }
 
