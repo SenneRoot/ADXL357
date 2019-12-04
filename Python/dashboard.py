@@ -56,8 +56,8 @@ Z = df['z']
 freq = 4000
 #print(X.values[1:].ravel())
 Xy_fft, Xx_fft = fftPlot(X.values[1:].ravel(), 1/freq, title='X_FFT')
-Yy_fft, Yx_fft = fftPlot(Y.values[1:].ravel(), 1/freq, title='X_FFT')
-Zy_fft, Zx_fft = fftPlot(Z.values[1:].ravel(), 1/freq, title='X_FFT') 
+Yy_fft, Yx_fft = fftPlot(Y.values[1:].ravel(), 1/freq, title='Y_FFT')
+Zy_fft, Zx_fft = fftPlot(Z.values[1:].ravel(), 1/freq, title='Z_FFT') 
 
 files = os.listdir("data/")
 
@@ -95,8 +95,9 @@ app.layout = html.Div([
 [Input('vehicle-data-name', 'value')])
 def display_graphs(selected_values):
     graphs = []
+    
     if len(selected_values)>2:
-        class_choice = 'col s12 m6 l6'
+        class_choice = 'col s12 m6 l4'
     elif len(selected_values) == 2:
         class_choice = 'col s12 m6 l6'
     else:
