@@ -25,13 +25,15 @@ bool read_btn(int btnPin)
 		usleep(1);
 		return digitalRead(btnPin);
 	}
+	//should never reach this part
+	return true;
 }
 
 
 int main()
 {
 	setupGPIO();
-	vector<Sample> samples;
+	vector<vector<Sample>> samples;
 	ADXL357 adxl357;
 	bool logged = false;
 	double time = 0.005;
@@ -48,21 +50,21 @@ int main()
 
 		if(!read_btn(btn_pin))
 		{
-			samples.clear();
-
+			//samples.clear();
+			vector<Sample> temp;
 			while(!digitalRead(btn_pin))
 			{
-				logger.log(samples, time, true, true);
-				printf("\rLogging ---> %6d", samples.size());
+				logger.log(temp, time, true, true);
+				printf("\rLogging ---> %6d", temp.size());
         fflush(stdout);
 			}
-
+			samples.push_back(temp);
 			logged = true;
 		}
 
 		if(logged)
 		{
-			printf("\nDone! logged %7d samples\n", samples.size());
+			printf("\nDone! logged %2d times\n", samples.size());
 			logged = false;
 		}
 	}
