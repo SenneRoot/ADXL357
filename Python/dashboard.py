@@ -77,11 +77,13 @@ app.layout = html.Div([
                 style={'float': 'left',
                     }),
         ]),
+    html.Div([
     dcc.Dropdown(id='Data-files',
                 options=[{'label': s, 'value': s} for s in files],
                 #value=[],
                 multi=False
                 ),
+        ]),
     dcc.Dropdown(id='vehicle-data-name',
                 options=[{'label': s, 'value': s} for s in data_dict.keys()],
                 value=['X', 'X_FFT'],
@@ -96,12 +98,13 @@ app.layout = html.Div([
 def display_graphs(selected_values):
     graphs = []
     
+    print(len(selected_values))
     if len(selected_values)>2:
-        class_choice = 'col s12 m6 l4'
+        class_choice = 'col s12 m6 l6'
     elif len(selected_values) == 2:
         class_choice = 'col s12 m6 l6'
-    else:
-        class_choice = 'col s12'
+    elif len(selected_values) < 2:
+        class_choice = 'col s12 m12 l12'
 
 
     for values in selected_values:

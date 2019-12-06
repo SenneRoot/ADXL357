@@ -1,3 +1,5 @@
+//source: https://github.com/sisterniccy/LibPiSPI
+
 #include "PiSPI.hpp"
 
 mutex PiSPI::mutexSPI[2];

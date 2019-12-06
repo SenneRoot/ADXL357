@@ -14,6 +14,8 @@
 #include <linux/spi/spidev.h>
 #include <unistd.h>
 
+//source: https://github.com/sisterniccy/LibPiSPI
+
 //Namespace STD to avoid std::
 using namespace std;
 
