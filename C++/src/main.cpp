@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 			payload[1] = adxl357.getX();
 			adxl357.stop();
 
-			message m(TOPIC, &payload, 1, 0, true);
+			mqtt::message m(TOPIC, &payload, 1, 0, true);
 
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
 			cout << payload[0] << endl;
 
 			// Publish to the topic
-			top.publish(m);
+			top.publish(std::move(m.to_string()));
 
 			tm += PERIOD;
 		}
