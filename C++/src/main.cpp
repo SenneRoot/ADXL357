@@ -85,6 +85,7 @@ int main(int argc, char* argv[])
 			Sample samp = adxl357.getXYZ();
 			samp.convertSample(adxl357.getSensitivityFactor());
 			double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
+			cout << payload[0] << payload[1] << payload[2] << endl;
 
 			// Publish to the topic
 			top.publish(std::move(payload), sizeof(payload));
