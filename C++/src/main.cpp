@@ -84,9 +84,6 @@ int main(int argc, char* argv[])
 		cout << "Connecting to server '" << address << "'..." << flush;
 		cli.connect(connOpts)->wait();
 		cout << "OK\n" << endl;
-
-		char tmbuf[32];
-		unsigned nsample = 0;
 	}
 	catch (const mqtt::exception& exc) {
 		cerr << exc.what() << endl;
@@ -106,7 +103,7 @@ int main(int argc, char* argv[])
 			while(!digitalRead(btn_pin))
 			{
 				logger.log(samples, time, true, true);
-				printf("\rLogging ---> %6d", temp.size());
+				printf("\rLogging ---> %6d", samples.size());
         fflush(stdout);
 			}
 			//samples.push_back(temp);
@@ -115,6 +112,7 @@ int main(int argc, char* argv[])
 
 		if(logged)
 		{
+			char tmbuf[32];
 			time_t t = system_clock::to_time_t(system_clock::now());
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 
