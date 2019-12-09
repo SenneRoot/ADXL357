@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
 			//cout << payload[0] << " " << payload[1] << " " << payload[2] << endl;
-			cout << payload[0] << endl;
+			cout << m.to_string() << endl;
 
 			// Publish to the topic
 			top.publish(std::move(m.to_string()));
