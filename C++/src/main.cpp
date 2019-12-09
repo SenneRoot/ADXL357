@@ -82,10 +82,12 @@ int main(int argc, char* argv[])
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 
 			// Simulate reading some data
+			adxl357.start();
 			Sample samp = adxl357.getXYZ();
+			adxl357.stop();
 			samp.convertSample(adxl357.getSensitivityFactor());
 			double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
-			cout << payload[0] << payload[1] << payload[2] << endl;
+			cout << payload[0] << " " << payload[1] << " " << payload[2] << endl;
 
 			// Publish to the topic
 			top.publish(std::move(payload), sizeof(payload));
