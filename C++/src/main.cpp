@@ -96,9 +96,12 @@ int main(int argc, char* argv[])
 	while (1)
 	{
 		Logger logger(&adxl357);
+		char tmbuf[32];
 
 		if(!read_btn(btn_pin))
 		{
+			time_t t = system_clock::to_time_t(system_clock::now());
+			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//samples.clear();
 			//vector<Sample> temp;
 			while(!digitalRead(btn_pin))
@@ -113,12 +116,9 @@ int main(int argc, char* argv[])
 
 		if(logged)
 		{
-			char tmbuf[32];
-			time_t t = system_clock::to_time_t(system_clock::now());
-			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
-
 			//string payload = tmbuf;
-			string payload;
+
+			string payload = to_string(samples.size()) + "at" + tmbuf + "\n";
 			for (auto& sample : samples)
 			{
 				payload += to_string(sample.getX()) + "," + to_string(sample.getY()) + "," + to_string(sample.getZ()) + "\n";
