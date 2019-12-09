@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 			double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
 
 			// Publish to the topic
-			top.publish(std::move(payload));
+			top.publish(std::move(payload), 3);
 
 			tm += PERIOD;
 		}
