@@ -113,32 +113,32 @@ def display_graphs(selected_values):
             data = go.Scatter(
                 y=df[values.lower()],
                 name='Scatter',
-                fill="tozeroy",
-                fillcolor="#6897bb"
+                #fill="tozeroy",
+                #fillcolor="#6897bb"
                 )
         elif 'x_fft' in values.lower():
             data = go.Scatter(
                 x=Xx_fft,
                 y=np.abs(Xy_fft),
                 name='Scatter',
-                fill="tozeroy",
-                fillcolor="#6897bb"
+                #fill="tozeroy",
+                #fillcolor="#6897bb"
                 )
         elif 'y_fft' in values.lower():
             data = go.Scatter(
                 x=Yx_fft,
                 y=np.abs(Yy_fft),
                 name='Scatter',
-                fill="tozeroy",
-                fillcolor="#6897bb"
+                #fill="tozeroy",
+                #fillcolor="#6897bb"
                 )
         elif 'z_fft' in values.lower():
             data = go.Scatter(
                 x=Zx_fft,
                 y=np.abs(Zy_fft),
                 name='Scatter',
-                fill="tozeroy",
-                fillcolor="#6897bb"
+                #fill="tozeroy",
+                #fillcolor="#6897bb"
                 )
 
 
@@ -146,6 +146,13 @@ def display_graphs(selected_values):
             id=values,
             animate=True,
             figure={'data': [data],'layout' : go.Layout(
+                                                        xaxis=dict(
+                                                        tickmode='linear',
+                                                        ticks='outside',
+                                                        tick0=0,
+                                                        dtick=1/freq,
+                                                        tickcolor='#000'
+                                                        ),
                                                         margin={'l':50,'r':1,'t':45,'b':1},
                                                         title='{}'.format(values))}
             ), className=class_choice))
