@@ -56,6 +56,7 @@ const string PERSIST_DIR { "data-persist" };
 
 int main(int argc, char* argv[])
 {
+	setupGPIO();
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
