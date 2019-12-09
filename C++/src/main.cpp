@@ -84,11 +84,12 @@ int main(int argc, char* argv[])
 
 			// Simulate reading some data
 			adxl357.start();
-			double payload[1];
-			payload[1] = adxl357.getX();
+			double payload[2];
+			payload[0] = 15;
+			payload[1] = 17;
 			adxl357.stop();
 
-			mqtt::message m(TOPIC, &payload, 1, 0, true);
+			mqtt::message m(TOPIC, &payload, 2, 0, true);
 
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
