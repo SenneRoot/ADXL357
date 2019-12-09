@@ -8,8 +8,8 @@ Logger::Logger(ADXL357 *adxl357)
 Logger::~Logger()
 
 {
-	if(m_adxl357 != nullptr)
-		delete m_adxl357;
+	//if(m_adxl357 != nullptr)
+		//delete m_adxl357;
 }
 
 void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appendSamples)
