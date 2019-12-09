@@ -7,6 +7,12 @@
 #include <cstring>
 #include <ctime>
 #include <mqtt/async_client.h>
+#include "ADXL357.hpp"
+#include "Logger.hpp"
+#include "Sample.hpp"
+#include "stdio.h"
+#include <wiringPi.h>
+#include <unistd.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -26,6 +32,17 @@ const string PERSIST_DIR { "data-persist" };
 
 int main(int argc, char* argv[])
 {
+	vector<vector<Sample>> samples;
+	ADXL357 adxl357;
+	bool logged = false;
+	double time = 0.005;
+
+	//setup ADXL357 sensor
+	adxl357.stop();
+	adxl357.setRange(SET_RANGE_10G);
+	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
+	adxl357.dumpInfo();
+
 	string address = (argc > 1) ? string(argv[1]) : DFLT_ADDRESS;
 
 	mqtt::async_client cli(address, "", MAX_BUFFERED_MSGS, PERSIST_DIR);
@@ -41,8 +58,8 @@ int main(int argc, char* argv[])
 
 	// Random number generator [0 - 100]
 	random_device rnd;
-    mt19937 gen(rnd());
-    uniform_int_distribution<> dis(0, 100);
+  mt19937 gen(rnd());
+  uniform_int_distribution<> dis(0, 100);
 
 	try {
 		// Connect to the MQTT broker
@@ -65,12 +82,9 @@ int main(int argc, char* argv[])
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 
 			// Simulate reading some data
-			int x = dis(gen);
-
-			// Create the payload as a text CSV string
-			string payload = to_string(++nsample) + "," +
-								tmbuf + "," + to_string(x);
-			cout << payload << endl;
+			Sample samp = adxl357.getXYZ();
+			samp.convertSample(adxl357.getSensitivityFactor());
+			double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
 
 			// Publish to the topic
 			top.publish(std::move(payload));
