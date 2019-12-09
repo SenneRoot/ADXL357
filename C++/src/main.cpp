@@ -83,13 +83,13 @@ int main(int argc, char* argv[])
 
 			// Simulate reading some data
 			adxl357.start();
-			double payload[1]
+			double payload[1];
 			payload[1] = adxl357.getX();
 			adxl357.stop();
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
 			//cout << payload[0] << " " << payload[1] << " " << payload[2] << endl;
-			cout << payload << endl;
+			cout << payload[0] << endl;
 
 			// Publish to the topic
 			top.publish(std::move(payload), sizeof(payload));
