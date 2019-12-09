@@ -89,15 +89,13 @@ int main(int argc, char* argv[])
 			payload[1] = 17;
 			adxl357.stop();
 
-			mqtt::message m(TOPIC, &payload, sizeof(payload), 0, true);
-
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
 			//cout << payload[0] << " " << payload[1] << " " << payload[2] << endl;
 			cout << m.to_string() << endl;
 
 			// Publish to the topic
-			top.publish(std::move(m.to_string()));
+			top.publish(&payload, sizeof(payload));
 
 			tm += PERIOD;
 		}
