@@ -7,6 +7,7 @@
 #include <cstring>
 #include <ctime>
 #include <mqtt/async_client.h>
+#include <mqtt/message.h>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
@@ -86,13 +87,16 @@ int main(int argc, char* argv[])
 			double payload[1];
 			payload[1] = adxl357.getX();
 			adxl357.stop();
+
+			message m(TOPIC, &payload, 1, 0, true);
+
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
 			//cout << payload[0] << " " << payload[1] << " " << payload[2] << endl;
 			cout << payload[0] << endl;
 
 			// Publish to the topic
-			top.publish(std::move(payload), sizeof(payload));
+			top.publish(m);
 
 			tm += PERIOD;
 		}
