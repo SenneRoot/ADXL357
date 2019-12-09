@@ -83,7 +83,8 @@ int main(int argc, char* argv[])
 
 			// Simulate reading some data
 			adxl357.start();
-			double payload = adxl357.getX();
+			double payload[1]
+			payload[1] = adxl357.getX();
 			adxl357.stop();
 			//samp.convertSample(adxl357.getSensitivityFactor());
 			//double payload[3] = {samp.getX(), samp.getY(), samp.getZ()};
