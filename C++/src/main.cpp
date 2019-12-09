@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
 			string payload;
 			for (auto& sample : samples)
 			{
-				payload += to_string(sample.getX()) + "," + to_string(sample.getY()) + "," + to_string(sample.getZ()) + "\n"
+				payload += to_string(sample.getX()) + "," + to_string(sample.getY()) + "," + to_string(sample.getZ()) + "\n";
 			}
 
 			//Publish to the topic
