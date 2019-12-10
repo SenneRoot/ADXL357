@@ -118,8 +118,9 @@ int main(int argc, char* argv[])
 
 			//Publish to the topic
 			//top.publish(std::move(payload));
+			cout << "\nsending data..." << flush;
 			sender.send(payload, "ADXL357");
-			printf("\nDone!\n");
+			cout << "OK" << endl;
 			samples.clear();
 			logged = false;
 		}
