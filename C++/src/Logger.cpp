@@ -12,6 +12,18 @@ Logger::~Logger()
 		//delete m_adxl357;
 }
 
+void Logger::startADXL()
+{
+	if(m_adxl357 != nullptr)
+		m_adxl357->start();
+}
+
+void Logger::stopADXL()
+{
+	if(m_adxl357 != nullptr)
+		m_adxl357->stop();
+}
+
 void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appendSamples)
 {
 	if(m_adxl357 == nullptr)

@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//samples.clear();
 			//vector<Sample> temp;
-			adxl357.start();
+			logger.startADXL();
 			while(!digitalRead(btn_pin))
 			{
 				//logger.log(samples, time, true, true);
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
         fflush(stdout);
 			}
 			//samples.push_back(temp);
-			adxl357.stop();
+			logger.stopADXL();
 			logged = true;
 		}
 
