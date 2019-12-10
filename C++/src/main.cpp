@@ -89,17 +89,32 @@ int main(int argc, char* argv[])
 			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
 			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
-			std::string sampleArr = "[";
+			std::string xSamples = "[";
+			std::string ySamples = "[";
+			std::string zSamples = "[";
 
 			for (auto& sample : samples)
 			{
-				sampleArr += "\"" + to_string(sample.getX()) + "\"" + "," + "\"" + to_string(sample.getY()) + "\""  + "," + "\"" + to_string(sample.getZ()) + "\"" + ",";
+				xSamples += "\"" + to_string(sample.getX()) + "\" ,";
+				ySamples += "\"" + to_string(sample.getY()) + "\" ,";
+				zSamples += "\"" + to_string(sample.getZ()) + "\" ,"
 			}
 
-			sampleArr.pop_back();
-			sampleArr += "]";
+			xSamples.pop_back();
+			ySamples.pop_back();
+			zSamples.pop_back();
+			xSamples += "]";
+			ySamples += "]";
+			zSamples += "]";
 
-			std::string payload =  "{ \"Sensor\" : " + sensor + ", \"Time\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"Samples\" : " + sampleArr + "}";
+			std::string payload =  "{ \"Sensor\" : " + sensor
+															+ ", \"Time\" : " + date
+															+ ", \"NumberSamples\" : " + nSamples
+															+ ", \"xSamples\" : " + xSamples
+															+ ", \"ySamples\" : " + ySamples
+															+ ", \"zSamples\" : " + zSamples
+															+ "}";
+			
 			//Publish to the topic
 			//top.publish(std::move(payload));
 			sender.send(payload, "ADXL357");
