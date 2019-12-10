@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
 			}
 
 			sampleArr += "]";
-			std::string payload = "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + sampleArr;
+			std::string payload =  "\"Reading\" : {" +  "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + sampleArr + "}";
 			//Publish to the topic
 			//top.publish(std::move(payload));
 			sender.send(payload, "testTopic");
