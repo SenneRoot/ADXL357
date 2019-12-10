@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 
 			for (auto& sample : samples)
 			{
-				samples += "\"" + to_string(sample.getX()) + "\"" + "," + "\"" + to_string(sample.getY()) + "\""  + "," + "\"" + to_string(sample.getZ()) + "\"" + ",";
+				samples += to_string(sample.getX()) +  "," +  to_string(sample.getY()) +  "," + to_string(sample.getZ()) + ",";
 			}
 
 			samples += "]";
