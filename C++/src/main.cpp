@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 				sampleArr += "\"" + to_string(sample.getX()) + "\"" + "," + "\"" + to_string(sample.getY()) + "\""  + "," + "\"" + to_string(sample.getZ()) + "\"" + ",";
 			}
 
-			samples += "]";
+			sampleArr += "]";
 			std::string payload = "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + sampleArr;
 			//Publish to the topic
 			//top.publish(std::move(payload));
