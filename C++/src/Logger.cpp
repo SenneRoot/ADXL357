@@ -71,7 +71,7 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	}
 }
 
-void Logger::logContinuous(vector<Sample> &samples, double m_time, bool convert)
+void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, bool convert)
 {
 	if(m_adxl357 == nullptr)
 		return;
@@ -79,7 +79,7 @@ void Logger::logContinuous(vector<Sample> &samples, double m_time, bool convert)
 	if(samples.empty())
 		m_adxl357->emptyFifo();
 
-	size_t nSamples = m_time * m_adxl357->getRate();
+	size_t nSamples = m_time * rate;
 	size_t retrievedSamples = 0;
 	//double period = 1 / m_adxl357->getRate();
 

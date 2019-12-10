@@ -67,6 +67,7 @@ int main(int argc, char* argv[])
 	adxl357.setRange(SET_RANGE_10G);
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
 	adxl357.dumpInfo();
+	double rate = adxl357.getRate();
 
 	//setup MQTT
 	string address = (argc > 1) ? string(argv[1]) : DFLT_ADDRESS;
@@ -108,7 +109,7 @@ int main(int argc, char* argv[])
 			while(!digitalRead(btn_pin))
 			{
 				//logger.log(samples, time, true, true);
-				logger.logContinuous(samples, time, true);
+				logger.logContinuous(samples, rate, time, true);
 				printf("\rLogging ---> %6d", samples.size());
         fflush(stdout);
 			}

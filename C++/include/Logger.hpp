@@ -13,7 +13,7 @@ class Logger
 	~Logger();
 
 	void log(vector<Sample> &samples, double m_time = 1, bool convert = true, bool appendSamples = false);
-	void logContinuous(vector<Sample> &samples, double m_time = 0.5, bool convert = true);
+	void logContinuous(vector<Sample> &samples, double rate, double m_time = 0.5, bool convert = true);
 
 	void startADXL();
 	void stopADXL();
