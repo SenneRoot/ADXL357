@@ -97,11 +97,12 @@ int main(int argc, char* argv[])
 				sampleArr += "\"" + to_string(sample.getX()) + "\"" + "," + "\"" + to_string(sample.getY()) + "\""  + "," + "\"" + to_string(sample.getZ()) + "\"" + ",";
 			}
 
+			sampleArr.pop_back();
 			sampleArr += "]";
-			std::string payload =  "{" +  "\"Sensor\" : " + sensor + ", \"Time\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"Samples\" : " + sampleArr + "}";
+			std::string payload =  "{ \"Sensor\" : " + sensor + ", \"Time\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"Samples\" : " + sampleArr + "}";
 			//Publish to the topic
 			//top.publish(std::move(payload));
-			sender.send(payload, "testTopic");
+			sender.send(payload, "ADXL357");
 			printf("\nDone!\n");
 			samples.clear();
 			logged = false;
