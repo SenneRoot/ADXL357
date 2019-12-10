@@ -86,10 +86,10 @@ int main(int argc, char* argv[])
 	 	//send the logged samples over MQTT protocol
 		if(logged)
 		{
-			string date = "\"" + tmbuf + "\"";
-			string sensor = "\"ADXL357\"";
-			string nSamples = "\"" + to_string(samples.size()) + "\"";
-			string samples = "["
+			std::string date = "\"" + tmbuf + "\"";
+			std::string sensor = "\"ADXL357\"";
+			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
+			std::string samples = "[";
 
 
 			for (auto& sample : samples)
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
 			}
 
 			samples += "]";
-			string payload = "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + samples;
+			std::string payload = "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + samples;
 			//Publish to the topic
 			//top.publish(std::move(payload));
 			sender.send(payload, "testTopic");
