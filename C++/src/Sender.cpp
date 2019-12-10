@@ -29,7 +29,7 @@ Sender::~Sender()
 	if(m_cli != nullptr)
 	{
 		cout << "\nDisconnecting..." << flush;
-		m_cli.disconnect()->wait();
+		m_cli->disconnect()->wait();
 		cout << "OK" << endl;
 		delete m_cli;
 	}
