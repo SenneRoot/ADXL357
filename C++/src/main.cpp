@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
 
 		if(logged)
 		{
-			string payload = to_string(samples.size()) + "at" + tmbuf + "\n";
+			string payload = to_string(samples.size()) + " logged at " + tmbuf + "\n";
 			for (auto& sample : samples)
 			{
 				payload += to_string(sample.getX()) + "," + to_string(sample.getY()) + "," + to_string(sample.getZ()) + "\n";

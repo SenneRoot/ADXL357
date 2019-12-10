@@ -59,7 +59,7 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	}
 }
 
-void Logger::logContinuous(vector<Sample> &samples, double m_time = 0.5, bool convert = true)
+void Logger::logContinuous(vector<Sample> &samples, double m_time, bool convert)
 {
 	if(m_adxl357 == nullptr)
 		return;
