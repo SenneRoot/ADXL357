@@ -89,12 +89,12 @@ int main(int argc, char* argv[])
 			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
 			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
-			std::string samples;
-
-
+			string payload = to_string(samples.size()) + " logged at " + tmbuf + "\n";
+			
 			for (auto& sample : samples)
 			{
-				samples += to_string(sample.getX()) +  "," +  to_string(sample.getY()) +  "," + to_string(sample.getZ()) + ",";
+				//samples += to_string(sample.getX()) +  "," +  to_string(sample.getY()) +  "," + to_string(sample.getZ()) + ",";
+				payload += to_string(sample.getX()) + "," + to_string(sample.getY()) + "," + to_string(sample.getZ()) + "\n";
 			}
 
 			samples += "]";
