@@ -25,6 +25,16 @@ Sender::Sender(std::string address, std::string client_id , int qos, std::string
 	}
 }
 
+Sender::~Sender()
+{
+	if(m_cli != nullptr)
+	{
+		cout << "\nDisconnecting..." << flush;
+		m_cli.disconnect()->wait();
+		cout << "OK" << endl;
+		delete m_cli;
+	}
+}
 
 void Sender::send(std::string payload, std::string topic)
 {

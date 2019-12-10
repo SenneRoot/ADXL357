@@ -126,9 +126,6 @@ int main(int argc, char* argv[])
 	}
 
 		// Disconnect
-		cout << "\nDisconnecting..." << flush;
-		cli.disconnect()->wait();
-		cout << "OK" << endl;
 		return 0;
 }
 
