@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 			//log Continuous, the time parameter determines the polling interval
 			while(!digitalRead(btn_pin))
 			{
-				logger.logContinuous(samples, rate, time, true);
+				logger.logContinuous(samples, rate, time, false);
 				printf("\rLogging ---> %6d", samples.size());
         fflush(stdout);
 			}
@@ -95,9 +95,10 @@ int main(int argc, char* argv[])
 
 			for (auto& sample : samples)
 			{
+				sample.convertSample(adxl357.getSensitivityFactor());
 				xSamples += "\"" + to_string(sample.getX()) + "\" ,";
 				ySamples += "\"" + to_string(sample.getY()) + "\" ,";
-				zSamples += "\"" + to_string(sample.getZ()) + "\" ,"
+				zSamples += "\"" + to_string(sample.getZ()) + "\" ,";
 			}
 
 			xSamples.pop_back();
@@ -114,7 +115,7 @@ int main(int argc, char* argv[])
 															+ ", \"ySamples\" : " + ySamples
 															+ ", \"zSamples\" : " + zSamples
 															+ "}";
-			
+
 			//Publish to the topic
 			//top.publish(std::move(payload));
 			sender.send(payload, "ADXL357");
