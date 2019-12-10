@@ -89,16 +89,16 @@ int main(int argc, char* argv[])
 			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
 			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
-			string payload = to_string(samples.size()) + " logged at " + tmbuf + "\n";
-			
+			std::string sampleArr = "[";
+
+
 			for (auto& sample : samples)
 			{
-				//samples += to_string(sample.getX()) +  "," +  to_string(sample.getY()) +  "," + to_string(sample.getZ()) + ",";
-				payload += to_string(sample.getX()) + "," + to_string(sample.getY()) + "," + to_string(sample.getZ()) + "\n";
+				sampleArr += "\"" + to_string(sample.getX()) + "\"" + "," + "\"" + to_string(sample.getY()) + "\""  + "," + "\"" + to_string(sample.getZ()) + "\"" + ",";
 			}
 
 			samples += "]";
-			std::string payload = "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + samples;
+			std::string payload = "\"Sensor\" : " + sensor + "\"Time\" : " + date + "\"NumberSamples\" : " + nSamples + "\"Samples\" : " + sampleArr;
 			//Publish to the topic
 			//top.publish(std::move(payload));
 			sender.send(payload, "testTopic");
