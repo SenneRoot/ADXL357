@@ -86,10 +86,10 @@ int main(int argc, char* argv[])
 	 	//send the logged samples over MQTT protocol
 		if(logged)
 		{
-			std::string date = "\"" + tmbuf + "\"";
+			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
 			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
-			std::string samples = "[";
+			std::string samples = std::string("[");
 
 
 			for (auto& sample : samples)
