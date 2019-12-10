@@ -59,3 +59,40 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	}
 }
 
+void Logger::logContinuous(vector<Sample> &samples, double m_time = 0.5, bool convert = true)
+{
+	if(m_adxl357 == nullptr)
+		return;
+
+	if(samples.empty())
+		m_adxl357->emptyFifo();
+
+	size_t nSamples = m_time * m_adxl357->getRate();
+	size_t retrievedSamples = 0;
+	//double period = 1 / m_adxl357->getRate();
+
+	while(retrievedSamples < nSamples)
+	{
+		if (m_adxl357->fifoOverRange())
+		{
+			cout << "\nThe FIFO overrange bit was set. Data could be inaccurate" << endl;
+		}
+
+		if(m_adxl357->hasNewData())
+		{
+			vector<Sample> temp;
+			m_adxl357->getFifo(&temp);
+			retrievedSamples += temp.size();
+			samples.insert(samples.end(), temp.begin(), temp.end());
+		}
+	}
+
+	if(convert)
+	{
+		for(auto &sample : samples)
+		{
+			sample.convertSample(m_adxl357->getSensitivityFactor());
+		}
+	}
+}
+
