@@ -65,7 +65,11 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, 
 		return;
 
 	if(samples.empty())
+	{
+		m_adxl357->stop();
 		m_adxl357->emptyFifo();
+		m_adxl357->start();
+	}
 
 	size_t nSamples = m_time * rate;
 	size_t retrievedSamples = 0;
