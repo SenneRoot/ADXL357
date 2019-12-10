@@ -86,6 +86,8 @@ int main(int argc, char* argv[])
 	 	//send the logged samples over MQTT protocol (JSON Format)
 		if(logged)
 		{
+			cout << "\nsending data..." << flush;
+
 			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
 			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
@@ -115,11 +117,9 @@ int main(int argc, char* argv[])
 															+ ", \"ySamples\" : " + ySamples
 															+ ", \"zSamples\" : " + zSamples
 															+ "}";
-
 			//Publish to the topic
-			//top.publish(std::move(payload));
-			cout << "\nsending data..." << flush;
 			sender.send(payload, "ADXL357");
+
 			cout << "OK" << endl;
 			samples.clear();
 			logged = false;
