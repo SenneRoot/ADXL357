@@ -66,6 +66,8 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, 
 
 	if(samples.empty())
 	{
+		//read status reg to clear it from previous statuses
+		m_adxl357->fifoFull();
 		m_adxl357->stop();
 		m_adxl357->emptyFifo();
 		m_adxl357->start();
