@@ -6,14 +6,13 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <mqtt/async_client.h>
-#include <mqtt/message.h>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
 #include "stdio.h"
 #include <wiringPi.h>
 #include <unistd.h>
+#include "Sender.hpp"
 
 
 #define btn_pin 8
@@ -41,17 +40,6 @@ bool read_btn(int btnPin)
 using namespace std;
 using namespace std::chrono;
 
-const std::string DFLT_ADDRESS { "tcp://localhost:1883" };
-
-const string TOPIC { "testTopic" };
-const int	 QOS = 0;
-
-const auto PERIOD = seconds(5);
-
-const int MAX_BUFFERED_MSGS = 120;	// 120 * 5sec => 10min off-line buffering
-
-const string PERSIST_DIR { "data-persist" };
-
 /////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char* argv[])
@@ -62,6 +50,8 @@ int main(int argc, char* argv[])
 	bool logged = false;
 	double time = 0.005;
 
+	Sender sender("tcp://localhost:1883", "", 0);
+
 	//setup ADXL357 sensor
 	adxl357.stop();
 	adxl357.setRange(SET_RANGE_10G);
@@ -70,7 +60,7 @@ int main(int argc, char* argv[])
 	double rate = adxl357.getRate();
 
 	//setup MQTT
-	string address = (argc > 1) ? string(argv[1]) : DFLT_ADDRESS;
+	/*string address = (argc > 1) ? string(argv[1]) : DFLT_ADDRESS;
 	mqtt::async_client cli(address, "", MAX_BUFFERED_MSGS, PERSIST_DIR);
 	mqtt::connect_options connOpts;
 	connOpts.set_keep_alive_interval(MAX_BUFFERED_MSGS * PERIOD);
@@ -79,7 +69,6 @@ int main(int argc, char* argv[])
 	// Create a topic object. This is a conventience since we will
 	// repeatedly publish messages with the same parameters.
 	mqtt::topic top(cli, TOPIC, QOS, true);
-
 
 	try {
 		// Connect to the MQTT broker
@@ -90,9 +79,7 @@ int main(int argc, char* argv[])
 	catch (const mqtt::exception& exc) {
 		cerr << exc.what() << endl;
 		return 1;
-	}
-
-
+	}*/
 
 	while (1)
 	{
@@ -103,9 +90,10 @@ int main(int argc, char* argv[])
 		{
 			time_t t = system_clock::to_time_t(system_clock::now());
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
-			//samples.clear();
-			//vector<Sample> temp;
-			logger.startADXL();
+			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
+			adxl357.start();
+
+			//log Continuous, the time parameter determines the polling interval
 			while(!digitalRead(btn_pin))
 			{
 				//logger.log(samples, time, true, true);
@@ -113,11 +101,13 @@ int main(int argc, char* argv[])
 				printf("\rLogging ---> %6d", samples.size());
         fflush(stdout);
 			}
-			//samples.push_back(temp);
-			logger.stopADXL();
+
+			//its now safe to put the sensor back in measurement mode
+			adxl357.stop();
 			logged = true;
 		}
 
+	 	//send the logged samples over MQTT protocol
 		if(logged)
 		{
 			string payload = to_string(samples.size()) + " logged at " + tmbuf + "\n";
@@ -127,7 +117,8 @@ int main(int argc, char* argv[])
 			}
 
 			//Publish to the topic
-			top.publish(std::move(payload));
+			//top.publish(std::move(payload));
+			sender.send(payload, "testTopic");
 			printf("\nDone!\n");
 			samples.clear();
 			logged = false;

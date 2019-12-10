@@ -86,7 +86,7 @@ app.layout = html.Div([
         ]),
     dcc.Dropdown(id='vehicle-data-name',
                 options=[{'label': s, 'value': s} for s in data_dict.keys()],
-                value=['X', 'X_FFT'],
+                value=['X', 'Y', 'Z'],
                 multi=True
                 ),
     html.Div(children=html.Div(id='graphs'), className='row')
