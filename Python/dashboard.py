@@ -47,7 +47,7 @@ def fftPlot(sig, dt=None, block=False, plot=True, title = 'Analytic FFT plot'):
 
 app = dash.Dash('Accel-data', external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"])
 
-df = pandas.read_csv("data/data_235Hz.csv", usecols=['x', 'y', 'z'])
+df = pandas.read_csv("data/data_motor.csv", usecols=['x', 'y', 'z'])
 
 X = df['x']
 Y = df['y']

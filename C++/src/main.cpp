@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
-	double time = 0.005;
+	double time = 4;
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -104,20 +104,18 @@ int main(int argc, char* argv[])
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//samples.clear();
 			//vector<Sample> temp;
-			while(!digitalRead(btn_pin))
-			{
+			//while(!digitalRead(btn_pin))
+			//{
 				logger.log(samples, time, true, true);
 				printf("\rLogging ---> %6d", samples.size());
         fflush(stdout);
-			}
+			//}
 			//samples.push_back(temp);
 			logged = true;
 		}
 
 		if(logged)
 		{
-			//string payload = tmbuf;
-
 			string payload = to_string(samples.size()) + "at" + tmbuf + "\n";
 			for (auto& sample : samples)
 			{
