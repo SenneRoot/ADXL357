@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 {
 	setupGPIO();
 	vector<Sample> samples;
-	ADXL3 57 adxl357;
+	ADXL357 adxl357;
 	bool logged = false;
 	double time = 0.005;
 
