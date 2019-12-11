@@ -96,24 +96,8 @@ void ADXL357::dumpInfo()
 
 	printf("ODR: %f\n", getRate());
 	printf("Sensitivity factor: %f\n", m_factor);
-	if(read(REG_RANGE, buf))
-	{
-		int range = 0;
-		switch ((buf[0] & 0b11))
-		{
-		case SET_RANGE_10G:
-			range = 10;
-			break;
-		case SET_RANGE_20G:
-			range = 20;
-			break;
-		case SET_RANGE_40G:
-			range = 40;
-			break;
-		default:
-			break;
-		}
-		printf("Range: %dg\n", range);
+
+	printf("Range: %dg\n", get_range());
 	}
 	else
 		cout << "Reading Range register Failed!" << endl;
@@ -228,6 +212,31 @@ double ADXL357::getRate()
 double ADXL357::getSensitivityFactor()
 {
 	return m_factor;
+}
+
+int ADXL357::get_range()
+{
+	uint8_t buf[64];
+	if(read(REG_RANGE, buf))
+	{
+		int range = 0;
+		switch ((buf[0] & 0b11))
+		{
+		case SET_RANGE_10G:
+			return 10;
+			break;
+		case SET_RANGE_20G:
+			return 20;
+			break;
+		case SET_RANGE_40G:
+			return 40;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+		return -1;
 }
 
 int16_t ADXL357::tempRaw()

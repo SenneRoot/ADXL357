@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 {
 	setupGPIO();
 	vector<Sample> samples;
-	ADXL357 adxl357;
+	ADXL3 57 adxl357;
 	bool logged = false;
 	double time = 0.005;
 
@@ -91,6 +91,9 @@ int main(int argc, char* argv[])
 			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
 			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
+			std::string range = to_string(adxl357.get_range());
+			std::string freq = to_string(rate);
+
 			std::string xSamples = "[";
 			std::string ySamples = "[";
 			std::string zSamples = "[";
@@ -98,9 +101,9 @@ int main(int argc, char* argv[])
 			for (auto& sample : samples)
 			{
 				sample.convertSample(adxl357.getSensitivityFactor());
-				xSamples += "\"" + to_string(sample.getX()) + "\" ,";
-				ySamples += "\"" + to_string(sample.getY()) + "\" ,";
-				zSamples += "\"" + to_string(sample.getZ()) + "\" ,";
+				xSamples += "\"" + to_string(sample.getX()) + "\",";
+				ySamples += "\"" + to_string(sample.getY()) + "\",";
+				zSamples += "\"" + to_string(sample.getZ()) + "\",";
 			}
 
 			xSamples.pop_back();
@@ -111,7 +114,9 @@ int main(int argc, char* argv[])
 			zSamples += "]";
 
 			std::string payload =  "{ \"Sensor\" : " + sensor
-															+ ", \"Time\" : " + date
+															+ ", \"frequency\" : " + freq
+															+ ", \"range\" : " + range
+															+ ", \"Time_stamp\" : " + date
 															+ ", \"NumberSamples\" : " + nSamples
 															+ ", \"xSamples\" : " + xSamples
 															+ ", \"ySamples\" : " + ySamples
