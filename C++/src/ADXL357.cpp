@@ -98,10 +98,6 @@ void ADXL357::dumpInfo()
 	printf("Sensitivity factor: %f\n", m_factor);
 
 	printf("Range: %dg\n", get_range());
-	}
-	else
-		cout << "Reading Range register Failed!" << endl;
-
 	printf("========================================\n");
 }
 
@@ -236,7 +232,10 @@ int ADXL357::get_range()
 		}
 	}
 	else
+	{
+		cout << "Reading Range register Failed!" << endl;
 		return -1;
+	}
 }
 
 int16_t ADXL357::tempRaw()
