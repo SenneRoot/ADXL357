@@ -87,17 +87,15 @@ int main(int argc, char* argv[])
 		if(logged)
 		{
 			cout << "\nsending data..." << flush;
-
-			std::string date = std::string("\"") + tmbuf + std::string("\"");
 			std::string sensor = "\"ADXL357\"";
-			std::string nSamples = "\"" + to_string(samples.size()) + "\"";
-			std::string range = to_string(adxl357.get_range());
 			std::string freq = to_string(rate);
+			std::string range = to_string(adxl357.get_range());
+			std::string nSamples = to_string(samples.size());
+			std::string date = std::string("\"") + tmbuf + std::string("\"");
 
 			std::string xSamples = "[";
 			std::string ySamples = "[";
 			std::string zSamples = "[";
-
 			for (auto& sample : samples)
 			{
 				sample.convertSample(adxl357.getSensitivityFactor());
@@ -105,7 +103,6 @@ int main(int argc, char* argv[])
 				ySamples += "\"" + to_string(sample.getY()) + "\",";
 				zSamples += "\"" + to_string(sample.getZ()) + "\",";
 			}
-
 			xSamples.pop_back();
 			ySamples.pop_back();
 			zSamples.pop_back();
@@ -114,8 +111,8 @@ int main(int argc, char* argv[])
 			zSamples += "]";
 
 			std::string payload =  "{ \"Sensor\" : " + sensor
-															+ ", \"frequency\" : " + freq
-															+ ", \"range\" : " + range
+															+ ", \"Frequency\" : " + freq
+															+ ", \"Range\" : " + range
 															+ ", \"Time_stamp\" : " + date
 															+ ", \"NumberSamples\" : " + nSamples
 															+ ", \"xSamples\" : " + xSamples
@@ -124,7 +121,6 @@ int main(int argc, char* argv[])
 															+ "}";
 			//Publish to the topic
 			sender.send(payload, "ADXL357");
-
 			cout << "OK" << endl;
 			samples.clear();
 			logged = false;
