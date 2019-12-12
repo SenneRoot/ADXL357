@@ -20,7 +20,7 @@ OBJEXT	:= o
 
 #Flags, Libraries and Includes
 CFLAGS	:= -Wall -Wextra -Wno-psabi -Wno-missing-field-initializers -g -std=c++11
-LIB	:= -lpthread -lrt -lfftw3 -lpaho-mqttpp3 -lpaho-mqtt3as -lwiringPi
+LIB	:= -lpaho-mqttpp3 -lpaho-mqtt3as -lwiringPi
 INCDEP	:= -I$(INCDIR)
 
 #---------------------------------------------------------------------------------
