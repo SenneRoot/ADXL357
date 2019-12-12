@@ -99,9 +99,9 @@ int main(int argc, char* argv[])
 			for (auto& sample : samples)
 			{
 				sample.convertSample(adxl357.getSensitivityFactor());
-				xSamples += to_string(sample.getX());
-				ySamples += to_string(sample.getY());
-				zSamples += to_string(sample.getZ());
+				xSamples += to_string(sample.getX() + ", ");
+				ySamples += to_string(sample.getY() + ", ");
+				zSamples += to_string(sample.getZ() + ", ");
 			}
 			xSamples.pop_back();
 			ySamples.pop_back();
