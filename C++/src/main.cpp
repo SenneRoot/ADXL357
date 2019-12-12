@@ -126,7 +126,5 @@ int main(int argc, char* argv[])
 			logged = false;
 		}
 	}
-
-		// Disconnect
 		return 0;
 }
