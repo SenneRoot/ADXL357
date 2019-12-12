@@ -12,6 +12,7 @@ Sender::Sender(std::string address, std::string client_id , int qos, std::string
 	m_conn_opt.set_keep_alive_interval(MAX_BUFFERED_MSGS);
 	m_conn_opt.set_clean_session(true);
 	m_conn_opt.set_automatic_reconnect(true);
+	m_conn_opt.set_mqtt_version(MQTTVERSION_5);
 
 	try {
 		// Connect to the MQTT broker
