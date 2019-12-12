@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 	bool logged = false;
 	double time = 0.005;
 
-	Sender sender("tcp://localhost:1883", "", 0);
+	Sender sender("tcp://localhost:1883", "", 0, MQTTVERSION_3_1_1);
 
 	//setup ADXL357 sensor
 	adxl357.stop();
