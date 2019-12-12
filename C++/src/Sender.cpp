@@ -16,7 +16,7 @@ Sender::Sender(std::string address, std::string client_id , int qos, std::string
 
 	try {
 		// Connect to the MQTT broker
-		cout << "MQTT version: " << m_conn_opts.get_mqtt_version() << endl;
+		cout << "MQTT version: " << m_conn_opt.get_mqtt_version() << endl;
 		cout << "Connecting to server '" << address << "'..." << flush;
 		m_cli->connect(m_conn_opt)->wait();
 		cout << "OK\n" << endl;
