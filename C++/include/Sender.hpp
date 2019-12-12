@@ -4,6 +4,7 @@
 #include <string>
 #include <mqtt/async_client.h>
 #include <mqtt/message.h>
+#include "mqtt/properties.h"
 #include <iostream>
 
 #define MAX_BUFFERED_MSGS 120
