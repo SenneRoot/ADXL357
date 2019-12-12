@@ -12,15 +12,16 @@ Sender::Sender(std::string address, std::string client_id , int qos, std::string
 	m_conn_opt.set_keep_alive_interval(MAX_BUFFERED_MSGS);
 	m_conn_opt.set_clean_session(true);
 	m_conn_opt.set_automatic_reconnect(true);
-	m_conn_opt.set_mqtt_version(MQTTVERSION_5);
+	m_conn_opt.set_mqtt_version(MQTTVERSION_3_1_1);
 
 	try {
 		// Connect to the MQTT broker
 		cout << "MQTT version: " << m_conn_opt.get_mqtt_version() << endl;
 		cout << "Connecting to server '" << address << "'..." << flush;
-		mqtt::token_ptr tok = m_cli->connect(m_conn_opt)->wait();
+		mqtt::token_ptr tok = m_cli->connect(m_conn_opt);
 		auto connRsp = tok->get_connect_response();
-		cout << "OK\n" << endl;
+		cout << "OK (" << connRsp.get_server_uri() << ")" << endl;
+		//cout << "OK\n" << endl;
 	}
 	catch (const mqtt::exception& exc) {
 		cerr << exc.what() << endl;
