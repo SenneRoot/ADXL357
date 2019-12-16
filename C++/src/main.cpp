@@ -14,12 +14,21 @@
 #include <unistd.h>
 #include "Sender.hpp"
 
-void setupGPIO()
+void setupGPIO(vector<int> inputs, vector<int> outputs)
 {
 	wiringPiSetup();
 
-	pinMode(btn_pin, INPUT);
-	pullUpDnControl(btn_pin, PUD_UP);
+	for(const auto& input : inputs)
+	{
+		pinMode(input, INPUT);
+		pullUpDnControl(input, PUD_UP);
+	}
+
+	for(const auto& output : outputs)
+	{
+		pinMode(output, OUTPUT);
+		pullUpDnControl(output, PUD_UP);
+	}
 }
 
 bool read_btn(int btnPin)
@@ -35,10 +44,11 @@ bool read_btn(int btnPin)
 }
 
 using namespace std;
+using namespace std::chrono;
 
 int main(int argc, char *argv[])
 {
-	setupGPIO();
+	setupGPIO({8}, {});
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
