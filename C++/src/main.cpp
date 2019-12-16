@@ -1,11 +1,5 @@
-#include <random>
 #include <string>
-#include <thread>
 #include <chrono>
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"

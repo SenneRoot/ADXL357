@@ -213,7 +213,6 @@ int ADXL357::get_range()
 	uint8_t buf[64];
 	if (read(REG_RANGE, buf))
 	{
-		int range = 0;
 		switch ((buf[0] & 0b11))
 		{
 		case SET_RANGE_10G:
@@ -230,10 +229,9 @@ int ADXL357::get_range()
 		}
 	}
 	else
-	{
 		cout << "Reading Range register Failed!" << endl;
-		return -1;
-	}
+	
+	return -1;
 }
 
 int16_t ADXL357::tempRaw()
