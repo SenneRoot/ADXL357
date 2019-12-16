@@ -7,7 +7,7 @@
 
 class Sample
 {
-	public:
+public:
 	Sample();
 	~Sample();
 
@@ -28,21 +28,21 @@ class Sample
 
 	void convertSample(double factor);
 	//implemented in this way to use it as a static function
-	static int32_t convertTwoComp(uint32_t source) {
+	static int32_t convertTwoComp(uint32_t source)
+	{
 		int target;
-	source = (source >> 4);
-  source = (source & 0x000FFFFF);
+		source = (source >> 4);
+		source = (source & 0x000FFFFF);
 
-  if((source & 0x00080000)  == 0x00080000)
-    target = (source | 0xFFF00000);
-  else
-    target = source;
+		if ((source & 0x00080000) == 0x00080000)
+			target = (source | 0xFFF00000);
+		else
+			target = source;
 
-  return target;
+		return target;
 	};
 
-	private:
-
+private:
 	uint32_t m_rawX;
 	uint32_t m_rawY;
 	uint32_t m_rawZ;
@@ -53,6 +53,5 @@ class Sample
 
 	bool m_converted;
 };
-
 
 #endif

@@ -14,7 +14,8 @@ Sender::Sender(std::string address, std::string client_id, int qos, int mqtt_ver
 	m_conn_opt.set_automatic_reconnect(true);
 	m_conn_opt.set_mqtt_version(mqtt_version);
 
-	try {
+	try
+	{
 		// Connect to the MQTT broker
 		//cout << "MQTT version: " << m_conn_opt.get_mqtt_version() << endl;
 		cout << "Connecting to server '" << address << "'..." << flush;
@@ -23,14 +24,15 @@ Sender::Sender(std::string address, std::string client_id, int qos, int mqtt_ver
 		cout << "OK (" << connRsp.get_server_uri() << ")" << endl;
 		//cout << "OK\n" << endl;
 	}
-	catch (const mqtt::exception& exc) {
+	catch (const mqtt::exception &exc)
+	{
 		cerr << exc.what() << endl;
 	}
 }
 
 Sender::~Sender()
 {
-	if(m_cli != nullptr)
+	if (m_cli != nullptr)
 	{
 		cout << "\nDisconnecting..." << flush;
 		m_cli->disconnect()->wait();

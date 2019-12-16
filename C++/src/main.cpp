@@ -14,21 +14,18 @@
 #include <unistd.h>
 #include "Sender.hpp"
 
-
-#define btn_pin 8
-
 void setupGPIO()
 {
-		wiringPiSetup();
+	wiringPiSetup();
 
-		pinMode(btn_pin, INPUT);
-		pullUpDnControl(btn_pin, PUD_UP);
+	pinMode(btn_pin, INPUT);
+	pullUpDnControl(btn_pin, PUD_UP);
 }
 
 bool read_btn(int btnPin)
 {
 	//debounce pin
-	if(!digitalRead(btnPin) || digitalRead(btnPin))
+	if (!digitalRead(btnPin) || digitalRead(btnPin))
 	{
 		usleep(1);
 		return digitalRead(btnPin);
@@ -38,17 +35,15 @@ bool read_btn(int btnPin)
 }
 
 using namespace std;
-using namespace std::chrono;
 
-/////////////////////////////////////////////////////////////////////////////
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	setupGPIO();
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
 	double time = 0.005;
+	int btn_pin = 8;
 
 	Sender sender("tcp://localhost:1883", "", 0, MQTTVERSION_3_1_1);
 
@@ -64,7 +59,7 @@ int main(int argc, char* argv[])
 		Logger logger(&adxl357);
 		char tmbuf[32];
 
-		if(!read_btn(btn_pin))
+		if (!read_btn(btn_pin))
 		{
 			time_t t = system_clock::to_time_t(system_clock::now());
 			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
@@ -72,19 +67,19 @@ int main(int argc, char* argv[])
 			adxl357.start();
 
 			//log Continuous, the time parameter determines the polling interval
-			while(!digitalRead(btn_pin))
+			while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, time, false);
 				printf("\rLogging ---> %6d", samples.size());
-        fflush(stdout);
+				fflush(stdout);
 			}
 			//its now safe to put the sensor back in measurement mode
 			adxl357.stop();
 			logged = true;
 		}
 
-	 	//send the logged samples over MQTT protocol (JSON Format)
-		if(logged)
+		//send the logged samples over MQTT protocol (JSON Format)
+		if (logged)
 		{
 			cout << "\nsending data..." << flush;
 			std::string sensor = "\"ADXL357\"";
@@ -96,7 +91,7 @@ int main(int argc, char* argv[])
 			std::string xSamples = "[";
 			std::string ySamples = "[";
 			std::string zSamples = "[";
-			for (auto& sample : samples)
+			for (auto &sample : samples)
 			{
 				sample.convertSample(adxl357.getSensitivityFactor());
 				xSamples += to_string(sample.getX()) + ",";
@@ -110,15 +105,7 @@ int main(int argc, char* argv[])
 			ySamples += "]";
 			zSamples += "]";
 
-			std::string payload =  "{ \"Sensor\" : " + sensor
-															+ ", \"Frequency\" : " + freq
-															+ ", \"Range\" : " + range
-															+ ", \"Time_stamp\" : " + date
-															+ ", \"NumberSamples\" : " + nSamples
-															+ ", \"xSamples\" : " + xSamples
-															+ ", \"ySamples\" : " + ySamples
-															+ ", \"zSamples\" : " + zSamples
-															+ "}";
+			std::string payload = "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + freq + ", \"Range\" : " + range + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
 			//Publish to the topic
 			sender.send(payload, "ADXL357");
 			cout << "OK" << endl;
@@ -126,5 +113,5 @@ int main(int argc, char* argv[])
 			logged = false;
 		}
 	}
-		return 0;
+	return 0;
 }

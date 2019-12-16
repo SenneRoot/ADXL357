@@ -19,8 +19,6 @@
 //Namespace STD to avoid std::
 using namespace std;
 
-
-
 //PiSPI class
 //Class for low level SPI communicationn
 class PiSPI
@@ -42,23 +40,22 @@ public:
 	bool SetSpeed(int speed);
 	int GetSpeed();
 
-	bool Write(uint8_t reg, uint8_t* pData, size_t length);
-	bool Write(uint8_t* pData, size_t length);
-	bool Read(uint8_t reg, uint8_t* pData, size_t length);
-	bool Read(uint8_t* pData, size_t length);
-	bool SyncReadWrite(uint8_t* pData, size_t length);
+	bool Write(uint8_t reg, uint8_t *pData, size_t length);
+	bool Write(uint8_t *pData, size_t length);
+	bool Read(uint8_t reg, uint8_t *pData, size_t length);
+	bool Read(uint8_t *pData, size_t length);
+	bool SyncReadWrite(uint8_t *pData, size_t length);
 
 	//Fields
 public:
 	static std::mutex mutexSPI[2];
 
 private:
-	uint8_t  _u8Channel;
+	uint8_t _u8Channel;
 	int _iSpeed;
 	uint8_t _iBitsPerWord;
 	int _iMode;
 	int _iFD;
-
 };
 
 #endif //__PiSPI_H_

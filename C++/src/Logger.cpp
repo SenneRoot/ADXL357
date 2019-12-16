@@ -9,21 +9,21 @@ Logger::~Logger()
 
 {
 	//if(m_adxl357 != nullptr)
-		//delete m_adxl357;
+	//delete m_adxl357;
 }
 
 void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appendSamples)
 {
-	if(m_adxl357 == nullptr)
+	if (m_adxl357 == nullptr)
 		return;
 
-	if(!samples.empty() && !appendSamples)
-		{
-			samples.clear();
-			m_adxl357->emptyFifo();
-		}
+	if (!samples.empty() && !appendSamples)
+	{
+		samples.clear();
+		m_adxl357->emptyFifo();
+	}
 
-	if(samples.empty())
+	if (samples.empty())
 		m_adxl357->emptyFifo();
 
 	m_adxl357->stop();
@@ -33,14 +33,14 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	//double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
-	while(retrievedSamples < nSamples)
+	while (retrievedSamples < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())
 		{
 			cout << "\nThe FIFO overrange bit was set. Data could be inaccurate" << endl;
 		}
 
-		if(m_adxl357->hasNewData())
+		if (m_adxl357->hasNewData())
 		{
 			vector<Sample> temp;
 			m_adxl357->getFifo(&temp);
@@ -50,9 +50,9 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	}
 	m_adxl357->stop();
 
-	if(convert)
+	if (convert)
 	{
-		for(auto &sample : samples)
+		for (auto &sample : samples)
 		{
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
@@ -61,10 +61,10 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 
 void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, bool convert)
 {
-	if(m_adxl357 == nullptr)
+	if (m_adxl357 == nullptr)
 		return;
 
-	if(samples.empty())
+	if (samples.empty())
 	{
 		//read status reg to clear it from previous statuses
 		m_adxl357->fifoFull();
@@ -77,14 +77,14 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, 
 	size_t retrievedSamples = 0;
 	//double period = 1 / m_adxl357->getRate();
 
-	while(retrievedSamples < nSamples)
+	while (retrievedSamples < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())
 		{
 			cout << "\nThe FIFO overrange bit was set. Data could be inaccurate" << endl;
 		}
 
-		if(m_adxl357->hasNewData())
+		if (m_adxl357->hasNewData())
 		{
 			vector<Sample> temp;
 			m_adxl357->getFifo(&temp);
@@ -93,12 +93,11 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, 
 		}
 	}
 
-	if(convert)
+	if (convert)
 	{
-		for(auto &sample : samples)
+		for (auto &sample : samples)
 		{
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
 	}
 }
-

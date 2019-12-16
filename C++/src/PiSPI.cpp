@@ -16,10 +16,10 @@ PiSPI::PiSPI(uint8_t channel, int speed, int mode, uint8_t bitsperword)
 	if (this->_iFD < 0)
 		throw ios_base::failure(string("Could not open device!"));
 
-	if(!this->SetMode(mode))
+	if (!this->SetMode(mode))
 		throw ios_base::failure(string("Could not set SPI mode!"));
 
-	if(!this->SetBitsPerWord(bitsperword))
+	if (!this->SetBitsPerWord(bitsperword))
 		throw ios_base::failure(string("Could not set SPI bits per word!"));
 
 	if (!this->SetSpeed(speed))
@@ -73,9 +73,9 @@ int PiSPI::GetSpeed()
 	return this->_iSpeed = speed;
 }
 
-bool PiSPI::Write(uint8_t reg, uint8_t * pData, size_t length)
+bool PiSPI::Write(uint8_t reg, uint8_t *pData, size_t length)
 {
-	struct spi_ioc_transfer spi = { 0 };
+	struct spi_ioc_transfer spi = {0};
 	uint8_t buffer[length + 1];
 	int retVal = 0;
 
@@ -100,9 +100,9 @@ bool PiSPI::Write(uint8_t reg, uint8_t * pData, size_t length)
 	return retVal != -1;
 }
 
-bool PiSPI::Write(uint8_t * pData, size_t length)
+bool PiSPI::Write(uint8_t *pData, size_t length)
 {
-	struct spi_ioc_transfer spi = { 0 };
+	struct spi_ioc_transfer spi = {0};
 	int retVal = 0;
 
 	if (pData == NULL)
@@ -120,7 +120,7 @@ bool PiSPI::Write(uint8_t * pData, size_t length)
 	return retVal != -1;
 }
 
-bool PiSPI::Read(uint8_t reg, uint8_t * pData, size_t length)
+bool PiSPI::Read(uint8_t reg, uint8_t *pData, size_t length)
 {
 	struct spi_ioc_transfer spi[2];
 	int retVal = 0;
@@ -148,9 +148,9 @@ bool PiSPI::Read(uint8_t reg, uint8_t * pData, size_t length)
 	return retVal != -1;
 }
 
-bool PiSPI::Read(uint8_t * pData, size_t length)
+bool PiSPI::Read(uint8_t *pData, size_t length)
 {
-	struct spi_ioc_transfer spi = { 0 };
+	struct spi_ioc_transfer spi = {0};
 	int retVal = 0;
 
 	if (pData == NULL)
@@ -168,9 +168,9 @@ bool PiSPI::Read(uint8_t * pData, size_t length)
 	return retVal != -1;
 }
 
-bool PiSPI::SyncReadWrite(uint8_t* pData, size_t length)
+bool PiSPI::SyncReadWrite(uint8_t *pData, size_t length)
 {
-	struct spi_ioc_transfer spi = { 0 };
+	struct spi_ioc_transfer spi = {0};
 	int retVal = 0;
 
 	if (pData == NULL)

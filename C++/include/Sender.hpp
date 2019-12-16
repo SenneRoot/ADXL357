@@ -13,13 +13,13 @@ using namespace std;
 
 class Sender
 {
-	public:
-	Sender(std::string address, std::string client_id ,int qos, int mqtt_version = MQTTVERSION_3_1_1, std::string persist_dir = "data-persist");
+public:
+	Sender(std::string address, std::string client_id, int qos, int mqtt_version = MQTTVERSION_3_1_1, std::string persist_dir = "data-persist");
 	~Sender();
 
 	void send(std::string payload, std::string topic);
 
-	private:
+private:
 	std::string m_address;
 	std::string m_persist_dir;
 	std::string m_client_id;
@@ -27,9 +27,6 @@ class Sender
 
 	mqtt::async_client *m_cli;
 	mqtt::connect_options m_conn_opt;
-
 };
-
-
 
 #endif

@@ -11,7 +11,6 @@ Sample::Sample()
 
 Sample::~Sample()
 {
-
 }
 
 void Sample::setRawX(uint32_t val)
@@ -46,7 +45,7 @@ uint32_t Sample::getRawZ()
 
 double Sample::getX()
 {
-	if(m_converted)
+	if (m_converted)
 		return m_X;
 	else
 	{
@@ -56,7 +55,7 @@ double Sample::getX()
 
 double Sample::getY()
 {
-	if(m_converted)
+	if (m_converted)
 		return m_Y;
 	else
 	{
@@ -66,14 +65,13 @@ double Sample::getY()
 
 double Sample::getZ()
 {
-	if(m_converted)
+	if (m_converted)
 		return m_Z;
 	else
 	{
 		return -1;
 	}
 }
-
 
 void Sample::getRawSampleData(uint32_t *x, uint32_t *y, uint32_t *z)
 {
@@ -84,7 +82,7 @@ void Sample::getRawSampleData(uint32_t *x, uint32_t *y, uint32_t *z)
 
 bool Sample::getSampleData(double *x, double *y, double *z)
 {
-	if(!m_converted)
+	if (!m_converted)
 		return false;
 
 	*x = m_X;
@@ -96,7 +94,7 @@ bool Sample::getSampleData(double *x, double *y, double *z)
 
 void Sample::convertSample(double factor)
 {
-	if(!m_converted)
+	if (!m_converted)
 	{
 		m_X = convertTwoComp(m_rawX) * factor;
 		m_Y = convertTwoComp(m_rawY) * factor;
