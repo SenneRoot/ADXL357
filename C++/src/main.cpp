@@ -99,6 +99,10 @@ int main(int argc, char *argv[])
 			samples.clear();
 			logged = false;
 		}
+		else
+		{
+			cout << "Not connected to the MQTT broker please restart!" << endl;
+		}
 	}
 	return 0;
 }
