@@ -33,6 +33,10 @@ int main(int argc, char *argv[])
 	setupGPIO({btn_pin}, {});
 
 	Sender sender(connected, MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
+	if(!connected)
+	{
+		cout << "Waring!! Not connected to the MQTT broker please restart to send data!" << endl;
+	}
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -98,10 +102,6 @@ int main(int argc, char *argv[])
 			cout << "OK" << endl;
 			samples.clear();
 			logged = false;
-		}
-		else if(!connected)
-		{
-			cout << "Not connected to the MQTT broker please restart!" << endl;
 		}
 	}
 	return 0;
