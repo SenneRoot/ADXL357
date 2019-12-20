@@ -1,6 +1,6 @@
 #include "Sender.hpp"
 
-Sender::Sender(std::string address, std::string client_id, int qos, int mqtt_version, std::string persist_dir)
+Sender::Sender(bool& conn_result, std::string address, std::string client_id, int qos, int mqtt_version, std::string persist_dir)
 {
 	m_address = address;
 	m_qos = qos;
@@ -22,11 +22,13 @@ Sender::Sender(std::string address, std::string client_id, int qos, int mqtt_ver
 		mqtt::token_ptr tok = m_cli->connect(m_conn_opt);
 		auto connRsp = tok->get_connect_response();
 		cout << "OK (" << connRsp.get_server_uri() << ")" << endl;
+		conn_result = true;
 		//cout << "OK\n" << endl;
 	}
 	catch (const mqtt::exception &exc)
 	{
 		cerr << exc.what() << endl;
+		conn_result = false;
 	}
 }
 

@@ -25,13 +25,14 @@ int main(int argc, char *argv[])
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
+	bool connected = false;
 	const double time = 0.005;
 	const int btn_pin = 8;
 
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
 	setupGPIO({btn_pin}, {});
 
-	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
+	Sender sender(connected, MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -65,7 +66,7 @@ int main(int argc, char *argv[])
 		}
 
 		//send the logged samples over MQTT protocol (JSON Format)
-		if (logged)
+		if (logged && connected)
 		{
 			cout << "\nsending data..." << flush;
 			std::string sensor = "\"ADXL357\"";
