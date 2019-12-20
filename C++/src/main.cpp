@@ -13,12 +13,15 @@
 #define MQTT_QOS				 0
 #define MQTT_VER				 MQTTVERSION_3_1_1
 
+void setupGPIO(vector<int> inputs, vector<int> outputs);
+bool read_btn(int btnPin);
+
 using namespace std;
 using namespace std::chrono;
 
 int main(int argc, char *argv[])
 {
-	//create vector to save the samples into 
+	//create vector to save the samples into
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
