@@ -1,55 +1,34 @@
 #include <string>
 #include <chrono>
+#include <unistd.h>
+#include <stdio.h>
+#include <wiringPi.h>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
-#include "stdio.h"
-#include <wiringPi.h>
-#include <unistd.h>
 #include "Sender.hpp"
 
-void setupGPIO(vector<int> inputs, vector<int> outputs)
-{
-	wiringPiSetup();
-
-	for(const auto& input : inputs)
-	{
-		pinMode(input, INPUT);
-		pullUpDnControl(input, PUD_UP);
-	}
-
-	for(const auto& output : outputs)
-	{
-		pinMode(output, OUTPUT);
-		pullUpDnControl(output, PUD_UP);
-	}
-}
-
-bool read_btn(int btnPin)
-{
-	//debounce pin
-	if (!digitalRead(btnPin) || digitalRead(btnPin))
-	{
-		usleep(1);
-		return digitalRead(btnPin);
-	}
-	//should never reach this part
-	return true;
-}
+#define MQTT_BROKER_ADDR "tcp://localhost:1883"
+#define MQTT_CLIENT_ID	 ""
+#define MQTT_QOS				 0
+#define MQTT_VER				 MQTTVERSION_3_1_1
 
 using namespace std;
 using namespace std::chrono;
 
 int main(int argc, char *argv[])
 {
-	setupGPIO({8}, {});
+	//create vector to save the samples into 
 	vector<Sample> samples;
 	ADXL357 adxl357;
 	bool logged = false;
-	double time = 0.005;
-	int btn_pin = 8;
+	const double time = 0.005;
+	const int btn_pin = 8;
 
-	Sender sender("tcp://localhost:1883", "", 0, MQTTVERSION_3_1_1);
+	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
+	setupGPIO({btn_pin}, {});
+
+	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
 
 	//setup ADXL357 sensor
 	adxl357.stop();
@@ -118,4 +97,33 @@ int main(int argc, char *argv[])
 		}
 	}
 	return 0;
+}
+
+void setupGPIO(vector<int> inputs, vector<int> outputs)
+{
+	wiringPiSetup();
+
+	for(const auto& input : inputs)
+	{
+		pinMode(input, INPUT);
+		pullUpDnControl(input, PUD_UP);
+	}
+
+	for(const auto& output : outputs)
+	{
+		pinMode(output, OUTPUT);
+		pullUpDnControl(output, PUD_UP);
+	}
+}
+
+bool read_btn(int btnPin)
+{
+	//debounce pin
+	if (!digitalRead(btnPin) || digitalRead(btnPin))
+	{
+		usleep(1);
+		return digitalRead(btnPin);
+	}
+	//should never reach this part
+	return true;
 }
