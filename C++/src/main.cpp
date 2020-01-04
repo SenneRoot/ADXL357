@@ -88,7 +88,7 @@ void send_json(Sender *sender, vector<Sample> samples, ADXL357 *adxl357, double 
 	std::string sensor = "\"ADXL357\"";
 	std::string freq = to_string(rate);
 	std::string range = to_string(adxl357->getRange());
-	std::string nSamples = to_string(samples->size());
+	std::string nSamples = to_string(samples.size());
 	std::string date = std::string("\"") + time_stamp + std::string("\"");
 
 	std::string xSamples = "[";
