@@ -32,7 +32,7 @@ def fft_plot(samples, freq, num_samples):
         xf = np.linspace(0.0, 1.0/(2.0*T), N/2)
 
         fig.add_trace(go.Scatter(y=sam, mode='lines', name=column))
-        fig_fft.add_trace(go.Scatter(x=xf[1:], y=2.0/N * np.abs(yf[:N//2])[1:], mode='lines', name=column + '_fft'))
+        fig_fft.add_trace(go.Scatter(x=xf[0:], y=2.0/N * np.abs(yf[:N//2])[0:], mode='lines', name=column + '_fft'))
 
     return fig, fig_fft
 
@@ -56,6 +56,15 @@ app.layout = html.Div([
     html.Div(children=html.Div(id='graphs'), className='row')
     ], className="container",style={'width':'98%','margin-left':10,'margin-right':10,'max-width':50000})
 
+
+@app.callback(
+    dash.dependencies.Output('Data-files', 'options'),
+    [dash.dependencies.Input('Data-files', 'value')]
+)
+def update_date_dropdown(name):
+    files_all = os.listdir("data/")
+    files = [i for i in files_all if i.endswith('.json')]
+    return [{'label': s, 'value': s} for s in files]
 
 @app.callback(Output('graphs', 'children'), 
 [Input('Data-files', 'value')])

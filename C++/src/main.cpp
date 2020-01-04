@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <wiringPi.h>
+#include <thread>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
@@ -13,6 +14,7 @@
 #define MQTT_QOS				 0
 #define MQTT_VER				 MQTTVERSION_3_1_1
 
+void send_json(Sender *sender, vector<Sample> *samples, ADXL357 *adxl357, double rate, string topic);
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
 
@@ -24,18 +26,17 @@ int main(int argc, char *argv[])
 	//create vector to save the samples into
 	vector<Sample> samples;
 	ADXL357 adxl357;
-	bool logged = false;
-	bool connected = false;
+	//bool logged = false;
 	const double time = 0.005;
 	const int btn_pin = 8;
 
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
 	setupGPIO({btn_pin}, {});
 
-	Sender sender(connected, MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
-	if(!connected)
+	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
+	if(!sender.is_connected())
 	{
-		cout << "Waring!! Not connected to the MQTT broker please restart to send data!" << endl;
+		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
 	}
 
 	//setup ADXL357 sensor
@@ -66,45 +67,51 @@ int main(int argc, char *argv[])
 			}
 			//its now safe to put the sensor back in measurement mode
 			adxl357.stop();
-			logged = true;
+			//logged = true;
 		}
 
 		//send the logged samples over MQTT protocol (JSON Format)
-		if (logged && connected)
+		if (logger.logged() && sender.is_connected())
 		{
-			cout << "\nsending data..." << flush;
-			std::string sensor = "\"ADXL357\"";
-			std::string freq = to_string(rate);
-			std::string range = to_string(adxl357.get_range());
-			std::string nSamples = to_string(samples.size());
-			std::string date = std::string("\"") + tmbuf + std::string("\"");
-
-			std::string xSamples = "[";
-			std::string ySamples = "[";
-			std::string zSamples = "[";
-			for (auto &sample : samples)
-			{
-				sample.convertSample(adxl357.getSensitivityFactor());
-				xSamples += to_string(sample.getX()) + ",";
-				ySamples += to_string(sample.getY()) + ",";
-				zSamples += to_string(sample.getZ()) + ",";
-			}
-			xSamples.pop_back();
-			ySamples.pop_back();
-			zSamples.pop_back();
-			xSamples += "]";
-			ySamples += "]";
-			zSamples += "]";
-
-			std::string payload = "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + freq + ", \"Range\" : " + range + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
-			//Publish to the topic
-			sender.send(payload, "ADXL357");
-			cout << "OK" << endl;
+			thread send(send_json, &sender, samples, &adxl357, rate, "ADXL357");
+			//send_json(&sender, samples, &adxl357, rate, "ADXL357");
 			samples.clear();
-			logged = false;
+			logger.set_logged(false);
 		}
 	}
 	return 0;
+}
+
+void send_json(Sender *sender, vector<Sample> samples, ADXL357 *adxl357, double rate, string topic)
+{
+	cout << "\nsending data..." << flush;
+	std::string sensor = "\"ADXL357\"";
+	std::string freq = to_string(rate);
+	std::string range = to_string(adxl357->get_range());
+	std::string nSamples = to_string(samples->size());
+	std::string date = std::string("\"") + tmbuf + std::string("\"");
+
+	std::string xSamples = "[";
+	std::string ySamples = "[";
+	std::string zSamples = "[";
+	for (auto &sample : samples)
+	{
+		sample.convertSample(adxl357.getSensitivityFactor());
+		xSamples += to_string(sample.getX()) + ",";
+		ySamples += to_string(sample.getY()) + ",";
+		zSamples += to_string(sample.getZ()) + ",";
+	}
+	xSamples.pop_back();
+	ySamples.pop_back();
+	zSamples.pop_back();
+	xSamples += "]";
+	ySamples += "]";
+	zSamples += "]";
+
+	std::string payload = "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + freq + ", \"Range\" : " + range + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
+	//Publish to the topic
+	sender->send(payload, topic);
+	cout << "OK" << endl;
 }
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)

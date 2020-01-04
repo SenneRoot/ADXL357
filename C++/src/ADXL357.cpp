@@ -4,6 +4,9 @@
 ADXL357::ADXL357(uint8_t channel, int speed, int mode, uint8_t bitsperword)
 {
 	piSPI = new PiSPI(channel, speed, mode, bitsperword);
+
+	//get and set range to set correct sensitivity factor
+	setRange(getRange());
 }
 
 ADXL357::~ADXL357()
@@ -208,7 +211,7 @@ double ADXL357::getSensitivityFactor()
 	return m_factor;
 }
 
-int ADXL357::get_range()
+uint8_t ADXL357::getRange()
 {
 	uint8_t buf[64];
 	if (read(REG_RANGE, buf))
@@ -230,7 +233,7 @@ int ADXL357::get_range()
 	}
 	else
 		cout << "Reading Range register Failed!" << endl;
-	
+
 	return -1;
 }
 

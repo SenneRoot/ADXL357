@@ -14,15 +14,17 @@ using namespace std;
 class Sender
 {
 public:
-	Sender(bool& conn_result, std::string address, std::string client_id, int qos, int mqtt_version = MQTTVERSION_3_1_1, std::string persist_dir = "data-persist");
+	Sender(std::string address, std::string client_id, int qos, int mqtt_version = MQTTVERSION_3_1_1, std::string persist_dir = "data-persist");
 	~Sender();
 
 	void send(std::string payload, std::string topic);
+	bool is_connected();
 
 private:
 	std::string m_address;
 	std::string m_persist_dir;
 	std::string m_client_id;
+	bool m_connected;
 	int m_qos;
 
 	mqtt::async_client *m_cli;
