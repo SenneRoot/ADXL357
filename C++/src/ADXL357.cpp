@@ -98,7 +98,7 @@ void ADXL357::dumpInfo()
 	printf("ODR: %f\n", getRate());
 	printf("Sensitivity factor: %f\n", m_factor);
 
-	printf("Range: %dg\n", get_range());
+	printf("Range: %dg\n", getRange());
 	printf("========================================\n");
 }
 
