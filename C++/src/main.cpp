@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 		//send the logged samples over MQTT protocol (JSON Format)
 		if (logger.logged() && sender.is_connected())
 		{
-			thread send(send_json, &sender, samples, &adxl357, rate, string(tmbuf), "ADXL357");
+			std::thread th1(send_json, std::ref(sender), samples, std::ref(adxl357), rate, string(tmbuf), "ADXL357");
 			//send_json(&sender, samples, &adxl357, rate, "ADXL357");
 			samples.clear();
 			logger.set_logged(false);
