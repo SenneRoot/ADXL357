@@ -6,7 +6,7 @@ ADXL357::ADXL357(uint8_t channel, int speed, int mode, uint8_t bitsperword)
 	piSPI = new PiSPI(channel, speed, mode, bitsperword);
 
 	//get and set range to set correct sensitivity factor
-	setRange(getRange());
+	//setRange(getRange());
 }
 
 ADXL357::~ADXL357()
