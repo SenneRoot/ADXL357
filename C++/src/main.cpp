@@ -14,7 +14,7 @@
 #define MQTT_QOS				 0
 #define MQTT_VER				 MQTTVERSION_3_1_1
 
-void send_json(Sender *sender, vector<Sample> *samples, ADXL357 *adxl357, double rate, string topic);
+void send_json(Sender *sender, vector<Sample> *samples, ADXL357 *adxl357, double rate, string time_stamp, string topic);
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 		//send the logged samples over MQTT protocol (JSON Format)
 		if (logger.logged() && sender.is_connected())
 		{
-			thread send(send_json, &sender, samples, &adxl357, rate, "ADXL357");
+			thread send(send_json, &sender, samples, &adxl357, rate, string(tmbuf), "ADXL357");
 			//send_json(&sender, samples, &adxl357, rate, "ADXL357");
 			samples.clear();
 			logger.set_logged(false);
@@ -82,14 +82,14 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void send_json(Sender *sender, vector<Sample> samples, ADXL357 *adxl357, double rate, string topic)
+void send_json(Sender *sender, vector<Sample> samples, ADXL357 *adxl357, double rate, string time_stamp, string topic)
 {
 	cout << "\nsending data..." << flush;
 	std::string sensor = "\"ADXL357\"";
 	std::string freq = to_string(rate);
 	std::string range = to_string(adxl357->getRange());
 	std::string nSamples = to_string(samples->size());
-	std::string date = std::string("\"") + tmbuf + std::string("\"");
+	std::string date = std::string("\"") + time_stamp + std::string("\"");
 
 	std::string xSamples = "[";
 	std::string ySamples = "[";
