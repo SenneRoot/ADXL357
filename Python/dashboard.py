@@ -39,7 +39,7 @@ def fft_plot(samples, freq, num_samples):
 app = dash.Dash('Accel-data', external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"])
 files_all = os.listdir("data/")
 files = [i for i in files_all if i.endswith('.json')]
-data_file = "data.json"
+data_file = files[0]
 
 app.layout = html.Div([
     html.Div([
