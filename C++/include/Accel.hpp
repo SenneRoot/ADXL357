@@ -14,7 +14,7 @@ public:
 
 	virtual int32_t getX() = 0;
 	virtual int32_t getY() = 0;
-	virtual int32_t getZ() - 0;
+	virtual int32_t getZ() = 0;
 
 private:
 	PiSPI *m_piSPI = nullptr;
