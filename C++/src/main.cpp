@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 				printf("\rLogging ---> %6d", samples.size());
 				fflush(stdout);
 			}
-			//its now safe to put the sensor back in measurement mode
+			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
 			logged = true;
 		}

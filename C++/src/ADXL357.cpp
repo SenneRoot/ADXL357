@@ -1,18 +1,18 @@
 #include "ADXL357.hpp"
 #include "PiSPI.hpp"
 
-ADXL357::ADXL357(uint8_t channel, int speed, int mode, uint8_t bitsperword)
+ADXL357::ADXL357(uint8_t channel, int speed, int mode, uint8_t bitsperword):Accel(channel, speed, mode, bitsperword)
 {
-	piSPI = new PiSPI(channel, speed, mode, bitsperword);
+	//piSPI = new PiSPI(channel, speed, mode, bitsperword);
 }
 
 ADXL357::~ADXL357()
 {
-	if (piSPI != nullptr)
-		delete piSPI;
+	/*if (piSPI != nullptr)
+		delete piSPI;*/
 }
 
-bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length)
+/*bool ADXL357::read(uint8_t reg, uint8_t *buf, size_t length)
 {
 	if (piSPI == nullptr)
 		return false;
@@ -28,7 +28,7 @@ bool ADXL357::write(uint8_t reg, uint8_t val)
 
 	uint8_t address = (reg << 1) & 0b11111110;
 	return piSPI->Write(address, &val, 1);
-}
+}*/
 
 bool ADXL357::fifoFull()
 {
@@ -230,7 +230,7 @@ int ADXL357::get_range()
 	}
 	else
 		cout << "Reading Range register Failed!" << endl;
-	
+
 	return -1;
 }
 
