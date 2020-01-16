@@ -12,10 +12,10 @@ public:
 	bool read(uint8_t reg, uint8_t *buf, size_t length = 1);
 	bool write(uint8_t reg, uint8_t val);
 
-	virtual int32_t getX();
-	virtual int32_t getY();
-	virtual int32_t getZ();
-	
+	virtual int32_t getX() = 0;
+	virtual int32_t getY() = 0;
+	virtual int32_t getZ() - 0;
+
 private:
 	PiSPI *m_piSPI = nullptr;
 };
