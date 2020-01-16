@@ -1,6 +1,7 @@
 #include "PiSPI.hpp"
 
-
+#define READ  0b1
+#define WRITE 0b11111110
 class Accel
 {
 public:

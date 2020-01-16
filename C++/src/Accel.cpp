@@ -16,7 +16,7 @@ bool Accel::read(uint8_t reg, uint8_t *buf, size_t length)
 	if (m_piSPI == nullptr)
 		return false;
 
-	uint8_t address = (reg << 1) | 0b1;
+	uint8_t address = (reg << 1) | READ;
 	return m_piSPI->Read(address, buf, length);
 }
 
@@ -25,6 +25,6 @@ bool Accel::write(uint8_t reg, uint8_t val)
 	if (m_piSPI == nullptr)
 		return false;
 
-	uint8_t address = (reg << 1) & 0b11111110;
+	uint8_t address = (reg << 1) & WRITE;
 	return m_piSPI->Write(address, &val, 1);
 }
