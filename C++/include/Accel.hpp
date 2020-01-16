@@ -3,7 +3,7 @@
 
 class Accel
 {
-	Accel();
+	Accel(uint8_t channel, int speed, int mode, uint8_t bitsperword);
 	~Accel();
 
 public:
