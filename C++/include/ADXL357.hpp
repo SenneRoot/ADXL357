@@ -81,8 +81,6 @@
 
 class ADXL357 : public Accel
 {
-
-	//methods
 public:
 	ADXL357(uint8_t channel = 0, int speed = 1000000, int mode = 0, uint8_t bitsperword = 8);
 	~ADXL357();
@@ -125,15 +123,6 @@ public:
 	void getsamples(vector<Sample> *samples, int nSampels = 1000);
 
 private:
-	//bool read(uint8_t reg, uint8_t *buf, size_t length = 1);
-	//bool write(uint8_t reg, uint8_t val);
-
-	int32_t twoComp(uint32_t source);
-
-	//fields:
-public:
-private:
-	//PiSPI *piSPI = nullptr;
 	double m_factor = 1;
 };
 

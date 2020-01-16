@@ -28,3 +28,16 @@ bool Accel::write(uint8_t reg, uint8_t val)
 	uint8_t address = (reg << 1) & ~WRITE;
 	return m_piSPI->Write(address, &val, 1);
 }
+
+virtual int32_t getX()
+{
+	return nullptr;
+}
+virtual int32_t getY()
+{
+	return nullptr;
+}
+virtual int32_t getZ()
+{
+	return nullptr;
+}
