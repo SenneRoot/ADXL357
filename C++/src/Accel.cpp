@@ -1,11 +1,11 @@
 #include "Accel.hpp"
 
-Accel:Accel(uint8_t channel, int speed, int mode, uint8_t bitsperword)
+Accel::Accel(uint8_t channel, int speed, int mode, uint8_t bitsperword)
 {
 	m_piSPI = new PiSPI(channel, speed, mode, bitsperword);
 }
 
-Accel:~Accel()
+Accel::~Accel()
 {
 	if (m_piSPI != nullptr)
 		delete m_piSPI;
