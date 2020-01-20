@@ -15,7 +15,7 @@
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
-string buildPayload(vector<Sample> samples, string name, double rate, int range, string timeStamp, double sensitivityFactor);
+string buildPayload(vector<Sample> &samples, string name, double rate, int range, string timeStamp, double sensitivityFactor);
 
 using namespace std;
 using namespace std::chrono;
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	setupGPIO({btn_pin}, {});
 
 	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
-	if(!connected)
+	if(!sender.connected())
 	{
 		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
 	}
@@ -65,8 +65,7 @@ int main(int argc, char *argv[])
 			}
 			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
-			logged = true;
-		}
+			}
 
 		//send the logged samples over MQTT protocol (JSON Format)
 		if (logger.logged() && sender.connected())
