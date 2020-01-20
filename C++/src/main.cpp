@@ -15,6 +15,7 @@
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
+string buildPayload(vector<Sample> samples, string name, double rate, int range, string timeStamp);
 
 using namespace std;
 using namespace std::chrono;
@@ -35,7 +36,7 @@ int main(int argc, char *argv[])
 	Sender sender(connected, MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
 	if(!connected)
 	{
-		cout << "Waring!! Not connected to the MQTT broker please restart to send data!" << endl;
+		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
 	}
 
 	//setup ADXL357 sensor
@@ -73,11 +74,27 @@ int main(int argc, char *argv[])
 		if (logged && connected)
 		{
 			cout << "\nsending data..." << flush;
-			std::string sensor = "\"ADXL357\"";
+
+			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), tmbuf);
+			//Publish to the topic
+			sender.send(payload, "ADXL357");
+			cout << "OK" << endl;
+			samples.clear();
+			logged = false;
+		}
+	}
+	return 0;
+}
+
+
+
+string buildPayload(vector<Sample> samples, string sensorName, double rate, int range, string timeStamp)
+{
+			std::string sensor = "\"" + sensorName + "\"";
 			std::string freq = to_string(rate);
-			std::string range = to_string(adxl357.get_range());
+			std::string range = to_string(range);
 			std::string nSamples = to_string(samples.size());
-			std::string date = std::string("\"") + tmbuf + std::string("\"");
+			std::string date = std::string("\"") + timeStamp + std::string("\"");
 
 			std::string xSamples = "[";
 			std::string ySamples = "[";
@@ -96,16 +113,9 @@ int main(int argc, char *argv[])
 			ySamples += "]";
 			zSamples += "]";
 
-			std::string payload = "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + freq + ", \"Range\" : " + range + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
-			//Publish to the topic
-			sender.send(payload, "ADXL357");
-			cout << "OK" << endl;
-			samples.clear();
-			logged = false;
-		}
-	}
-	return 0;
+			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + freq + ", \"Range\" : " + range + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
 }
+
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
 {
