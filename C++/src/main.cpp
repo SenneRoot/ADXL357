@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
 			while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, time, false);
-				cout << "\rWhy?";
 				//printf("\rLogging ---> %6d", samples.size());
 				//fflush(stdout);
 			}
