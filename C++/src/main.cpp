@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
 			cout << "\nsending data..." << flush;
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), tmbuf, adxl357.getSensitivityFactor());
 
-
 			sender.send(payload, "ADXL357");
 			cout << "OK" << endl;
 			samples.clear();
@@ -111,7 +110,6 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 
 			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
 }
-
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
 {
