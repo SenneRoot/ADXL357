@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
 			}
 			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
+			logger.setLogged(true);
 			}
 
 		//send the logged samples over MQTT protocol (JSON Format)
