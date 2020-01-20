@@ -15,7 +15,7 @@
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
-string buildPayload(vector<Sample> samples, string name, double rate, int range, string timeStamp);
+string buildPayload(vector<Sample> samples, string name, double rate, int range, string timeStamp, double sensitivityFactor);
 
 using namespace std;
 using namespace std::chrono;
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 		{
 			cout << "\nsending data..." << flush;
 
-			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), tmbuf);
+			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), tmbuf, adxl357.getSensitivityFactor());
 			//Publish to the topic
 			sender.send(payload, "ADXL357");
 			cout << "OK" << endl;
@@ -88,11 +88,11 @@ int main(int argc, char *argv[])
 
 
 
-string buildPayload(vector<Sample> samples, string sensorName, double rate, int range, string timeStamp)
+string buildPayload(vector<Sample> samples, string sensorName, double rate, int range, string timeStamp, double sensitivityFactor)
 {
 			std::string sensor = "\"" + sensorName + "\"";
-			std::string freq = to_string(rate);
-			std::string range = to_string(range);
+			std::string sfreq = to_string(rate);
+			std::string srange = to_string(range);
 			std::string nSamples = to_string(samples.size());
 			std::string date = std::string("\"") + timeStamp + std::string("\"");
 
@@ -101,7 +101,7 @@ string buildPayload(vector<Sample> samples, string sensorName, double rate, int 
 			std::string zSamples = "[";
 			for (auto &sample : samples)
 			{
-				sample.convertSample(adxl357.getSensitivityFactor());
+				sample.convertSample(sensitivityFactor);
 				xSamples += to_string(sample.getX()) + ",";
 				ySamples += to_string(sample.getY()) + ",";
 				zSamples += to_string(sample.getZ()) + ",";
@@ -113,7 +113,7 @@ string buildPayload(vector<Sample> samples, string sensorName, double rate, int 
 			ySamples += "]";
 			zSamples += "]";
 
-			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + freq + ", \"Range\" : " + range + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
+			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
 }
 
 
