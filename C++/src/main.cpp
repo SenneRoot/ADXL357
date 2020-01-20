@@ -60,9 +60,10 @@ int main(int argc, char *argv[])
 			while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, time, false);
-				printf("\rLogging ---> %6d", samples.size());
-				fflush(stdout);
 			}
+
+			printf("\rLogging ---> %6d", samples.size());
+			fflush(stdout);
 			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
 			logger.setLogged(true);
