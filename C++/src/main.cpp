@@ -25,15 +25,13 @@ int main(int argc, char *argv[])
 	//create vector to save the samples into
 	vector<Sample> samples;
 	ADXL357 adxl357;
-	bool logged = false;
-	bool connected = false;
 	const double time = 0.005;
 	const int btn_pin = 8;
 
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
 	setupGPIO({btn_pin}, {});
 
-	Sender sender(connected, MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
+	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
 	if(!connected)
 	{
 		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
@@ -71,34 +69,33 @@ int main(int argc, char *argv[])
 		}
 
 		//send the logged samples over MQTT protocol (JSON Format)
-		if (logged && connected)
+		if (logger.logged() && sender.connected())
 		{
 			cout << "\nsending data..." << flush;
-
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), tmbuf, adxl357.getSensitivityFactor());
-			//Publish to the topic
+
+
 			sender.send(payload, "ADXL357");
 			cout << "OK" << endl;
 			samples.clear();
-			logged = false;
+			logger.setLogged(false);
 		}
 	}
 	return 0;
 }
 
 
-
-string buildPayload(vector<Sample> samples, string sensorName, double rate, int range, string timeStamp, double sensitivityFactor)
+string buildPayload(vector<Sample> &samples, string sensorName, double rate, int range, string timeStamp, double sensitivityFactor)
 {
-			std::string sensor = "\"" + sensorName + "\"";
-			std::string sfreq = to_string(rate);
-			std::string srange = to_string(range);
-			std::string nSamples = to_string(samples.size());
-			std::string date = std::string("\"") + timeStamp + std::string("\"");
+			string date = "\"" + timeStamp + "\"";
+			string sensor = "\"" + sensorName + "\"";
+			string sfreq = to_string(rate);
+			string srange = to_string(range);
+			string nSamples = to_string(samples.size());
 
-			std::string xSamples = "[";
-			std::string ySamples = "[";
-			std::string zSamples = "[";
+			string xSamples = "[";
+			string ySamples = "[";
+			string zSamples = "[";
 			for (auto &sample : samples)
 			{
 				sample.convertSample(sensitivityFactor);

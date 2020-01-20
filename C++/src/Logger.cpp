@@ -3,6 +3,7 @@
 Logger::Logger(ADXL357 *adxl357)
 {
 	m_adxl357 = adxl357;
+	m_logged = false;
 }
 
 Logger::~Logger()
@@ -50,6 +51,7 @@ void Logger::log(vector<Sample> &samples, double m_time, bool convert, bool appe
 	}
 	m_adxl357->stop();
 
+	m_logged = true;
 	if (convert)
 	{
 		for (auto &sample : samples)
@@ -93,6 +95,7 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, 
 		}
 	}
 
+	m_logged = true;
 	if (convert)
 	{
 		for (auto &sample : samples)
@@ -100,4 +103,14 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double m_time, 
 			sample.convertSample(m_adxl357->getSensitivityFactor());
 		}
 	}
+}
+
+bool Logger::logged()
+{
+	return m_logged;
+}
+
+void Logger::setLogged(bool logged)
+{
+	m_logged = logged;
 }
