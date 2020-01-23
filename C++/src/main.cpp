@@ -20,7 +20,7 @@ string buildPayload(vector<Sample> &samples, string name, double rate, int range
 string getTimeStamp();
 
 using namespace std;
-using namespace std::chrono;
+//using namespace std::chrono;
 
 int main(int argc, char *argv[])
 {
@@ -117,7 +117,7 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 
 string getTimeStamp()
 {
-	time_t now = system_clock::to_time_t(system_clock::now());
+	time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	return std::string(ctime(&now));
 }
 
