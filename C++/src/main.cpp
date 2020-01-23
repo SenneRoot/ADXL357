@@ -50,12 +50,10 @@ int main(int argc, char *argv[])
 	{
 		Logger logger(&adxl357);
 		string timeStamp;
-		//char tmbuf[32];
 
 		if (!read_btn(btn_pin))
 		{
 			timeStamp = getTimeStamp();
-			//strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
 
@@ -119,11 +117,10 @@ string getTimeStamp()
 {
 	//time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	//return std::string(ctime(&now));
-	time_t rawtime;
-  std::time(&rawtime);
-  time_t *tinfo = std::localtime(&rawtime);
-  char buffer[12];
-  strftime(buffer, sizeof(buffer), "%F", tinfo);
+	time_t time;
+	char buffer[12];
+  std::time(&time);
+  strftime(buffer, sizeof(buffer), "%F %T", localtime(&time));
   return std::string(buffer);
 }
 
