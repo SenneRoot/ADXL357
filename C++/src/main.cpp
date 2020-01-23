@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 		{
 			//time_t t = system_clock::to_time_t(system_clock::now());
 			now = system_clock::to_time_t(system_clock::now());
-			t =ctime(&now);
+			timeStamp = std::string(ctime(&now));
 			//strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
