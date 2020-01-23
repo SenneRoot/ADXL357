@@ -17,6 +17,7 @@
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
 string buildPayload(vector<Sample> &samples, string name, double rate, int range, string timeStamp, double sensitivityFactor);
+string getTimeStamp();
 
 using namespace std;
 using namespace std::chrono;
@@ -26,7 +27,7 @@ int main(int argc, char *argv[])
 	//create vector to save the samples into
 	vector<Sample> samples;
 	ADXL357 adxl357;
-	const double time = 0.005;
+	const double polling_time = 0.005;
 	const int btn_pin = 8;
 
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
@@ -48,24 +49,21 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		Logger logger(&adxl357);
-		time_t now;
 		string timeStamp;
-		char* t;
 		//char tmbuf[32];
 
 		if (!read_btn(btn_pin))
 		{
-			//time_t t = system_clock::to_time_t(system_clock::now());
 			now = system_clock::to_time_t(system_clock::now());
-			timeStamp = std::string(ctime(&now));
+			timeStamp = getTimeStamp();
 			//strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
 
-			//log Continuous, the time parameter determines the polling interval
+			//log Continuous, the polling_time parameter determines the polling interval
 			while (!digitalRead(btn_pin))
 			{
-				logger.logContinuous(samples, rate, time, false);
+				logger.logContinuous(samples, rate, polling_time, false);
 				//printf("\rLogging ---> %6d", samples.size());
 				//fflush(stdout);
 			}
@@ -116,6 +114,12 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 			zSamples += "]";
 
 			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
+}
+
+string getTimeStamp()
+{
+	time_t now = system_clock::to_time_t(system_clock::now());
+	return std::string(ctime(&now));
 }
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
