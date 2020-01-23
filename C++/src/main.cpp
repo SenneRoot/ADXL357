@@ -50,13 +50,14 @@ int main(int argc, char *argv[])
 		Logger logger(&adxl357);
 		time_t now;
 		string timeStamp;
+		char* t;
 		//char tmbuf[32];
 
 		if (!read_btn(btn_pin))
 		{
 			//time_t t = system_clock::to_time_t(system_clock::now());
 			now = system_clock::to_time_t(system_clock::now());
-			timeStamp = to_string(ctime(&now));
+			t =ctime(&now);
 			//strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
