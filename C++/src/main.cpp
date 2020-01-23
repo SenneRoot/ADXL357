@@ -2,6 +2,7 @@
 #include <chrono>
 #include <unistd.h>
 #include <stdio.h>
+#include <ctime>
 #include <wiringPi.h>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
@@ -47,12 +48,16 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		Logger logger(&adxl357);
-		char tmbuf[32];
+		time_t now;
+		string timeStamp
+		//char tmbuf[32];
 
 		if (!read_btn(btn_pin))
 		{
 			time_t t = system_clock::to_time_t(system_clock::now());
-			strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
+			now = time(0);
+			timeStamp = to_string(ctime(&now));
+			//strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
 
@@ -72,7 +77,7 @@ int main(int argc, char *argv[])
 		if (logger.logged() && sender.connected())
 		{
 			cout << "\nsending data..." << flush;
-			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), tmbuf, adxl357.getSensitivityFactor());
+			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor());
 
 			sender.send(payload, "ADXL357");
 			cout << "OK" << endl;
