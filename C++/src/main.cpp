@@ -117,8 +117,14 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 
 string getTimeStamp()
 {
-	time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-	return std::string(ctime(&now));
+	//time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	//return std::string(ctime(&now));
+	time_t rawtime;
+  std::time(&rawtime);
+  time_t *tinfo = std::localtime(&rawtime);
+  char buffer[12];
+  strftime(buffer, sizeof(buffer), "%F", tinfo);
+  return std::string(buffer);
 }
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
