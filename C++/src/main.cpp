@@ -119,9 +119,10 @@ string getTimeStamp()
 	//return std::string(ctime(&now));
 
 	char tmbuf[32];
-	time_t t = std::chrono::to_time_t( std::chrono::system_clock::now());
+	//time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	time_t t = std::time(NULL);
 	strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
-  return std::string(tmbuf);
+ 	return std::string(tmbuf);
 }
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
