@@ -16,7 +16,7 @@
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
-string buildPayload(vector<Sample> &samples, string name, double rate, int range, string timeStamp, double sensitivityFactor);
+string buildPayload(vector<Sample> &samples, string name, double rate, int range, string timeStamp, double sensitivityFactor, int nfifoOverranged);
 string getTimeStamp();
 
 using namespace std;
