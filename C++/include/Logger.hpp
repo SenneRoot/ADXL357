@@ -15,7 +15,7 @@ public:
 	void log(vector<Sample> &samples, double time = 1, bool convert = true, bool appendSamples = false);
 	void logContinuous(vector<Sample> &samples, double rate, double time = 0.5, bool convert = true);
 	bool logged();
-	bool numFifoOveranged();
+	int  numFifoOveranged();
 	void setLogged(bool logged);
 private:
 	ADXL357 *m_adxl357;
