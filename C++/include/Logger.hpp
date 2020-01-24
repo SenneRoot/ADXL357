@@ -12,13 +12,15 @@ public:
 	Logger(ADXL357 *adxl357);
 	~Logger();
 
-	void log(vector<Sample> &samples, double m_time = 1, bool convert = true, bool appendSamples = false);
-	void logContinuous(vector<Sample> &samples, double rate, double m_time = 0.5, bool convert = true);
+	void log(vector<Sample> &samples, double time = 1, bool convert = true, bool appendSamples = false);
+	void logContinuous(vector<Sample> &samples, double rate, double time = 0.5, bool convert = true);
 	bool logged();
+	bool numFifoOveranged();
 	void setLogged(bool logged);
 private:
 	ADXL357 *m_adxl357;
 	bool m_logged;
+	int m_nfifoOverranged;
 };
 
 #endif

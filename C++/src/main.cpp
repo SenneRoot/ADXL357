@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 		if (logger.logged() && sender.connected())
 		{
 			cout << "\nsending data..." << flush;
-			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor());
+			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor(), logger.numFifoOveranged());
 
 			sender.send(payload, "ADXL357");
 			cout << "OK" << endl;
@@ -84,14 +84,14 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-
-string buildPayload(vector<Sample> &samples, string sensorName, double rate, int range, string timeStamp, double sensitivityFactor)
+string buildPayload(vector<Sample> &samples, string sensorName, double rate, int range, string timeStamp, double sensitivityFactor, int nfifoOverranged)
 {
-			string date = "\"" + timeStamp + "\"";
+			string date = "\"" + timeStamp + "\"";							//as a json string type
 			string sensor = "\"" + sensorName + "\"";
-			string sfreq = to_string(rate);
+			string sfreq = to_string(rate);											//as a json number type
 			string srange = to_string(range);
 			string nSamples = to_string(samples.size());
+			string sfifoOverranged = to_string(nfifoOverranged);
 
 			string xSamples = "[";
 			string ySamples = "[";
@@ -110,19 +110,18 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 			ySamples += "]";
 			zSamples += "]";
 
-			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
+			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"NUM_FIFO_OVER\" : " + sfifoOverranged + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
 }
 
 string getTimeStamp()
 {
-	//time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-	//return std::string(ctime(&now));
-
 	char tmbuf[32];
-	//time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 	time_t t = std::time(NULL);
 	strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
- 	return std::string(tmbuf);
+	//this will return time in for example, 2020-01-23 10:11:12
+	return std::string(tmbuf);
+	//this will return time in for example, thu 23 jan 10:11:12 2020
+	//return std::string(ctime(&now));
 }
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
