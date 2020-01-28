@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <ctime>
+#include <thread>
 #include <wiringPi.h>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
