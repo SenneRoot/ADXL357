@@ -75,7 +75,9 @@ int main(int argc, char *argv[])
 			cout << "\nsending data..." << flush;
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor(), logger.numFifoOveranged());
 
-			sender.send(payload, "ADXL357");
+			//sender.send(payload, "ADXL357");
+			std::thread th(&Sender::send, &sender, payload, "ADXL357");
+			th.detach();
 			cout << "OK" << endl;
 			samples.clear();
 			logger.setLogged(false);

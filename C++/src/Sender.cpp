@@ -43,6 +43,27 @@ Sender::~Sender()
 	}
 }
 
+
+bool reConnect()
+{
+	try
+	{
+		// Connect to the MQTT broker
+		//cout << "MQTT version: " << m_conn_opt.get_mqtt_version() << endl;
+		cout << "Connecting to server '" << address << "'..." << flush;
+		mqtt::token_ptr tok = m_cli->connect(m_conn_opt);
+		auto connRsp = tok->get_connect_response();
+		cout << "OK (" << connRsp.get_server_uri() << ")" << endl;
+		m_connected = true;
+		//cout << "OK\n" << endl;
+	}
+	catch (const mqtt::exception &exc)
+	{
+		cerr << exc.what() << endl;
+		m_connected = false;
+	}
+}
+
 void Sender::send(std::string payload, std::string topic)
 {
 	mqtt::message_ptr msg = mqtt::make_message(topic, payload);

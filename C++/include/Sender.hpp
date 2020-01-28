@@ -18,6 +18,7 @@ public:
 	~Sender();
 
 	void send(std::string payload, std::string topic);
+	bool reConnect();
 	bool connected();
 
 private:
