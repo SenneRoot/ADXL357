@@ -44,13 +44,13 @@ Sender::~Sender()
 }
 
 
-bool reConnect()
+bool Sender::reConnect()
 {
 	try
 	{
 		// Connect to the MQTT broker
 		//cout << "MQTT version: " << m_conn_opt.get_mqtt_version() << endl;
-		cout << "Connecting to server '" << address << "'..." << flush;
+		cout << "Connecting to server '" << m_address << "'..." << flush;
 		mqtt::token_ptr tok = m_cli->connect(m_conn_opt);
 		auto connRsp = tok->get_connect_response();
 		cout << "OK (" << connRsp.get_server_uri() << ")" << endl;
