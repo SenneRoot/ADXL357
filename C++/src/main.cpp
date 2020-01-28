@@ -83,6 +83,10 @@ int main(int argc, char *argv[])
 			samples.clear();
 			logger.setLogged(false);
 		}
+		else
+		{
+			samples.clear();
+		}
 	}
 	return 0;
 }

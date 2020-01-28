@@ -62,6 +62,8 @@ bool Sender::reConnect()
 		cerr << exc.what() << endl;
 		m_connected = false;
 	}
+
+	return m_connected;
 }
 
 void Sender::send(std::string payload, std::string topic)
