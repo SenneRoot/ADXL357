@@ -21,7 +21,7 @@ Sender::Sender(std::string address, std::string client_id, int qos, int mqtt_ver
 		cout << "Connecting to server '" << address << "'..." << flush;
 		mqtt::token_ptr tok = m_cli->connect(m_conn_opt);
 		auto connRsp = tok->get_connect_response();
-		cout << "OK (" << connRsp.get_server_uri() << ")" << endl;
+		cout << "OK (" << connRsp.get_server_uri() << ")" << "QoS: " << m_qos << endl;
 		m_connected = true;
 		//cout << "OK\n" << endl;
 	}
