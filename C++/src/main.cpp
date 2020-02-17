@@ -10,10 +10,10 @@
 #include "Sample.hpp"
 #include "Sender.hpp"
 
-#define MQTT_BROKER_ADDR "tcp://localhost:1883"
-#define MQTT_CLIENT_ID	 ""
-#define MQTT_QOS				 0
-#define MQTT_VER				 MQTTVERSION_3_1_1
+#define MQTT_BROKER_ADDR	"tcp://localhost:1883"
+#define MQTT_CLIENT_ID 		""
+#define MQTT_QOS 					1
+#define MQTT_VER 					MQTTVERSION_3_1_1
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 	setupGPIO({btn_pin}, {});
 
 	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
-	if(!sender.connected())
+	if (!sender.connected())
 	{
 		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
 	}
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
 			logger.setLogged(true);
-			}
+		}
 
 		//send the logged samples over MQTT protocol (JSON Format)
 		if (logger.logged() && sender.connected())
@@ -93,31 +93,31 @@ int main(int argc, char *argv[])
 
 string buildPayload(vector<Sample> &samples, string sensorName, double rate, int range, string timeStamp, double sensitivityFactor, int nfifoOverranged)
 {
-			string date = "\"" + timeStamp + "\"";							//as a json string type
-			string sensor = "\"" + sensorName + "\"";
-			string sfreq = to_string(rate);											//as a json number type
-			string srange = to_string(range);
-			string nSamples = to_string(samples.size());
-			string sfifoOverranged = to_string(nfifoOverranged);
+	string date = "\"" + timeStamp + "\""; //as a json string type
+	string sensor = "\"" + sensorName + "\"";
+	string sfreq = to_string(rate); //as a json number type
+	string srange = to_string(range);
+	string nSamples = to_string(samples.size());
+	string sfifoOverranged = to_string(nfifoOverranged);
 
-			string xSamples = "[";
-			string ySamples = "[";
-			string zSamples = "[";
-			for (auto &sample : samples)
-			{
-				sample.convertSample(sensitivityFactor);
-				xSamples += to_string(sample.getX()) + ",";
-				ySamples += to_string(sample.getY()) + ",";
-				zSamples += to_string(sample.getZ()) + ",";
-			}
-			xSamples.pop_back();
-			ySamples.pop_back();
-			zSamples.pop_back();
-			xSamples += "]";
-			ySamples += "]";
-			zSamples += "]";
+	string xSamples = "[";
+	string ySamples = "[";
+	string zSamples = "[";
+	for (auto &sample : samples)
+	{
+		sample.convertSample(sensitivityFactor);
+		xSamples += to_string(sample.getX()) + ",";
+		ySamples += to_string(sample.getY()) + ",";
+		zSamples += to_string(sample.getZ()) + ",";
+	}
+	xSamples.pop_back();
+	ySamples.pop_back();
+	zSamples.pop_back();
+	xSamples += "]";
+	ySamples += "]";
+	zSamples += "]";
 
-			return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"NUM_FIFO_OVER\" : " + sfifoOverranged + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
+	return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"NUM_FIFO_OVER\" : " + sfifoOverranged + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
 }
 
 string getTimeStamp()
@@ -135,13 +135,13 @@ void setupGPIO(vector<int> inputs, vector<int> outputs)
 {
 	wiringPiSetup();
 
-	for(const auto& input : inputs)
+	for (const auto &input : inputs)
 	{
 		pinMode(input, INPUT);
 		pullUpDnControl(input, PUD_UP);
 	}
 
-	for(const auto& output : outputs)
+	for (const auto &output : outputs)
 	{
 		pinMode(output, OUTPUT);
 		pullUpDnControl(output, PUD_UP);

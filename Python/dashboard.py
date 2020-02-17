@@ -15,6 +15,16 @@ import scipy
 import warnings
 import os
 
+def find_json_files(base):
+  allFiles = []
+  for subdir, dirs, files in os.walk(base):
+    for file in files:
+      #print os.path.join(subdir, file)
+      filepath = subdir + os.sep + file
+      if filepath.endswith(".json"):
+        #print (filepath)
+        allFiles.append(filepath)
+  return allFiles
 
 def fft_plot(samples, freq, num_samples):
     fig_fft = go.Figure()
@@ -37,8 +47,9 @@ def fft_plot(samples, freq, num_samples):
     return fig, fig_fft
 
 app = dash.Dash('Accel-data', external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"])
-files_all = os.listdir("data/")
-files = [i for i in files_all if i.endswith('.json')]
+#files_all = os.listdir("data/")
+#files = [i for i in files_all if i.endswith('.json')]
+files = find_json_files("data")
 data_file = files[0]
 
 app.layout = html.Div([
@@ -46,6 +57,9 @@ app.layout = html.Div([
         html.H2('ADXL357 vibration analysis', id='out',
                 style={'float': 'left',}),
         ]),
+    html.Div([
+    html.Button('Refresh', id='button')
+    ]),
     html.Div([
     dcc.Dropdown(id='Data-files',
                 options=[{'label': s, 'value': s} for s in files],
@@ -57,6 +71,17 @@ app.layout = html.Div([
     ], className="container",style={'width':'98%','margin-left':10,'margin-right':10,'max-width':50000})
 
 
+
+@app.callback(
+    dash.dependencies.Output('Data-files', 'options'),
+    [dash.dependencies.Input('button', 'n_clicks')]
+)
+def update_date_dropdown(n_clicks):
+    #files_all = os.listdir("data/")
+    files = find_json_files("data")
+    return [{'label': i, 'value': i} for i in files]
+
+
 @app.callback(Output('graphs', 'children'), 
 [Input('Data-files', 'value')])
 def update_file_name(value):
@@ -66,7 +91,13 @@ def update_file_name(value):
 
     class_choice = 'col s12 m12 l12'
 
-    d = pd.read_json("data/" + data_file)
+    #d = pd.read_json("data/" + data_file)
+    try:
+      d = pd.read_json(data_file)
+    except ValueError:
+      print("Error reading file!")
+      return
+
     df = pd.DataFrame(d[['xSamples', 'ySamples', 'zSamples']])
 
     fig, fig_fft = fft_plot(df, d['Frequency'].values[0], d['NumberSamples'].values[0])
@@ -84,6 +115,7 @@ def update_file_name(value):
             ), className=class_choice))
     
     return graphs
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
