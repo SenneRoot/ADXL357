@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
 	setupGPIO({btn_pin}, {});
 
 
-	address = MQTT_BROKER_ADDR;
+	string address = MQTT_BROKER_ADDR;
 	if (argc > 1)
-		address = argv[1];
+		string address = to_string(argv[1]);
 
 
 	Sender sender(address, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
