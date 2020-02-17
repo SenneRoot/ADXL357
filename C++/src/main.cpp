@@ -34,7 +34,13 @@ int main(int argc, char *argv[])
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
 	setupGPIO({btn_pin}, {});
 
-	Sender sender(MQTT_BROKER_ADDR, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
+
+	address = MQTT_BROKER_ADDR;
+	if (argc > 1)
+		address = argv[1];
+
+
+	Sender sender(address, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
 	if (!sender.connected())
 	{
 		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
