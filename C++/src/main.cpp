@@ -3,25 +3,16 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <ctime>
-#include <thread>
 #include <wiringPi.h>
 #include "ADXL357.hpp"
 #include "Logger.hpp"
 #include "Sample.hpp"
 #include "Sender.hpp"
 
-#define MQTT_BROKER_ADDR	"tcp://localhost:1883"
-#define MQTT_CLIENT_ID 		""
-#define MQTT_QOS 					1
-#define MQTT_VER 					MQTTVERSION_3_1_1
-
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
-string buildPayload(vector<Sample> &samples, string name, double rate, int range, string timeStamp, double sensitivityFactor, int nfifoOverranged);
-string getTimeStamp();
 
 using namespace std;
-//using namespace std::chrono;
 
 int main(int argc, char *argv[])
 {
@@ -31,23 +22,14 @@ int main(int argc, char *argv[])
 	const double polling_time = 0.005;
 	const int btn_pin = 8;
 
-	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
-	setupGPIO({btn_pin}, {});
-
-
-	string address = MQTT_BROKER_ADDR;
+	string file_name = "results";
 	if (argc > 1)
 	{
-		address = argv[1];
+		file_name = argv[1];
 	}
 
-	Sender sender(address, MQTT_CLIENT_ID, MQTT_QOS, MQTT_VER);
-
-	if (!sender.connected())
-	{
-		cout << "Warning!! Not connected to the MQTT broker please restart to send data!" << endl;
-	}
-
+	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
+	setupGPIO({btn_pin}, {});
 	//setup ADXL357 sensor
 	adxl357.stop();
 	adxl357.setRange(SET_RANGE_10G);
@@ -70,8 +52,8 @@ int main(int argc, char *argv[])
 			while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, polling_time, false);
-				//printf("\rLogging ---> %6d", samples.size());
-				//fflush(stdout);
+				printf("\rLogging ---> %6d", samples.size());
+				fflush(stdout);
 			}
 			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
@@ -79,14 +61,13 @@ int main(int argc, char *argv[])
 		}
 
 		//send the logged samples over MQTT protocol (JSON Format)
-		if (logger.logged() && sender.connected())
+		if (logger.logged())
 		{
-			cout << "\nsending data..." << flush;
+			cout << "\nSaving data..." << flush;
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor(), logger.numFifoOveranged());
-
-			//sender.send(payload, "ADXL357");
-			std::thread th(&Sender::send, &sender, payload, "ADXL357");
-			th.detach();
+			std::ofstream out(to_string(file_name) + ".json");
+    		out << payload;
+    		out.close();
 			cout << "OK" << endl;
 			samples.clear();
 			logger.setLogged(false);
