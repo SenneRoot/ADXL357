@@ -1,3 +1,4 @@
+#include <fstream>
 #include <string>
 #include <chrono>
 #include <unistd.h>
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 		file_name = argv[1];
 	}
 
-	file_name = file_name + ".json"
+	file_name = file_name + ".json";
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
 	setupGPIO({btn_pin}, {});
 	//setup ADXL357 sensor
