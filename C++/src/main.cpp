@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 		file_name = argv[1];
 	}
 
+	file_name = file_name + ".json"
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
 	setupGPIO({btn_pin}, {});
 	//setup ADXL357 sensor
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
 		{
 			cout << "\nSaving data..." << flush;
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor(), logger.numFifoOveranged());
-			std::ofstream out(file_name + to_string(".json"));
+			std::ofstream out(file_name);
     	out << payload;
     	out.close();
 			cout << "OK" << endl;
