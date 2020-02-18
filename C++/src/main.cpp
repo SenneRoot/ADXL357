@@ -11,6 +11,8 @@
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
+string buildPayload(vector<Sample> &samples, string name, double rate, int range, string timeStamp, double sensitivityFactor, int nfifoOverranged);
+string getTimeStamp();
 
 using namespace std;
 
@@ -65,9 +67,9 @@ int main(int argc, char *argv[])
 		{
 			cout << "\nSaving data..." << flush;
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor(), logger.numFifoOveranged());
-			std::ofstream out(to_string(file_name) + ".json");
-    		out << payload;
-    		out.close();
+			std::ofstream out(file_name + to_string(".json"));
+    	out << payload;
+    	out.close();
 			cout << "OK" << endl;
 			samples.clear();
 			logger.setLogged(false);
