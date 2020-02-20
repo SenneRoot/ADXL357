@@ -9,8 +9,10 @@ C++ ADXL357 datalogger used to analyze machine vibrations
 Compile using make in [C++](C++) directory.
 
 run with:
-    ./bin/ADXL357 MQTT_BROKER_IP (optional, defaults to localhost)
 
+'''
+./bin/ADXL357 MQTT_BROKER_IP (optional, defaults to localhost)
+'''
 ### Dependecies
 
 1. [Paho mqtt c++](https://github.com/eclipse/paho.mqtt.cpp)
