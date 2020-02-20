@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
 			cout << "start logging!" << endl;
 			//log Continuous, the polling_time parameter determines the polling interval
-			while (!digitalRead(btn_pin))
+			while (!read_btn(btn_pin))
 			{
 				logger.logContinuous(samples, rate, polling_time, false);
 				//printf("\rLogging ---> %6d", samples.size());
