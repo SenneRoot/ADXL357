@@ -21,7 +21,6 @@ string buildPayload(vector<Sample> &samples, string name, double rate, int range
 string getTimeStamp();
 
 using namespace std;
-//using namespace std::chrono;
 
 int main(int argc, char *argv[])
 {
