@@ -47,9 +47,7 @@ def fft_plot(samples, freq, num_samples):
     return fig, fig_fft
 
 app = dash.Dash('Accel-data', external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"])
-#files_all = os.listdir("data/")
-#files = [i for i in files_all if i.endswith('.json')]
-files = find_json_files("data")
+files = find_json_files("..\data")
 data_file = files[0]
 
 app.layout = html.Div([
@@ -61,7 +59,7 @@ app.layout = html.Div([
 html.Div([
     html.Div([
         dcc.Dropdown(id='Data-files',
-                options=[{'label': s, 'value': s} for s in files],
+                options=[{'label': s[8:], 'value': s} for s in files],
                 value=data_file,
                 multi=False
                 )
@@ -82,8 +80,8 @@ dcc.Interval(
 [Input('interval-component', 'n_intervals')])
 def update_dropdown(nk):
     #files_all = os.listdir("data/")
-    files = find_json_files("data")
-    return [{'label': i, 'value': i} for i in files]
+    files = find_json_files("..\data")
+    return [{'label': i[8:], 'value': i} for i in files]
 
 @app.callback(Output('graphs', 'children'), 
 [Input('Data-files', 'value')])
