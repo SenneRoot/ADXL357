@@ -68,15 +68,6 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double time, bo
 	if (m_adxl357 == nullptr)
 		return;
 
-	if (samples.empty())
-	{
-		//read status reg to clear it from previous statuses
-		m_adxl357->fifoFull();
-		//m_adxl357->stop();
-		//m_adxl357->emptyFifo();
-		//m_adxl357->start();
-	}
-
 	size_t nSamples = time * rate;
 	size_t retrievedSamples = 0;
 	//double period = 1 / m_adxl357->getRate();

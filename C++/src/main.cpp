@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 {
 	//create vector to save the samples into
 	vector<Sample> samples;
-	ADXL357 adxl357;
+	ADXL357 adxl357(0, 5000000);
 	const double polling_time = 0.020;
 	const int btn_pin = 8;
 
@@ -64,14 +64,12 @@ int main(int argc, char *argv[])
 
 		if (!read_btn(btn_pin))
 		{
-			timeStamp = getTimeStamp();
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
+			timeStamp = getTimeStamp();
 			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-			cout << "sensor started" << endl;
+			//std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-			cout << "start logging!" << endl;
 			//log Continuous, the polling_time parameter determines the polling interval
 			while (!read_btn(btn_pin))
 			{
@@ -80,7 +78,6 @@ int main(int argc, char *argv[])
 				//fflush(stdout);
 			}
 			//its now safe to put the sensor back in standby mode
-			cout << "Logging done" << endl;
 			adxl357.stop();
 			logger.setLogged(true);
 		}
