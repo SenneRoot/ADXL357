@@ -61,9 +61,9 @@ int main(int argc, char *argv[])
 
 		if (!read_btn(btn_pin))
 		{
-			timeStamp = getTimeStamp();
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
+			timeStamp = getTimeStamp();
 			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
 			std::this_thread::sleep_for (std::chrono::milliseconds(15));
 
