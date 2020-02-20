@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 {
 	//create vector to save the samples into
 	vector<Sample> samples;
-	ADXL357 adxl357();
+	ADXL357 adxl357;
 	const double polling_time = 0.005;
 	const int btn_pin = 8;
 
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 
 			//log Continuous, the polling_time parameter determines the polling interval
 			logger.log(samples, 4, false, false);
-			
+
 			/*while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, polling_time, false);
