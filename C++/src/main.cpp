@@ -49,9 +49,9 @@ int main(int argc, char *argv[])
 
 	//setup ADXL357 sensor
 	adxl357.stop();
-	adxl357.emptyFifo()
+	adxl357.emptyFifo();
 	adxl357.fifoFull();
-	
+
 	adxl357.setRange(SET_RANGE_10G);
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
 	adxl357.dumpInfo();
