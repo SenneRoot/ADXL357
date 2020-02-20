@@ -35,6 +35,8 @@ void Logger::log(vector<Sample> &samples, double time, bool convert, bool append
 	//double period = 1 / m_adxl357->getRate();
 
 	m_adxl357->start();
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	
 	while (retrievedSamples < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())

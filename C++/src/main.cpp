@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 {
 	//create vector to save the samples into
 	vector<Sample> samples;
-	ADXL357 adxl357(0, 5000000);
-	const double polling_time = 0.020;
+	ADXL357 adxl357();
+	const double polling_time = 0.005;
 	const int btn_pin = 8;
 
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
@@ -65,20 +65,23 @@ int main(int argc, char *argv[])
 		if (!read_btn(btn_pin))
 		{
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
-			adxl357.start();
+			//adxl357.start();
 			timeStamp = getTimeStamp();
 			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
 			//std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
 			//log Continuous, the polling_time parameter determines the polling interval
-			while (!read_btn(btn_pin))
+			logger.log(samples, 4, false, false);
+			
+			/*while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, polling_time, false);
 				//printf("\rLogging ---> %6d", samples.size());
 				//fflush(stdout);
-			}
+			}*/
 			//its now safe to put the sensor back in standby mode
-			adxl357.stop();
+			//adxl357.stop();
+
 			logger.setLogged(true);
 		}
 
