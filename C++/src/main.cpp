@@ -68,12 +68,8 @@ int main(int argc, char *argv[])
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
 			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
-			//std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			cout << "sensor started" << endl;
-			while (!adxl357.hasNewData())
-			{
-				continue;
-			}
 
 			cout << "start logging!" << endl;
 			//log Continuous, the polling_time parameter determines the polling interval
