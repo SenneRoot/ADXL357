@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	//create vector to save the samples into
 	vector<Sample> samples;
 	ADXL357 adxl357;
-	const double polling_time = 0.005;
+	const double polling_time = 0.020;
 	const int btn_pin = 8;
 
 	// Setup the GPIO wiring pi lib, pass btn_pin in as a input
