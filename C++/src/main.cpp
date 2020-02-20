@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
 			timeStamp = getTimeStamp();
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
-			//let the adxl startup according to datasheet typical <10 ms
-			std::this_thread::sleep_for (std::chrono::milliseconds(10));
+			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
+			std::this_thread::sleep_for (std::chrono::milliseconds(15));
 
 			//log Continuous, the polling_time parameter determines the polling interval
 			while (!digitalRead(btn_pin))
@@ -162,7 +162,7 @@ bool read_btn(int btnPin)
 	//debounce pin
 	if (!digitalRead(btnPin) || digitalRead(btnPin))
 	{
-		usleep(1);
+		std::this_thread::sleep_for (std::chrono::milliseconds(1));
 		return digitalRead(btnPin);
 	}
 	//should never reach this part
