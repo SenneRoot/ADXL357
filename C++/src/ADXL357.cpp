@@ -328,9 +328,9 @@ void ADXL357::getFifo(vector<Sample> *samples)
 		//read(REG_FIFO_DATA, bufy, 3);
 		//read(REG_FIFO_DATA, bufz, 3);
 
-		sample.setRawX((((uint32_t)bufx[0]) << 16) | ((uint32_t)bufx[1] << 8) | ((uint32_t)bufx[2]));
-		sample.setRawY((((uint32_t)bufy[3]) << 16) | ((uint32_t)bufy[4] << 8) | ((uint32_t)bufy[5]));
-		sample.setRawZ((((uint32_t)bufz[6]) << 16) | ((uint32_t)bufz[7] << 8) | ((uint32_t)bufz[8]));
+		sample.setRawX((((uint32_t)buf[0]) << 16) | ((uint32_t)buf[1] << 8) | ((uint32_t)buf[2]));
+		sample.setRawY((((uint32_t)buf[3]) << 16) | ((uint32_t)buf[4] << 8) | ((uint32_t)buf[5]));
+		sample.setRawZ((((uint32_t)buf[6]) << 16) | ((uint32_t)buf[7] << 8) | ((uint32_t)buf[8]));
 
 		samples->push_back(sample);
 
