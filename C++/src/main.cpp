@@ -162,7 +162,7 @@ bool read_btn(int btnPin)
 	//debounce pin
 	if (!digitalRead(btnPin) || digitalRead(btnPin))
 	{
-		std::this_thread::sleep_for (std::chrono::milliseconds(1));
+		std::this_thread::sleep_for (std::chrono::milliseconds(10));
 		return digitalRead(btnPin);
 	}
 	//should never reach this part
