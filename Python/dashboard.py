@@ -57,30 +57,33 @@ app.layout = html.Div([
         html.H2('ADXL357 vibration analysis', id='out',
                 style={'float': 'left',}),
         ]),
+
+html.Div([
     html.Div([
-    html.Button('Refresh', id='button')
-    ]),
-    html.Div([
-    dcc.Dropdown(id='Data-files',
+        dcc.Dropdown(id='Data-files',
                 options=[{'label': s, 'value': s} for s in files],
                 value=data_file,
                 multi=False
-                ),
+                )
         ]),
-    html.Div(children=html.Div(id='graphs'), className='row')
+
+html.Div(children=html.Div(id='graphs'), className='row'),
+dcc.Interval(
+            id='interval-component',
+            interval=5000, # in milliseconds
+            n_intervals=0
+        )
     ], className="container",style={'width':'98%','margin-left':10,'margin-right':10,'max-width':50000})
+])
 
 
 
-@app.callback(
-    dash.dependencies.Output('Data-files', 'options'),
-    [dash.dependencies.Input('button', 'n_clicks')]
-)
-def update_date_dropdown(n_clicks):
+@app.callback(Output('Data-files', 'options'),
+[Input('interval-component', 'n_intervals')])
+def update_dropdown(nk):
     #files_all = os.listdir("data/")
     files = find_json_files("data")
     return [{'label': i, 'value': i} for i in files]
-
 
 @app.callback(Output('graphs', 'children'), 
 [Input('Data-files', 'value')])
