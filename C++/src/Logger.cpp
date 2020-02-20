@@ -74,6 +74,11 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double time, bo
 	size_t retrievedSamples = 0;
 	//double period = 1 / m_adxl357->getRate();
 
+	if(samples.empty())
+	{
+		m_adxl357->emptyFifo();
+	}
+
 	while (retrievedSamples < nSamples)
 	{
 		if (m_adxl357->fifoOverRange())
