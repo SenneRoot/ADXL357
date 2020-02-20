@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 			adxl357.start();
 			timeStamp = getTimeStamp();
 			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
-			std::this_thread::sleep_for (std::chrono::milliseconds(10));
+			std::this_thread::sleep_for (std::chrono::microseconds(10));
 
 			//log Continuous, the polling_time parameter determines the polling interval
 			while (!digitalRead(btn_pin))
