@@ -68,16 +68,14 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double time, bo
 	if (m_adxl357 == nullptr)
 		return;
 
-	if (samples.empty())
+	/*if (samples.empty())
 	{
 		//read status reg to clear it from previous statuses
 		m_adxl357->fifoFull();
 		m_adxl357->stop();
 		m_adxl357->emptyFifo();
 		m_adxl357->start();
-		//give it time to start up again
-		std::this_thread::sleep_for (std::chrono::milliseconds(15));
-	}
+	}*/
 
 	size_t nSamples = time * rate;
 	size_t retrievedSamples = 0;
