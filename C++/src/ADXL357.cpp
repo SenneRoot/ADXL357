@@ -315,27 +315,25 @@ void ADXL357::getFifo(vector<Sample> *samples)
 {
 	Sample sample;
 	uint8_t bufx[3], bufy[3], bufz[3];
-	uint8_t buf[9];
 
-	if (!read(REG_FIFO_DATA, buf, 9))
+	if (!read(REG_FIFO_DATA, bufx, 3))
 	{
 		cout << "Reading FIFO Failed!" << endl;
 		return;
 	}
 
-	while ((buf[2] & 0b10) == 0)
+	while ((bufx[2] & 0b10) == 0)
 	{
-		//read(REG_FIFO_DATA, bufy, 3);
-		//read(REG_FIFO_DATA, bufz, 3);
+		read(REG_FIFO_DATA, bufy, 3);
+		read(REG_FIFO_DATA, bufz, 3);
 
-		sample.setRawX((((uint32_t)buf[0]) << 16) | ((uint32_t)buf[1] << 8) | ((uint32_t)buf[2]));
-		sample.setRawY((((uint32_t)buf[3]) << 16) | ((uint32_t)buf[4] << 8) | ((uint32_t)buf[5]));
-		sample.setRawZ((((uint32_t)buf[6]) << 16) | ((uint32_t)buf[7] << 8) | ((uint32_t)buf[8]));
+		sample.setRawX((((uint32_t)bufx[0]) << 16) | ((uint32_t)bufx[1] << 8) | ((uint32_t)bufx[2]));
+		sample.setRawY((((uint32_t)bufy[0]) << 16) | ((uint32_t)bufy[1] << 8) | ((uint32_t)bufy[2]));
+		sample.setRawZ((((uint32_t)bufz[0]) << 16) | ((uint32_t)bufz[1] << 8) | ((uint32_t)bufz[2]));
 
 		samples->push_back(sample);
 
-		//read(REG_FIFO_DATA, bufx, 3);
-		read(REG_FIFO_DATA, buf, 9);
+		read(REG_FIFO_DATA, bufx, 3);
 	}
 }
 
