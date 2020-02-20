@@ -1,6 +1,7 @@
 ###demo code provided by Steve Cope at www.steves-internet-guide.com
 ##email steve@steves-internet-guide.com
 ###Free to use for any purpose
+###Edited by Senne Root to meet requirements
 """
 implements data logging class
 """
