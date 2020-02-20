@@ -11,12 +11,13 @@ options["username"] = ""
 options["password"] = ""
 options["broker"] = "127.0.0.1"
 options["port"] = 1883
+options["QoS"] = 0
 options["verbose"] = True
 options["cname"] = ""
 options["topics"] = [("", 0)]
 options["storechangesonly"] = True
 options["keepalive"] = 60
-options["loglevel"] = "WARNING"
+options["loglevel"] = "INFO"
 options["log_dir"] = "../data"
 options["log_records"] = 5000
 options["number_logs"] = 0
@@ -35,12 +36,10 @@ def command_input(options={}):
     print_options_flag = False
     try:
         opts, args = getopt.getopt(sys.argv[1:], "h:b:jsdk:p:t:q:l:vn:u:P:l:r:f:m")
-        print(opts)
     except getopt.GetoptError:
         print(sys.argv[0], valid_options)
         sys.exit(2)
-    qos = 0
-
+    #qos = 0
     for opt, arg in opts:
         if opt == "-h":
             options["broker"] = str(arg)
@@ -54,6 +53,7 @@ def command_input(options={}):
             topics_in.append(arg)
         elif opt == "-q":
             qos_in.append(int(arg))
+            options["QoS"] = int(arg)
         elif opt == "-n":
             options["cname"] = arg
         elif opt == "-d":

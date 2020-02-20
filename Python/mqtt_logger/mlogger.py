@@ -27,28 +27,39 @@ Data can be stored as plain text or in JSON format """
         self.timenow=time.time()
         self.flush_flag=True
         self.flush_time=2 #flush logs to disk every 2 seconds
+
     def __flushlogs(self): # write to disk 
         self.fo.flush()
         #logging.info("flushing logs")
         os.fsync(self.fo.fileno())
         self.timenow=time.time()
+
     def __del__(self):
         if not self.fo.closed:
-            print("closing log file")
+            logging.info("closing log file")
             self.fo.close()
+            if (self.writecount == 0):
+                os.remove(self.file_name)
+            if (self.count == 0):
+                os.rmdir(self.log_dir)
+
     def close_file(self):
         if not self.fo.closed:
-            print("closing log file")
+            logging.info("closing log file")
             self.fo.close()
+            if (self.writecount == 0):
+                os.remove(self.file_name)
+            if (self.count == 0):
+                os.rmdir(self.log_dir)
+
     def create_log_dir(self,log_dir):
         """
         Function for creating new log directories
         using the timestamp for the name
         """   
-        self.t=time.localtime(time.time())      
-        self.time_stamp=(str(self.t[1])+"-"+str(self.t[2])+"-"+\
-        str(self.t[3])+"-"+str(self.t[4]))                                                                             
-        logging.info("creating sub directory"+str(self.time_stamp))
+        self.t=time.localtime(time.time()) 
+        self.time_stamp = (str(self.t[2]) + "-" + str(self.t[1]) + "-" + str(self.t[0]) + "_" + str(self.t[3]) + "-" + str(self.t[4]) + "-" + str(self.t[5]))                                                                         
+        logging.info("creating sub directory "+str(self.time_stamp))
         try:
             os.stat(self.log_dir)
         except:
@@ -63,7 +74,7 @@ Data can be stored as plain text or in JSON format """
     def get_log_name(self,log_dir,count):
         """get log files and directories"""
         self.log_numbr="{0:003d}".format(count)
-        logging.info("s is"+str(self.log_numbr))
+        logging.info("s is "+str(self.log_numbr))
         self.file_name=self.log_dir+"/"+"log"+self.log_numbr+".json"
         logging.info("creating log file "+self.file_name)
         f = open(self.file_name,'w') #clears file if it exists
@@ -84,8 +95,8 @@ Data can be stored as plain text or in JSON format """
             if self.writecount>=self.log_recs:
                 self.count+=1 #counts number of logs
                 if self.count>self.number_logs and self.number_logs !=0 :
-                      logging.info("too many logs: starting from 0")
-                      self.count=0 #reset
+                    logging.info("too many logs: starting from 0")
+                    self.count=0 #reset
                 self.fo=self.get_log_name(self.log_dir,self.count)
                 self.writecount=0
         except BaseException as e:
