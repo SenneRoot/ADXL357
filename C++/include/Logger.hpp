@@ -3,8 +3,8 @@
 
 #include "Sample.hpp"
 #include "ADXL357.hpp"
-#include "tcpSocket.hpp"
-#include "udpSocket.hpp"
+#include <chrono>
+#include <thread>
 
 class Logger
 {

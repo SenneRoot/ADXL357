@@ -75,6 +75,8 @@ void Logger::logContinuous(vector<Sample> &samples, double rate, double time, bo
 		m_adxl357->stop();
 		m_adxl357->emptyFifo();
 		m_adxl357->start();
+		//give it time to start up again
+		std::this_thread::sleep_for (std::chrono::milliseconds(10))
 	}
 
 	size_t nSamples = time * rate;
