@@ -1,9 +1,15 @@
 
 # ADXL357 Logger and Analyzer
+C++ ADXL357 datalogger used to analyze machine vibrations
 
 ## ADXL357 Logger (Raspberry Pi)
 
-C++ ADXL357 datalogger used to analyze machine vibrations
+### Usage
+
+Compile using make in [C++](C++) directory.
+
+run with:
+    ./bin/ADXL357 MQTT_BROKER_IP (optional, defaults to localhost)
 
 ### Dependecies
 
@@ -16,7 +22,7 @@ C++ ADXL357 datalogger used to analyze machine vibrations
 
 ### Dashboard
 
-The dashboard can be started by running dashboard.py (You may have to install [Dash](https://plot.ly/dash/)). This can be found in the [Python](Python) directory.
+The dashboard can be started by running [dashboard.py](Python/dashboard/dashboard.py) (You may have to install [Dash](https://plot.ly/dash/)). This can be found in the [Python](Python) directory.
 
 ### Log MQTT messages
 
