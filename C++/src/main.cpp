@@ -65,23 +65,20 @@ int main(int argc, char *argv[])
 		if (!read_btn(btn_pin))
 		{
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
-			//adxl357.start();
+			adxl357.start();
 			timeStamp = getTimeStamp();
 			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
-			//std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
 			//log Continuous, the polling_time parameter determines the polling interval
-			logger.log(samples, 4, false, false);
-
-			/*while (!digitalRead(btn_pin))
+			while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, polling_time, false);
 				//printf("\rLogging ---> %6d", samples.size());
 				//fflush(stdout);
-			}*/
+			}
 			//its now safe to put the sensor back in standby mode
-			//adxl357.stop();
-
+			adxl357.stop();
 			logger.setLogged(true);
 		}
 
