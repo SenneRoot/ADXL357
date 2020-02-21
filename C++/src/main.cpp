@@ -127,7 +127,7 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 	ySamples += "]";
 	zSamples += "]";
 
-	return			"{Sensor\" : " + sensor +
+	return "{Sensor\" : " + sensor +
 					", \"Frequency\" : " + sfreq +
 					", \"Range\" : " + srange +
 					", \"Time_stamp\" : " + date +
