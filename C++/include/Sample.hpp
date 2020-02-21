@@ -27,6 +27,7 @@ public:
 	bool getSampleData(double *x, double *y, double *z);
 
 	void convertSample(double factor);
+	bool converted();
 	//implemented in this way to use it as a static function
 	static int32_t convertTwoComp(uint32_t source)
 	{

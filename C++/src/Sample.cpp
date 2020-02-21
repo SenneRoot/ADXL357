@@ -103,3 +103,8 @@ void Sample::convertSample(double factor)
 		m_converted = true;
 	}
 }
+
+bool Sample::converted()
+{
+	return m_converted;
+}

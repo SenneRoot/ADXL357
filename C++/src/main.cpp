@@ -65,16 +65,14 @@ int main(int argc, char *argv[])
 		{
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
-			timeStamp = getTimeStamp();
-			//let the adxl startup according to datasheet typical <10 ms, however, graph shows that this isnt enough
+			timeStamp = getTimeStamp(0);
+			//let the adxl startup according to datasheet typical <10 ms.
 			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
 			//log Continuous, the polling_time parameter determines the polling interval
 			while (!digitalRead(btn_pin))
 			{
 				logger.logContinuous(samples, rate, polling_time, false);
-				//printf("\rLogging ---> %6d", samples.size());
-				//fflush(stdout);
 			}
 			//its now safe to put the sensor back in standby mode
 			adxl357.stop();
@@ -86,8 +84,7 @@ int main(int argc, char *argv[])
 		{
 			cout << "\nsending data..." << flush;
 			std::string payload = buildPayload(samples, "ADXL357", rate, adxl357.get_range(), timeStamp, adxl357.getSensitivityFactor(), logger.numFifoOveranged());
-
-			//sender.send(payload, "ADXL357");
+			//create thread which sends the data, dont wait for it to finish.
 			std::thread th(&Sender::send, &sender, payload, "ADXL357");
 			th.detach();
 			cout << "OK" << endl;
@@ -111,12 +108,14 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 	string nSamples = to_string(samples.size());
 	string sfifoOverranged = to_string(nfifoOverranged);
 
-	string xSamples = "[";
+	string xSamples = "["; //as a json array type
 	string ySamples = "[";
 	string zSamples = "[";
 	for (auto &sample : samples)
 	{
-		sample.convertSample(sensitivityFactor);
+		if(!sample.converted())
+			sample.convertSample(sensitivityFactor);
+
 		xSamples += to_string(sample.getX()) + ",";
 		ySamples += to_string(sample.getY()) + ",";
 		zSamples += to_string(sample.getZ()) + ",";
@@ -128,18 +127,39 @@ string buildPayload(vector<Sample> &samples, string sensorName, double rate, int
 	ySamples += "]";
 	zSamples += "]";
 
-	return "{ \"Sensor\" : " + sensor + ", \"Frequency\" : " + sfreq + ", \"Range\" : " + srange + ", \"Time_stamp\" : " + date + ", \"NumberSamples\" : " + nSamples + ", \"NUM_FIFO_OVER\" : " + sfifoOverranged + ", \"xSamples\" : " + xSamples + ", \"ySamples\" : " + ySamples + ", \"zSamples\" : " + zSamples + "}";
+	return	"{ "Sensor\" : " + sensor +
+					", \"Frequency\" : " + sfreq +
+					", \"Range\" : " + srange +
+					", \"Time_stamp\" : " + date +
+					", \"NumberSamples\" : " + nSamples +
+					", \"NUM_FIFO_OVER\" : " + sfifoOverranged +
+					", \"xSamples\" : " + xSamples +
+					", \"ySamples\" : " + ySamples +
+					", \"zSamples\" : " + zSamples +
+					"}";
 }
 
-string getTimeStamp()
+string getTimeStamp(int format)
 {
 	char tmbuf[32];
 	time_t t = std::time(NULL);
 	strftime(tmbuf, sizeof(tmbuf), "%F %T", localtime(&t));
-	//this will return time in for example, 2020-01-23 10:11:12
-	return std::string(tmbuf);
-	//this will return time in for example, thu 23 jan 10:11:12 2020
-	//return std::string(ctime(&now));
+	std::string timeStamp = "";
+	switch (format)
+	{
+	case 0:
+		//this will return time in for example, 2020-01-23 10:11:12
+		timeStamp = std::string(tmbuf);
+		break;
+	case 1:
+		//this will return time in for example, thu 23 jan 10:11:12 2020
+		timeStamp = std::string(ctime(&t));
+		break;
+	default:
+		timeStamp = std::string(tmbuf);
+		break;
+	}
+	return timeStamp;
 }
 
 void setupGPIO(vector<int> inputs, vector<int> outputs)
@@ -162,11 +182,10 @@ void setupGPIO(vector<int> inputs, vector<int> outputs)
 bool read_btn(int btnPin)
 {
 	//debounce pin
-	if (!digitalRead(btnPin) || digitalRead(btnPin))
-	{
-		std::this_thread::sleep_for (std::chrono::milliseconds(1));
+	bool state = digitalRead(btnPin);
+	std::this_thread::sleep_for(std::chrono::milliseconds(1));
+	if(state == digitalRead(btnPin))
+		return state;
+	else
 		return digitalRead(btnPin);
-	}
-	//should never reach this part
-	return true;
 }
