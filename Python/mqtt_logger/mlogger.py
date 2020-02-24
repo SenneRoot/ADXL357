@@ -50,7 +50,7 @@ Data can be stored as plain text or in JSON format """
             self.fo.close()
             if (self.writecount == 0):
                 os.remove(self.file_name)
-            if (self.count == 0):
+            if (self.count == 0 and self.writecount == 0):
                 os.rmdir(self.log_dir)
 
     def create_log_dir(self,log_dir):
@@ -77,7 +77,7 @@ Data can be stored as plain text or in JSON format """
         self.log_numbr="{0:003d}".format(count)
         logging.info("s is "+str(self.log_numbr))
         self.file_name=self.log_dir+"/"+"log"+self.log_numbr+".json"
-        logging.info("creating log file "+self.file_name)
+        logging.info("Opening log file "+self.file_name)
         f = open(self.file_name,'w') #clears file if it exists
         f.close()
         f=open(self.file_name, 'a')
@@ -90,9 +90,6 @@ Data can be stored as plain text or in JSON format """
     def log_data(self, data):
         self.data=data
         try:
-            self.fo.write(data)
-            self.writecount+=1
-            self.__flushlogs()
             if self.writecount>=self.log_recs:
                 self.count+=1 #counts number of logs
                 if self.count>self.number_logs and self.number_logs !=0 :
@@ -100,6 +97,10 @@ Data can be stored as plain text or in JSON format """
                     self.count=0 #reset
                 self.fo=self.get_log_name(self.log_dir,self.count)
                 self.writecount=0
+            logging.info("Writing and closing log file: " + self.file_name)
+            self.fo.write(data)
+            self.writecount+=1
+            self.__flushlogs()
         except BaseException as e:
             logging.error("Error on_data: %s" % str(e))
             return False
