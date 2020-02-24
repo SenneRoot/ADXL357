@@ -29,6 +29,8 @@ Then run with:
 
 The dashboard can be started by running [dashboard.py](Python/dashboard/dashboard.py) (You may have to install [Dash](https://plot.ly/dash/)). This file can be found in the [Python](Python) directory.
 
+![image](https://user-images.githubusercontent.com/19331519/75137020-b9eceb80-56e6-11ea-85c1-231d8fd2fbd6.png)
+
 ### Log MQTT messages
 
 To log the messages published by the C++ program, you can use the mqtt logger which is found in [Python/mqtt_logger](Python/mqtt_logger) directory. See [Python/mqtt_logger/README](Python/mqtt_logger/README.md) for usage.
