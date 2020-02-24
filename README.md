@@ -34,3 +34,7 @@ The dashboard can be started by running [dashboard.py](Python/dashboard/dashboar
 ### Log MQTT messages
 
 To log the messages published by the C++ program, you can use the mqtt logger which is found in [Python/mqtt_logger](Python/mqtt_logger) directory. See [Python/mqtt_logger/README](Python/mqtt_logger/README.md) for usage.
+
+Example usage:
+
+    python .\mqtt_data_logger.py -b localhost -t ADXL357 -q 1 -r 1 -s -m -d
