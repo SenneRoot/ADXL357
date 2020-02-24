@@ -8,7 +8,11 @@ C++ ADXL357 datalogger used to analyze machine vibrations
 
 Compile using make in [C++](C++) directory.
 
-run with:
+First run make in [C++ directory](C++):
+
+    make
+
+Then run with:
 
     ./bin/ADXL357 MQTT_BROKER_IP (optional, defaults to localhost)
 
