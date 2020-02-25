@@ -71,7 +71,7 @@ class MQTTClient(mqtt.Client):  # extend the paho client class
 
 def Initialise_clients(cname, mqttclient_log=False, cleansession=True, flags=""):
     # flags set
-    #print("initialising clients")
+    # print("initialising clients")
     logging.info("initialising clients")
     client = MQTTClient(cname, clean_session=cleansession)
     client.cname = cname
@@ -235,7 +235,6 @@ client.q = q  # make queue available as part of client
 try:
     res = client.connect(client.broker, client.port)  # connect to broker
     client.loop_start()  # start loop
-
 except:
     logging.debug("connection to " + client.broker + " failed")
     raise SystemExit("connection failed")
@@ -249,5 +248,5 @@ except KeyboardInterrupt:
 
 client.loop_stop()  # start loop
 Log_worker_flag = False  # stop logging thread
-#time.sleep(5)
+# time.sleep(5)
 

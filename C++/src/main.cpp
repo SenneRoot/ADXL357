@@ -14,6 +14,8 @@
 #define MQTT_CLIENT_ID 		""
 #define MQTT_QOS 					1
 #define MQTT_VER 					MQTTVERSION_3_1_1
+#define TIME_FORMAT_NUM		0
+#define TIME_FORMAT_TXT		1
 
 void setupGPIO(vector<int> inputs, vector<int> outputs);
 bool read_btn(int btnPin);
@@ -48,9 +50,6 @@ int main(int argc, char *argv[])
 
 	//setup ADXL357 sensor
 	adxl357.stop();
-	adxl357.emptyFifo();
-	adxl357.fifoFull();
-
 	adxl357.setRange(SET_RANGE_10G);
 	adxl357.setFilter(SET_HPF_OFF, SET_ODR_4000);
 	adxl357.dumpInfo();
@@ -65,7 +64,7 @@ int main(int argc, char *argv[])
 		{
 			//be sure to start the sensor before logging Continuous to avoid starting and stopping the sensor
 			adxl357.start();
-			timeStamp = getTimeStamp(0);
+			timeStamp = getTimeStamp(TIME_FORMAT_NUM);
 			//let the adxl startup according to datasheet typical <10 ms.
 			std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
