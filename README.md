@@ -29,7 +29,7 @@ Then run with:
 
 The dashboard can be started by running [dashboard.py](Python/dashboard/dashboard.py) (You may have to install [Dash](https://plot.ly/dash/)). This file can be found in the [Python](Python) directory.
 
-![image](https://user-images.githubusercontent.com/19331519/75137020-b9eceb80-56e6-11ea-85c1-231d8fd2fbd6.png)
+![image](https://user-images.githubusercontent.com/19331519/75445699-3e00d680-5966-11ea-8b18-775547522f49.png)
 
 ### Log MQTT messages
 
