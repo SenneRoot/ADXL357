@@ -15,15 +15,20 @@ import scipy
 import warnings
 import os
 
-def find_json_files(base):
+def find_json_files(base, sub = True):
   allFiles = []
-  for subdir, dirs, files in os.walk(base):
-    for file in files:
-      #print os.path.join(subdir, file)
-      filepath = subdir + os.sep + file
-      if filepath.endswith(".json"):
-        #print (filepath)
-        allFiles.append(filepath)
+  if sub:
+    for subdir, dirs, files in os.walk(base):
+      for file in files:
+        #print os.path.join(subdir, file)
+        filepath = subdir + os.sep + file
+        if filepath.endswith(".json"):
+          #print (filepath)
+          allFiles.append(filepath)
+  else:
+    files_all = os.listdir(base)
+    allFiles = [base + os.sep + i for i in files_all if i.endswith('.json')]
+  
   return allFiles
 
 def fft_plot(samples, freq, num_samples):
@@ -44,10 +49,22 @@ def fft_plot(samples, freq, num_samples):
         fig.add_trace(go.Scatter(y=sam, mode='lines', name=column))
         fig_fft.add_trace(go.Scatter(x=xf[1:], y=2.0/N * np.abs(yf[:N//2])[1:], mode='lines', name=column + '_fft'))
 
+    fig.update_layout(title="Time space analysis", font=dict(
+        size=10,
+        color="#7f7f7f"
+    ))
+    fig_fft.update_layout(title="FFT analysis", font=dict(
+        size=10,
+        color="#7f7f7f"
+    ))
     return fig, fig_fft
 
 app = dash.Dash('Accel-data', external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"])
-files = find_json_files("..\data")
+data_dir = "..\data"
+subfolders = [f.path for f in os.scandir(data_dir) if f.is_dir()]
+subfolders.insert(0, "..\data")
+
+files = find_json_files(subfolders[0], False)
 data_file = files[0]
 
 app.layout = html.Div([
@@ -58,6 +75,12 @@ app.layout = html.Div([
 
 html.Div([
     html.Div([
+      dcc.Dropdown(id='Data-folders',
+                options=[{'label': s[len(data_dir) + 1:] if len(s) > len(data_dir) else s[3:], 'value': s} for s in subfolders],
+                value=subfolders[0],
+                multi=False
+                ),
+
         dcc.Dropdown(id='Data-files',
                 options=[{'label': s[8:], 'value': s} for s in files],
                 value=data_file,
@@ -74,20 +97,35 @@ dcc.Interval(
     ], className="container",style={'width':'98%','margin-left':10,'margin-right':10,'max-width':50000})
 ])
 
+@app.callback(Output('Data-folders', 'options'),
+[Input('interval-component', 'n_intervals')])
+def update_folders_dropdown(nk):
+  subfolders = [f.path for f in os.scandir(data_dir) if f.is_dir()]
+  subfolders.insert(0, "..\data")
+  return [{'label': s[len(data_dir) + 1:] if len(s) > len(data_dir) else s[3:], 'value': s} for s in subfolders]
 
 
 @app.callback(Output('Data-files', 'options'),
-[Input('interval-component', 'n_intervals')])
-def update_dropdown(nk):
+[Input('interval-component', 'n_intervals'), Input('Data-folders', 'value')])
+def update_files_dropdown(nk, val):
     #files_all = os.listdir("data/")
-    files = find_json_files("..\data")
-    return [{'label': i[8:], 'value': i} for i in files]
+    #subfolders = [f.path for f in os.scandir(data_dir) if f.is_dir()]
+    #subfolders.insert(0, data_dir)
+    if val != subfolders[0]:
+      files = find_json_files(val)
+      return [{'label': i[len(val) + 1:], 'value': i} for i in files]
+    else:
+      files = find_json_files(val, False)
+      return [{'label': i[8:], 'value': i} for i in files]
 
 @app.callback(Output('graphs', 'children'), 
 [Input('Data-files', 'value')])
 def update_file_name(value):
     graphs = []
     print(value)
+    if value is None:
+      return
+    
     data_file = value
 
     class_choice = 'col s12 m12 l12'
@@ -97,7 +135,7 @@ def update_file_name(value):
       d = pd.read_json(data_file)
     except ValueError:
       print("Error reading file!")
-      return
+      return html.Div(["Error reading data file: " + data_file + "   is the JSON syntax correct?"], className=class_choice)
 
     df = pd.DataFrame(d[['xSamples', 'ySamples', 'zSamples']])
 
